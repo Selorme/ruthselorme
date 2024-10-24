@@ -24,7 +24,7 @@ google_password = os.getenv('PASSWORD')
 app = Flask(__name__)
 
 # Config for SQLite database
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///blog.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 app.config['CKEDITOR_PKG_TYPE'] = 'full'
 ckeditor = CKEditor(app)
