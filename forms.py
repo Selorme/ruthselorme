@@ -29,5 +29,5 @@ class LogInForm(FlaskForm):
 
 # The comment form
 class CommentForm(FlaskForm):
-    comment = StringField("Comment")
+    comment = StringField("Comment", validators=[DataRequired()])
     submit = SubmitField("Let's discuss this!")
