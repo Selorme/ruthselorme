@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-{% from "bootstrap5/form.html" import render_form %}
 {% block title %}{{ post.title }}{% endblock %}
 {% block content %}
 
@@ -36,7 +35,19 @@
                         {% endif %}
                     </div>
                     <p class="text-muted">Category: {{ post.category }}</p>
-                    {{render_form(form, novalidate=True, button_map={"submit": "primary"}) }}
+                    <form action="{{ url_for('add_comment') }}" method="post">
+                        {{ form.hidden_tag() }}
+                        <div class="mb-3">
+                            <label for="{{ form.comment.id }}" class="form-label">{{ form.comment.label }}</label>
+                            {{ form.comment(class="form-control") }}
+                            {% for error in form.comment.errors %}
+                                <span class="error text-danger">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        <div>
+                        {{ form.submit(class="btn btn-primary") }}
+                        </div>
+                    </form>
                     <div class="comment">
                         <!-- TODO: Show all the comments on a post -->
                         <ul class="commentList">

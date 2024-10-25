@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-{% from "bootstrap5/form.html" import render_form %}
 {% block content %}
 
   <div class="container position-relative px-4 px-lg-5">
@@ -23,8 +22,41 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
-        {{ ckeditor.load() }} {{ ckeditor.config(name='body') }} {{
-        render_form(form, novalidate=True, button_map={"submit": "primary"}) }}
+        {{ ckeditor.load() }} {{ ckeditor.config(name='body') }}
+        <form action="{{ url_for('add_new_post') }}" method="post">
+            {{ form.hidden_tag() }}
+            <div class="mb-3">
+                <label for="{{ form.title.id }}" class="form-label">{{ form.title.label }}</label>
+                {{ form.title(class="form-control") }}
+                {% for error in form.title.errors %}
+                    <span class="error text-danger">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div class="mb-3">
+                <label for="{{ form.img_url.id }}" class="form-label">{{ form.img_url.label }}</label>
+                {{ form.img_url(class="form-control") }}
+                {% for error in form.img_url.errors %}
+                    <span class="error text-danger">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div class="mb-3">
+                <label for="{{ form.body.id }}" class="form-label">{{ form.body.label }}</label>
+                {{ form.body(class="form-control") }}
+                {% for error in form.body.errors %}
+                    <span class="error text-danger">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div class="mb-3">
+                <label for="{{ form.category.id }}" class="form-label">{{ form.category.label }}</label>
+                {{ form.category(class="form-control") }}
+                {% for error in form.category.errors %}
+                    <span class="error text-danger">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div>
+                {{ form.submit(class="btn btn-primary") }}
+            </div>
+        </form>
       </div>
     </div>
   </div>
