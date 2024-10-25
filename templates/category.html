@@ -12,7 +12,7 @@
                     <ul class="list-unstyled">
                         {% for post in posts %}
                             <li>
-                                <a href="{{ url_for('show_post', index=post.id) }}">
+                                <a href="{{ url_for('show_post', post_id=post.id) }}">
                                     {{ post.title }}
                                 </a>
                             </li>
