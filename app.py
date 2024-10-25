@@ -13,9 +13,15 @@ from sqlalchemy import Integer, String, Text
 from functools import wraps
 from werkzeug.security import generate_password_hash, check_password_hash
 from forms import CreatePostForm, RegisterForm, LogInForm, CommentForm
+from supabase import create_client, Client
 
 # Load environment variables
 load_dotenv()
+
+# Supabase setup
+supabase_url = os.getenv('SUPABASE_URL')
+supabase_key = os.getenv('SUPABASE_ANON_KEY')
+supabase: Client = create_client(supabase_url, supabase_key)
 
 # Email and password
 google_email = os.getenv('MY_EMAIL')
