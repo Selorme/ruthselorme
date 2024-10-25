@@ -1,6 +1,6 @@
 from flask import Flask, abort, render_template, request, redirect, url_for, flash
 from datetime import datetime, date
-from flask_bootstrap import Bootstrap
+from flask_bootstrap import Bootstrap5
 from flask_sqlalchemy import SQLAlchemy
 import smtplib
 import os
@@ -39,7 +39,7 @@ class Base(DeclarativeBase):
 db = SQLAlchemy(model_class=Base)
 db.init_app(app)
 login_manager.init_app(app)
-bootstrap = Bootstrap(app)
+bootstrap = Bootstrap5(app)
 
 year = datetime.today().year
 
