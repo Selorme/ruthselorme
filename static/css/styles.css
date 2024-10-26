@@ -564,3 +564,7 @@ body.dark-mode .fac {
 .commentText p {
   margin:0;
 }
+
+.flash {
+  color: #ff182d;
+}

@@ -12,8 +12,10 @@ from sqlalchemy.orm import relationship, DeclarativeBase, Mapped, mapped_column
 from sqlalchemy import Integer, String, Text
 from functools import wraps
 from werkzeug.security import generate_password_hash, check_password_hash
-from forms import CreatePostForm, RegisterForm, LogInForm, CommentForm
+from forms import CreatePostForm, RegisterForm, LogInForm, CommentForm, ForgotPasswordForm, ResetPasswordForm
 from supabase import create_client, Client
+from flask_mail import Mail, Message
+from itsdangerous import URLSafeTimedSerializer, SignatureExpired
 
 # Load environment variables
 load_dotenv()
@@ -24,10 +26,19 @@ supabase_key = os.getenv('SUPABASE_KEY')
 supabase: Client = create_client(supabase_url, supabase_key)
 
 # Email and password
-google_email = os.getenv('MY_EMAIL')
-google_password = os.getenv('PASSWORD')
+google_email = os.getenv('MY_WEBSITE_EMAIL')
+google_password = os.getenv('MY_WEBSITE_PASSWORD')
 
 app = Flask(__name__)
+
+# Set up for email
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'  # e.g., smtp.gmail.com for Gmail
+app.config['MAIL_PORT'] = 587  # Use 465 for SSL, 587 for TLS
+app.config['MAIL_USE_TLS'] = True  # or False if using SSL
+app.config['MAIL_USE_SSL'] = False  # or True if using SSL
+app.config['MAIL_USERNAME'] = os.getenv('MY_WEBSITE_EMAIL')
+app.config['MAIL_PASSWORD'] = os.getenv('MY_WEBSITE_PASSWORD')
+app.config['MAIL_DEFAULT_SENDER'] = os.getenv('MY_WEBSITE_EMAIL')
 
 # Config for SQLite database
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
@@ -36,6 +47,10 @@ app.config['CKEDITOR_PKG_TYPE'] = 'full'
 ckeditor = CKEditor(app)
 login_manager = LoginManager()
 gravatar = Gravatar(app, default='retro')
+
+mail = Mail(app)
+app.config['MAIL_SECRET_KEY'] = os.getenv('MAIL_SECRET_KEY')
+s = URLSafeTimedSerializer(app.config['MAIL_SECRET_KEY'])
 
 # Initialize the database
 class Base(DeclarativeBase):
@@ -101,8 +116,10 @@ with app.app_context():
 def admin_only(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
-        if current_user.id != 1:
-            return abort(403)
+        if not current_user.is_authenticated:
+            return redirect(url_for('login'))
+        elif current_user.id != 1:
+            return redirect(url_for('home'))
         return func(*args, **kwargs)
     return wrapper
 
@@ -218,9 +235,64 @@ def delete_post(post_id):
     return redirect(url_for('home'))
 
 
+def send_reset_email(email, reset_url):
+    msg = Message("Password Reset Request",
+                  sender=os.getenv('MY_WEBSITE_EMAIL'),
+                  recipients=[email])
+
+    # Email body content
+    msg.body = f"""To reset your password, click the following link: {reset_url}
+
+If you did not request this, ignore this email.
+"""
+
+    # Set the Reply-To header to a non-monitored address
+    msg.reply_to = "no-reply@example.com"  # Use a non-monitored address
+
+    # Send the email
+    mail.send(msg)
 
 
+@app.route("/forgot-password", methods=["GET", "POST"])
+def forgot_password():
+    form = ForgotPasswordForm()
+    if form.validate_on_submit():
+        email = form.email.data
+        user = User.query.filter_by(email=email).first()
+        if user:
+            token = s.dumps(email, salt='email-reset')
+            reset_url = url_for('reset_password', token=token, _external=True)
+            send_reset_email(email, reset_url)
+            flash("A password reset link has been sent to your email.", "info")
+            return redirect(url_for('login'))
+        else:
+            flash("Email not found. Please register.", "warning")
+            return redirect(url_for('register'))
+    return render_template("forgot_password.html", form=form)
 
+
+@app.route("/reset-password/<token>", methods=["GET", "POST"])
+def reset_password(token):
+    try:
+        email = s.loads(token, salt="email-reset", max_age=3600)  # Token expires in 1 hour
+    except SignatureExpired:
+        flash("The reset link is expired.", "warning")
+        return redirect(url_for("forgot_password"))
+
+    form = ResetPasswordForm()
+    if form.validate_on_submit():
+        new_password = form.new_password.data
+        confirm_password = form.confirm_password.data
+        if new_password == confirm_password:
+            user = User.query.filter_by(email=email).first()
+            user.password = generate_password_hash(new_password)
+            db.session.commit()
+            flash("Password reset successful. Please log in.", "success")
+            return redirect(url_for("login"))
+        else:
+            flash("Passwords do not match.", "danger")
+
+    return render_template("reset_password.html", form=form, token=token)
 
 
 
