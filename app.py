@@ -422,7 +422,7 @@ def show_post(post_id):
             return redirect(url_for('show_post', post_id=post_id))
         else:
             error = "Login Required! Please log in/Register to leave a comment"
-            flash("Log in required error!")
+            flash("Log in to leave a comment!")
             return redirect(url_for("login"))
     # Fetch all posts in the same category, excluding the current post
     all_posts = Post.query.filter(Post.category == requested_post.category, Post.id != requested_post.id).all()
