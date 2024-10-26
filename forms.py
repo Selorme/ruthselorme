@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField, EmailField
-from wtforms.validators import DataRequired, URL, EqualTo, Email
+from wtforms.validators import DataRequired, URL, EqualTo, Email, Length, Regexp
 from flask_ckeditor import CKEditorField
 
 
@@ -23,7 +23,12 @@ class RegisterForm(FlaskForm):
 # Form to log in as an existing user
 class LogInForm(FlaskForm):
     email = StringField("Email", validators=[DataRequired(), Email()])
-    password = PasswordField("Password", validators=[DataRequired()])
+    password = PasswordField('Password', validators=[
+        DataRequired(),
+        Length(min=8, message='Password must be at least 8 characters long.'),
+        Regexp(r'(?=.*[0-9])', message='Password must contain at least one number.'),
+        Regexp(r'(?=.*[!@#$%^&*(),.?":{}|<>])', message='Password must contain at least one special character.')
+    ])
     submit = SubmitField("Let Me In")
 
 
