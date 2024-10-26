@@ -56,5 +56,5 @@ class ResetPasswordForm(FlaskForm):
         Regexp(r'(?=.*[!@#$%^&*(),.?":{}|<>])', message='Password must contain at least one special character.')
     ])
 
-    confirm_password = PasswordField("Confirm New Password", validators=[DataRequired(), EqualTo('password', message="Passwords must match")])
+    confirm_password = PasswordField("Confirm New Password", validators=[DataRequired(), EqualTo('new_password', message="Passwords must match")])
     submit = SubmitField("Reset Password")
