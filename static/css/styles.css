@@ -518,11 +518,15 @@ body.dark-mode .fac {
     content: url('/static/img/facebook.svg');
 }
 
+body.dark-mode .github {
+    content: url('/static/img/github.svg');
+}
+
 .cke_editable p {
     text-align: left !important;
 }
 
-/* Commment Styling */
+/* Comment Styling */
 .commentBox {
   padding:10px;
   border-top:1px dotted #bbb;
