@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField
-from wtforms.validators import DataRequired, URL, EqualTo
+from wtforms import StringField, SubmitField, PasswordField, EmailField
+from wtforms.validators import DataRequired, URL, EqualTo, Email
 from flask_ckeditor import CKEditorField
 
 
@@ -14,7 +14,7 @@ class CreatePostForm(FlaskForm):
 
 # Form to register to leave a comment as a user
 class RegisterForm(FlaskForm):
-    email = StringField("Email", validators=[DataRequired()])
+    email = StringField("Email", validators=[DataRequired(), Email()])
     password = PasswordField("Password", validators=[DataRequired()])
     name = StringField("Name", validators=[DataRequired()])
     submit = SubmitField("Sign Me Up!")
@@ -22,7 +22,7 @@ class RegisterForm(FlaskForm):
 
 # Form to log in as an existing user
 class LogInForm(FlaskForm):
-    email = StringField("Email", validators=[DataRequired()])
+    email = StringField("Email", validators=[DataRequired(), Email()])
     password = PasswordField("Password", validators=[DataRequired()])
     submit = SubmitField("Let Me In")
 
@@ -34,7 +34,7 @@ class CommentForm(FlaskForm):
 
 # Form to request a password reset
 class ForgotPasswordForm(FlaskForm):
-    email = StringField("Enter your registered email", validators=[DataRequired()])
+    email = EmailField("Enter your registered email", validators=[DataRequired(), Email()])
     submit = SubmitField("Send Reset Link")
 
 # Form to reset the password
