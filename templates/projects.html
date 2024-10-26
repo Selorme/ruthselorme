@@ -19,7 +19,7 @@
             <div class="post-preview d-flex flex-column flex-md-row mb-4">
                  <!-- Image on top on smaller screens and on the left on larger screens -->
                 <div class="mb-3 mb-md-0 me-md-3">
-                    <img class="img-fluid" src="{{ post.image_url }}" alt="{{ post.title }}" style="max-width: 200px; height: auto;">
+                    <img class="img-fluid" src="{{ post.img_url }}" alt="{{ post.title }}" style="max-width: 200px; height: auto;">
                 </div>
                 <!-- Title and content on the right on larger screens and below on smaller screens -->
                 <div>
@@ -30,7 +30,7 @@
                     </a>
                     <!-- Display the first three lines of the content -->
                     <p>
-                        {{ post.content|truncate(300, True, '...')|safe }}
+                        {{ post.body|truncate(300, True, '...')|safe }}
                         <a class="btn btn-outline-success"  href="{{ url_for('show_post', post_id=post.id) }}"><em>Read More...</em></a>
                     </p>
                 </div>
