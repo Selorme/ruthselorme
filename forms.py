@@ -15,7 +15,12 @@ class CreatePostForm(FlaskForm):
 # Form to register to leave a comment as a user
 class RegisterForm(FlaskForm):
     email = StringField("Email", validators=[DataRequired(), Email()])
-    password = PasswordField("Password", validators=[DataRequired()])
+    password = PasswordField('Password', validators=[
+        DataRequired(),
+        Length(min=8, message='Password must be at least 8 characters long.'),
+        Regexp(r'(?=.*[0-9])', message='Password must contain at least one number.'),
+        Regexp(r'(?=.*[!@#$%^&*(),.?":{}|<>])', message='Password must contain at least one special character.')
+    ])
     name = StringField("Name", validators=[DataRequired()])
     submit = SubmitField("Sign Me Up!")
 
@@ -44,6 +49,12 @@ class ForgotPasswordForm(FlaskForm):
 
 # Form to reset the password
 class ResetPasswordForm(FlaskForm):
-    new_password = PasswordField("New Password", validators=[DataRequired()])
+    new_password = PasswordField("New Password", validators=[
+        DataRequired(),
+        Length(min=8, message='Password must be at least 8 characters long.'),
+        Regexp(r'(?=.*[0-9])', message='Password must contain at least one number.'),
+        Regexp(r'(?=.*[!@#$%^&*(),.?":{}|<>])', message='Password must contain at least one special character.')
+    ])
+
     confirm_password = PasswordField("Confirm New Password", validators=[DataRequired(), EqualTo('password', message="Passwords must match")])
     submit = SubmitField("Reset Password")
