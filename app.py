@@ -108,6 +108,14 @@ class Comment(db.Model):
     text: Mapped[str] = mapped_column(Text, nullable=False)
 
 
+class PasswordResetToken(db.Model):
+    __tablename__ = "password_reset_tokens"
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    email: Mapped[str] = mapped_column(String, nullable=False, unique=True)
+    token: Mapped[str] = mapped_column(String, nullable=False)
+    created_at: Mapped[datetime] = mapped_column(db.DateTime, default=datetime.utcnow)
+
+
 with app.app_context():
     db.create_all()
 
@@ -261,6 +269,16 @@ def forgot_password():
         user = User.query.filter_by(email=email).first()
         if user:
             token = s.dumps(email, salt='email-reset')
+
+            # save or update the password reset token in the database
+            reset_token = PasswordResetToken.query.filter_by(email=email).first()
+            if reset_token:
+                reset_token.token = token
+            else:
+                reset_token = PasswordResetToken(email=email, token=token)
+                db.session.add(reset_token)
+            db.session.commit()
+
             reset_url = url_for('reset_password', token=token, _external=True)
             send_reset_email(email, reset_url)
             flash("A password reset link has been sent to your email.", "info")
@@ -276,7 +294,13 @@ def reset_password(token):
     try:
         email = s.loads(token, salt="email-reset", max_age=3600)  # Token expires in 1 hour
     except SignatureExpired:
-        flash("The reset link is expired.", "warning")
+        flash("The reset link is expired! Request for another one.", "warning")
+        return redirect(url_for("forgot_password"))
+
+    # Verify token exists and is valid
+    reset_token = PasswordResetToken.query.filter_by(email=email, token=token).first()
+    if not reset_token:
+        flash("Invalid or already used reset link.", "warning")
         return redirect(url_for("forgot_password"))
 
     form = ResetPasswordForm()
@@ -287,6 +311,11 @@ def reset_password(token):
             user = User.query.filter_by(email=email).first()
             user.password = generate_password_hash(new_password)
             db.session.commit()
+
+            # Delete the token after use
+            db.session.delete(reset_token)
+            db.session.commit()
+
             flash("Password reset successful. Please log in.", "success")
             return redirect(url_for("login"))
         else:
