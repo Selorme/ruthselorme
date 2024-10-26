@@ -325,7 +325,8 @@ def show_post(post_id):
             return redirect(url_for("login"))
     # Fetch all posts in the same category, excluding the current post
     all_posts = Post.query.filter(Post.category == requested_post.category, Post.id != requested_post.id).all()
-    return render_template("post.html", post=requested_post, current_user=current_user, form=comment_form, all_posts=all_posts)
+    categories = [cat[0] for cat in db.session.query(Post.category).distinct().all()]
+    return render_template("post.html", post=requested_post, current_user=current_user, form=comment_form, all_posts=all_posts, categories=categories)
 
 
 @app.route('/search')
@@ -342,4 +343,4 @@ def search():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, port=5005)
