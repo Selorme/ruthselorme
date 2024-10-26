@@ -1,18 +1,55 @@
 <!-- footer section -->
-<section>
-    <footer class="footer-section d-flex flex-wrap justify-content-between align-items-center py-5">
-        <div class="col-md-4 d-flex align-items-center">
-            <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
-                <svg class="bi" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
-            </a>
-            <span class="mb-3 mb-md-0 text-body-secondary" id="footer-text">© RUTH SELORME {{ copyright_year }} </span>
-        </div>
+<section class="footer-container">
+    <footer class="footer-section py-4">
+        <div class="container">
+            <div class="row text-center text-md-start align-items-center">
 
-        <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
-            <li class="ms-3"><a class="text-body-secondary" href="https://github.com/Selorme"><img class="github" src="/static/img/githubdark.svg" /><svg class="bi" width="30" height="30"><use xlink:href="#github"></use></svg></a></li>
-            <li class="ms-3"><a class="text-body-secondary" href="https://www.linkedin.com/in/ruth-acolatse-0450181a1/"><img class="lin" src="/static/img/linkedindark.svg" /><svg class="bi" width="30" height="30"><use xlink:href="#linkedin"></use></svg></a></li>
-            <li class="ms-3"><a class="text-body-secondary" href="https://www.instagram.com/sselorme"><img class="ins" src="/static/img/instagramdark.svg" /><svg class="bi" width="30" height="30"><use xlink:href="#instagram"></use></svg></a></li>
-            <li class="ms-3"><a class="text-body-secondary" href="https://www.facebook.com/sselorme"><img class="fac" src="/static/img/facebookdark.svg" /><svg class="bi" width="30" height="30"><use xlink:href="#facebook"></use></svg></a></li>
-        </ul>
+                <!-- Left Section (Logo and Copyright) -->
+                <div class="col-md-4 d-flex flex-column align-items-center align-items-md-start mb-3 mb-md-0">
+                    <span class="text-muted" id="footer-text">© RUTH SELORME {{ copyright_year }} </span>
+                </div>
+
+                <!-- Center Section (Legal Links) -->
+                <div class="col-md-4 d-flex justify-content-center mb-3 mb-md-0">
+                    <ul class="list-inline text-center">
+                        <li class="list-inline-item mx-2">
+                            <a href="{{ url_for('disclaimer') }}" class="text-decoration-none text-muted">Disclaimer</a>
+                        </li>
+                        <li class="list-inline-item mx-2">
+                            <a href="{{ url_for('privacy_policy') }}" class="text-decoration-none text-muted">Privacy Policy</a>
+                        </li>
+                        <li class="list-inline-item mx-2">
+                            <a href="{{ url_for('terms_and_conditions') }}" class="text-decoration-none text-muted">Terms and Conditions</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Right Section (Social Links) -->
+                <div class="col-md-4 d-flex justify-content-center justify-content-md-end">
+                    <ul class="list-unstyled d-flex">
+                        <li class="ms-3">
+                            <a href="https://github.com/Selorme" class="text-decoration-none">
+                                <img src="/static/img/githubdark.svg" alt="GitHub" class="social-icon" width="30" height="30">
+                            </a>
+                        </li>
+                        <li class="ms-3">
+                            <a href="https://www.linkedin.com/in/ruth-acolatse-0450181a1/" class="text-decoration-none">
+                                <img src="/static/img/linkedindark.svg" alt="LinkedIn" class="social-icon" width="30" height="30">
+                            </a>
+                        </li>
+                        <li class="ms-3">
+                            <a href="https://www.instagram.com/sselorme" class="text-decoration-none">
+                                <img src="/static/img/instagramdark.svg" alt="Instagram" class="social-icon" width="30" height="30">
+                            </a>
+                        </li>
+                        <li class="ms-3">
+                            <a href="https://www.facebook.com/sselorme" class="text-decoration-none">
+                                <img src="/static/img/facebookdark.svg" alt="Facebook" class="social-icon" width="30" height="30">
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </footer>
 </section>

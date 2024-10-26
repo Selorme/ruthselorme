@@ -443,5 +443,20 @@ def search():
     return render_template('search.html', query=query, results=results)
 
 
+@app.route("/Disclaimer")
+def disclaimer():
+    return render_template("disclaimer.html")
+
+
+@app.route("/Privacy-Policy")
+def privacy_policy():
+    return render_template("privacy_policy.html")
+
+
+@app.route("/Terms-and-Conditions")
+def terms_and_conditions():
+    return render_template("terms_conditions.html")
+
+
 if __name__ == "__main__":
     app.run(debug=True, port=5005)
