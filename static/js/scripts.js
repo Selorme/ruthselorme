@@ -44,3 +44,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
+
+    function toggleReplyForm(commentId) {
+        const replyForm = document.getElementById('replyForm' + commentId);
+        if (replyForm.style.display === 'none') {
+            replyForm.style.display = 'block';
+        } else {
+            replyForm.style.display = 'none';
+        }
+    }

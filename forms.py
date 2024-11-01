@@ -40,7 +40,7 @@ class LogInForm(FlaskForm):
 # The comment form
 class CommentForm(FlaskForm):
     comment = StringField("Comment", validators=[DataRequired()])
-    submit = SubmitField("Leave Comment")
+    submit = SubmitField("Leave a comment!")
 
 # Form to request a password reset
 class ForgotPasswordForm(FlaskForm):

@@ -1,0 +1,69 @@
+<li>
+    <div class="commenterImage">
+        <img src="{{ comment.comment_author.email|gravatar }}" />
+    </div>
+    <div class="commentText">
+        <p>{{ comment.text|safe }}</p>
+        <span class="date sub-text">{{ comment.comment_author.name }}</span>
+
+        <!-- Reply Button -->
+        <button class="btn btn-link btn-sm reply-btn" onclick="toggleReplyForm({{ comment.id }})">Reply</button>
+
+        <!-- Reply Form -->
+        <form id="replyForm{{ comment.id }}" action="{{ url_for('show_post', post_id=post.id) }}" method="post" style="display: none;">
+            {{ form.hidden_tag() }}
+            <input type="hidden" name="parent_id" value="{{ comment.id }}"> <!-- Set parent_id to the current comment's id -->
+            <div class="mb-3">
+                {{ form.comment(class="form-control", placeholder="Write a reply...") }}
+            </div>
+            <button type="submit" class="btn btn-primary btn-sm">Post Reply</button>
+        </form>
+
+        <!-- Nested Comments -->
+        {% if comment.replies %}
+            <ul class="nestedCommentList">
+                {% for reply in comment.replies %}
+                    <li>
+                        <div class="commenterImage">
+                            <img src="{{ reply.comment_author.email|gravatar }}" />
+                        </div>
+                        <div class="commentText">
+                            <p>{{ reply.text|safe }}</p>
+                            <span class="date sub-text">{{ reply.comment_author.name }}</span>
+
+                            <!-- Reply Button for nested reply -->
+                            <button class="btn btn-link btn-sm reply-btn" onclick="toggleReplyForm({{ reply.id }})">Reply</button>
+
+                            <!-- Reply Form for nested reply -->
+                            <form id="replyForm{{ reply.id }}" action="{{ url_for('show_post', post_id=post.id) }}" method="post" style="display: none;">
+                                {{ form.hidden_tag() }}
+                                <input type="hidden" name="parent_id" value="{{ reply.id }}"> <!-- Use reply.id as parent_id -->
+                                <div class="mb-3">
+                                    {{ form.comment(class="form-control", placeholder="Write a reply...") }}
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-sm">Post Reply</button>
+                            </form>
+
+                            <!-- Check for further nested replies -->
+                            {% if reply.replies %}
+                                <ul class="nestedCommentList">
+                                    {% for nested_reply in reply.replies %}
+                                        <li>
+                                            <div class="commenterImage">
+                                                <img src="{{ nested_reply.comment_author.email|gravatar }}" />
+                                            </div>
+                                            <div class="commentText">
+                                                <p>{{ nested_reply.text|safe }}</p>
+                                                <span class="date sub-text">{{ nested_reply.comment_author.name }}</span>
+                                            </div>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+</li>

@@ -105,7 +105,10 @@ class Comment(db.Model):
 
     post_id: Mapped[int] = mapped_column(Integer, db.ForeignKey("blog_posts.id"))
     parent_post = relationship("Post", back_populates="comments")
+
     text: Mapped[str] = mapped_column(Text, nullable=False)
+    parent_id: Mapped[int] = mapped_column(Integer, db.ForeignKey("comments.id"), nullable=True)
+    parent_comment = relationship("Comment", remote_side=[id], backref="replies")
 
 
 class PasswordResetToken(db.Model):
@@ -412,10 +415,14 @@ def show_post(post_id):
 
     if comment_form.validate_on_submit():
         if current_user.is_authenticated:
+
+            parent_id = request.form.get("parent_id")
+
             new_comment = Comment(
                 text=comment_form.comment.data,
                 author_id=current_user.id,
-                post_id=requested_post.id
+                post_id=requested_post.id,
+                parent_id=parent_id
             )
             db.session.add(new_comment)
             db.session.commit()
