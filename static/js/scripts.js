@@ -69,7 +69,7 @@ function initializeSubscriptionReminder() {
                 `;
                 flashContainer.appendChild(alert);
             }
-        }, 30000); // Show after 30 seconds
+        }, 1000); // Show after 1 seconds
     }
 }
 
