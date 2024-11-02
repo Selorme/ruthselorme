@@ -14,20 +14,21 @@
     <div class="d-flex flex-column min-vh-100">
         {% include 'navbar.html' %}
 
-    <!-- Flash Messages Container -->
-    <div class="flash-messages d-flex justify-content-center mt-3">
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                {% for category, message in messages %}
-                    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert" style="width: 100%; max-width: 600px; font-size: 1.2rem;">
-                        {{ message }}
-                        <a href="{{ url_for('register') }}">Register</a>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
-    </div>
+        <!-- Flash Messages Container -->
+        <div class="flash-messages d-flex justify-content-center mt-3" style="width: 100%; display: flex; justify-content: center; align-items: center;">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert" style="width: 100%; max-width: 600px; font-size: 1.5rem; padding: 20px; text-align: center;">
+                            {{ message }}
+                            <br>
+                            <a href="{{ url_for('register') }}" class="alert-link">Register</a> <!-- Added link here -->
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
 
 
         <!-- Email Modal -->

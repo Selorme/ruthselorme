@@ -8,7 +8,7 @@
             <div class="col-md-10 col-lg-8 col-xl-7">
                 <div class="post-heading">
                     <h1>{{ post.title }}</h1>
-                    <span class="meta">Posted by <a href="#">{{ post.author.name }}</a></span>
+                    <span class="meta">Posted by <a href="{{ url_for('about') }}">{{ post.author.name }}</a></span>
                 </div>
             </div>
         </div>
