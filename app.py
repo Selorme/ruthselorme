@@ -201,7 +201,8 @@ def send_post_notification(post):
     try:
         # Get all registered users' emails
         users = User.query.all()
-        recipients = [user.email for user in users if user.email]
+        recipients = ["ruthselormeacolatse.website@gmail.com"]
+        bcc = [user.email for user in users if user.email]
 
         # Create the email
         subject = f"New Blog Post: {post.title}"
@@ -234,6 +235,7 @@ def send_post_notification(post):
         msg = Message(
             subject=subject,
             recipients=recipients,
+            bcc=bcc,
             html=html_content
         )
 
