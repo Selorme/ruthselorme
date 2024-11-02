@@ -196,6 +196,54 @@ def logout():
     return redirect(url_for('home'))
 
 
+def send_post_notification(post):
+    """Send email notification about new blog post to all registered users."""
+    try:
+        # Get all registered users' emails
+        users = User.query.all()
+        recipients = [user.email for user in users if user.email]
+
+        # Create the email
+        subject = f"New Blog Post: {post.title}"
+
+        # Create HTML email content
+        html_content = f'''
+        <html>
+            <body>
+                <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                    <h2>{post.title}</h2>
+                    <p>A new post has been published on our blog!</p>
+                    <div style="margin: 20px 0;">
+                        <p>Category: {post.category}</p>
+                    </div>
+                    <a href="{url_for('show_post', post_id=post.id, _external=True)}" 
+                       style="background-color: #007bff; color: white; padding: 10px 20px; 
+                              text-decoration: none; border-radius: 5px;">
+                        Read More
+                    </a>
+                    <hr style="margin-top: 30px;">
+                    <p style="font-size: 12px; color: #666;">
+                        You received this email because you're registered on our blog. 
+                        If you'd like to unsubscribe, please update your preferences in your account settings.
+                    </p>
+                </div>
+            </body>
+        </html>
+        '''
+
+        msg = Message(
+            subject=subject,
+            recipients=recipients,
+            html=html_content
+        )
+
+        mail.send(msg)
+        return True
+    except Exception as e:
+        print(f"Error sending notification: {e}")
+        return False
+
+
 @app.route("/new-post", methods=["GET", "POST"])
 @admin_only
 def add_new_post():
@@ -211,6 +259,13 @@ def add_new_post():
         )
         db.session.add(new_post)
         db.session.commit()
+
+        # Send notification email
+        if send_post_notification(new_post):
+            flash("New post created and notification sent to subscribers!", "success")
+        else:
+            flash("Post created, but there was an issue sending notifications.", "warning")
+
         return redirect(url_for("home"))
     return render_template("make-post.html", form=form)
 
@@ -327,11 +382,6 @@ def reset_password(token):
     return render_template("reset_password.html", form=form, token=token)
 
 
-
-
-
-
-
 @app.route("/")
 def home():
     return render_template("index.html", copyright_year=year)
@@ -373,6 +423,11 @@ def ugescapades():
     posts = Post.query.filter_by(category='UG Escapades').all()
     return render_template("ugescapades.html", posts=posts, copyright_year=year)
 
+
+@app.route("/random-musings")
+def random_musings():
+    posts = Post.query.filter_by(category='Random Musings').all()
+    return render_template("randommusings.html", posts=posts, copyright_year=year)
 
 @app.route("/Türkiye-Geçilmez")
 def turkiyegecilmez():
@@ -432,10 +487,19 @@ def show_post(post_id):
             flash("Log in to leave a comment!")
             return redirect(url_for("login"))
     # Fetch all posts in the same category, excluding the current post
+    top_level_comments = Comment.query.filter_by(post_id=post_id, parent_id=None).all()
     all_posts = Post.query.filter(Post.category == requested_post.category, Post.id != requested_post.id).all()
     categories = [cat[0] for cat in db.session.query(Post.category).distinct().all()]
-    return render_template("post.html", post=requested_post, current_user=current_user, form=comment_form, all_posts=all_posts, categories=categories)
 
+    return render_template(
+        "post.html",
+        post=requested_post,
+        comments=top_level_comments,  # Pass only top-level comments
+        current_user=current_user,
+        form=comment_form,
+        all_posts=all_posts,
+        categories=categories
+    )
 
 @app.route('/search')
 def search():

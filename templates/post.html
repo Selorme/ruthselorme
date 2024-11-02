@@ -47,10 +47,11 @@
                 <!-- Comments Section -->
                 <div class="comments-section mt-5">
                     <h3>Comments</h3>
+                    {% from 'comment.html' import render_comment %}
                     <ul class="commentList">
                         {% for comment in post.comments %}
-                            {% if not comment.parent_id %}  <!-- Check if it's a top-level comment -->
-                                {% include 'comment.html' %}
+                            {% if not comment.parent_id %}
+                                {{ render_comment(comment, post, form) }}
                             {% endif %}
                         {% endfor %}
                     </ul>

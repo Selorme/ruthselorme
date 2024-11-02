@@ -53,3 +53,36 @@ document.addEventListener('DOMContentLoaded', () => {
             replyForm.style.display = 'none';
         }
     }
+
+// In your external JS file
+function initializeSubscriptionReminder() {
+    if (!localStorage.getItem('subscription_reminder_shown')) {
+        const isLoggedIn = document.body.getAttribute('data-user-authenticated') === 'true';
+
+        if (!isLoggedIn) {
+            setTimeout(() => {
+                const flashContainer = document.querySelector('.flash-messages');
+                if (flashContainer) {
+                    const alert = document.createElement('div');
+                    alert.className = 'alert alert-info alert-dismissible fade show';
+                    alert.innerHTML = `
+                        <strong>Stay Updated!</strong> Register to receive notifications about new blog posts.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    `;
+                    flashContainer.appendChild(alert);
+
+                    // Set reminder shown flag
+                    localStorage.setItem('subscription_reminder_shown', 'true');
+
+                    // Reset flag after 24 hours
+                    setTimeout(() => {
+                        localStorage.removeItem('subscription_reminder_shown');
+                    }, 24 * 60 * 60 * 1000);
+                }
+            }, 30000); // Show after 30 seconds
+        }
+    }
+}
+
+// Add this to your existing document.ready or window.onload handler
+document.addEventListener('DOMContentLoaded', initializeSubscriptionReminder);
