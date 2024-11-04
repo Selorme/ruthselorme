@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField, EmailField
-from wtforms.validators import DataRequired, URL, EqualTo, Email, Length, Regexp
+from wtforms import StringField, SubmitField, PasswordField, EmailField, SelectField, DateField, TimeField
+from wtforms.validators import DataRequired, URL, EqualTo, Email, Length, Regexp, Optional, ValidationError
 from flask_ckeditor import CKEditorField
 
 
@@ -10,7 +10,30 @@ class CreatePostForm(FlaskForm):
     img_url = StringField("Image URL", validators=[DataRequired()])
     body = CKEditorField("Blog Content", validators=[DataRequired()])
     category = StringField("Category", validators=[DataRequired()])
-    submit = SubmitField("Send In Your Post!")
+
+    # Add these as form fields instead of handling them separately
+    publish_date = DateField('Publish Date', format='%Y-%m-%d', validators=[Optional()])
+    publish_time = TimeField('Publish Time', validators=[Optional()])
+
+    publish = SubmitField("Publish Your Post Now!")
+    draft = SubmitField("Save Your Post as Draft!")
+    schedule = SubmitField("Schedule Your Post!")
+
+    def validate(self, extra_validators=None):
+        """Validate the form."""
+        initial_validation = super().validate(extra_validators)
+        if not initial_validation:
+            return False
+
+        if self.schedule.data:
+            if not self.publish_date.data:
+                self.publish_date.errors = ['Publish date is required when scheduling a post.']
+                return False
+            if not self.publish_time.data:
+                self.publish_time.errors = ['Publish time is required when scheduling a post.']
+                return False
+
+        return True
 
 # Form to register to leave a comment as a user
 class RegisterForm(FlaskForm):

@@ -54,9 +54,31 @@
                     <span class="error text-danger">{{ error }}</span>
                 {% endfor %}
             </div>
-            <div>
-                {{ form.submit(class="btn btn-primary") }}
+
+            <!-- Date Picker -->
+            <div class="mb-3">
+                <label for="{{ form.publish_date.id }}" class="form-label">{{ form.publish_date.label }}</label>
+                {{ form.publish_date(class="form-control") }}
+                {% for error in form.publish_date.errors %}
+                    <span class="error text-danger">{{ error }}</span>
+                {% endfor %}
             </div>
+
+            <!-- Time Picker -->
+            <div class="mb-3">
+                <label for="{{ form.publish_time.id }}" class="form-label">{{ form.publish_time.label }}</label>
+                {{ form.publish_time(class="form-control") }}
+                {% for error in form.publish_time.errors %}
+                    <span class="error text-danger">{{ error }}</span>
+                {% endfor %}
+            </div>
+
+            <div class="d-flex flex-column flex-md-row justify-content-between">
+                {{ form.draft(class="btn btn-primary mb-2 mb-md-0") }}
+                {{ form.publish(class="btn btn-primary mb-2 mb-md-0") }}
+                {{ form.schedule(class="btn btn-primary mb-2 mb-md-0") }}
+            </div>
+
         </form>
       </div>
     </div>

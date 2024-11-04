@@ -81,6 +81,9 @@ class Post(db.Model):
     img_url: Mapped[str] = mapped_column(String, nullable=False)
     category: Mapped[str] = mapped_column(String, nullable=False)
 
+    status: Mapped[str] = mapped_column(String, nullable=False, default="published")  # "draft" or "published"
+    scheduled_datetime: Mapped[datetime] = mapped_column(db.DateTime, nullable=True)
+
     comments = relationship("Comment", back_populates="parent_post")
 
 
@@ -158,7 +161,7 @@ def register():
         db.session.commit()
         login_user(new_user)
         return redirect(url_for('home'))
-    return render_template("register.html", form=form)
+    return render_template("register.html", form=form, copyright_year=year)
 
 
 @login_manager.user_loader
@@ -186,7 +189,7 @@ def login():
             login_user(user)
             return redirect(url_for('home'))
 
-    return render_template("login.html", form=form)
+    return render_template("login.html", form=form, copyright_year=year)
 
 
 @app.route('/logout')
@@ -250,6 +253,7 @@ def send_post_notification(post):
 @admin_only
 def add_new_post():
     form = CreatePostForm()
+
     if form.validate_on_submit():
         new_post = Post(
             title=form.title.data,
@@ -257,39 +261,118 @@ def add_new_post():
             body=form.body.data,
             img_url=form.img_url.data,
             author=current_user,
-            date=date.today().strftime("%B %d, %Y")
+            date=date.today().strftime("%B %d, %Y"),
         )
+
+        if form.publish.data:
+            new_post.status = "published"
+            new_post.scheduled_datetime = None
+        elif form.draft.data:
+            new_post.status = "draft"
+            new_post.scheduled_datetime = None
+        elif form.schedule.data:
+            new_post.status = "scheduled"
+            # Combine the date and time fields
+            if form.publish_date.data and form.publish_time.data:
+                scheduled_datetime = datetime.combine(
+                    form.publish_date.data,
+                    form.publish_time.data
+                )
+                new_post.scheduled_datetime = scheduled_datetime
+
         db.session.add(new_post)
         db.session.commit()
 
-        # Send notification email
-        if send_post_notification(new_post):
-            flash("New post created and notification sent to subscribers!", "success")
+        if new_post.status == "published":
+            if send_post_notification(new_post):
+                flash("New post created and notification sent to subscribers!", "success")
+            else:
+                flash("Post created, but there was an issue sending notifications.", "warning")
         else:
-            flash("Post created, but there was an issue sending notifications.", "warning")
+            flash("Post saved successfully!", "success")
 
         return redirect(url_for("home"))
-    return render_template("make-post.html", form=form)
+
+    return render_template("make-post.html", form=form, copyright_year=year)
 
 
 @app.route("/edit-post/<int:post_id>", methods=["GET", "POST"])
 @admin_only
 def edit_post(post_id):
     post = db.get_or_404(Post, post_id)
-    edit_form = CreatePostForm(
-        title=post.title,
-        category=post.category,
-        img_url=post.img_url,
-        body=post.body
-    )
+    edit_form = CreatePostForm(obj=post)
+
+    # If it's a GET request and the post is scheduled, populate the date/time fields
+    if request.method == "GET" and post.scheduled_datetime:
+        edit_form.publish_date.data = post.scheduled_datetime.date()
+        edit_form.publish_time.data = post.scheduled_datetime.time()
+
     if edit_form.validate_on_submit():
         post.title = edit_form.title.data
         post.category = edit_form.category.data
         post.img_url = edit_form.img_url.data
         post.body = edit_form.body.data
-        db.session.commit()
-        return redirect(url_for("show_post", post_id=post.id))
-    return render_template("make-post.html", form=edit_form, is_edit=True, post=post)
+
+        print("\nButton states:")
+        print(f"Publish: {edit_form.publish.data}")
+        print(f"Draft: {edit_form.draft.data}")
+        print(f"Schedule: {edit_form.schedule.data}")
+        print(f"Current post status: {post.status}")
+
+        if edit_form.publish.data:
+            print("Setting status to published")
+            post.status = "published"
+            post.scheduled_datetime = None
+        elif edit_form.draft.data:
+            print("Setting status to draft")
+            post.status = "draft"
+            post.scheduled_datetime = None
+        elif edit_form.schedule.data:
+            print("Setting status to scheduled")
+            post.status = "scheduled"
+
+            # Combine the date and time fields
+            if edit_form.publish_date.data and edit_form.publish_time.data:
+                scheduled_datetime = datetime.combine(
+                    edit_form.publish_date.data,
+                    edit_form.publish_time.data
+                )
+                post.scheduled_datetime = scheduled_datetime
+            else:
+                flash('Publish date and time are required when scheduling a post.', 'danger')
+                return render_template(
+                    "make-post.html",
+                    form=edit_form,
+                    is_edit=True,
+                    post=post,
+                    copyright_year=year
+                )
+
+        print(f"Post status before commit: {post.status}")
+
+        try:
+            db.session.commit()
+            print(f"Post status after commit: {post.status}")
+            flash("Post updated successfully!", "success")
+            return redirect(url_for("show_post", post_id=post.id))
+        except Exception as e:
+            db.session.rollback()
+            flash(f"Error updating post: {str(e)}", "danger")
+            return render_template(
+                "make-post.html",
+                form=edit_form,
+                is_edit=True,
+                post=post,
+                copyright_year=year
+            )
+
+    return render_template(
+        "make-post.html",
+        form=edit_form,
+        is_edit=True,
+        post=post,
+        copyright_year=year
+    )
 
 
 @app.route("/delete/<int:post_id>")
@@ -344,7 +427,7 @@ def forgot_password():
         else:
             flash("Email not found. Please register.", "warning")
             return redirect(url_for('register'))
-    return render_template("forgot_password.html", form=form)
+    return render_template("forgot_password.html", form=form, copyright_year=year)
 
 
 @app.route("/reset-password/<token>", methods=["GET", "POST"])
@@ -379,7 +462,7 @@ def reset_password(token):
         else:
             flash("Passwords do not match.", "danger")
 
-    return render_template("reset_password.html", form=form, token=token)
+    return render_template("reset_password.html", form=form, token=token, copyright_year=year)
 
 
 @app.route("/")
@@ -395,21 +478,25 @@ def about():
 @app.route("/blog", defaults={'category': None})
 @app.route("/blog/<category>")
 def blogs(category):
-    result = db.session.execute(db.select(Post))
-    posts = result.scalars().all()
-    return render_template("blog.html", posts=posts)
+    if category:
+        # Filter posts by category and ensure they are published
+        posts = Post.query.filter_by(category=category.replace('-', ' '), status='published').all()
+    else:
+        # Get all published posts
+        posts = Post.query.filter_by(status='published').all()
+    return render_template("blog.html", posts=posts, copyright_year=year)
 
 
 @app.route("/<category>")
 def show_category(category):
     category = category.replace('-', ' ')
-    posts = Post.query.filter_by(category=category).all()
+    posts = Post.query.filter_by(category=category, status='published').all()
     return render_template("category.html", posts=posts, category=category, copyright_year=year)
 
 
 @app.route("/Projects")
 def projects():
-    posts = Post.query.filter_by(category='Projects').all()
+    posts = Post.query.filter_by(category='Projects', status='published').all()
     return render_template("projects.html", posts=posts, copyright_year=year)
 
 
@@ -420,18 +507,18 @@ def cvresume():
 
 @app.route("/UG-Escapades")
 def ugescapades():
-    posts = Post.query.filter_by(category='UG Escapades').all()
+    posts = Post.query.filter_by(category='UG Escapades', status='published').all()
     return render_template("ugescapades.html", posts=posts, copyright_year=year)
 
 
 @app.route("/random-musings")
 def random_musings():
-    posts = Post.query.filter_by(category='Random Musings').all()
+    posts = Post.query.filter_by(category='Random Musings', status='published').all()
     return render_template("randommusings.html", posts=posts, copyright_year=year)
 
 @app.route("/Türkiye-Geçilmez")
 def turkiyegecilmez():
-    posts = Post.query.filter_by(category='Türkiye Geçilmez').all()
+    posts = Post.query.filter_by(category='Türkiye Geçilmez', status='published').all()
     return render_template("turkiyegecilmez.html", posts=posts, copyright_year=year)
 
 
@@ -459,7 +546,7 @@ def contact():
 
 @app.route("/Audacious-Men-Series")
 def audacity():
-    posts = Post.query.filter_by(category='Audacious Men Series').all()
+    posts = Post.query.filter_by(category='Audacious Men Series', status='published').all()
     return render_template("audacity.html", posts=posts, copyright_year=year)
 
 
@@ -498,7 +585,8 @@ def show_post(post_id):
         current_user=current_user,
         form=comment_form,
         all_posts=all_posts,
-        categories=categories
+        categories=categories,
+        copyright_year=year
     )
 
 @app.route('/search')
@@ -511,22 +599,37 @@ def search():
     else:
         results = []
 
-    return render_template('search.html', query=query, results=results)
+    return render_template('search.html', query=query, results=results, copyright_year=year)
+
+
+@app.route("/drafts", methods=["GET", "POST"])
+@admin_only  # Ensure only admin can access
+def drafts():
+    draft_posts = Post.query.filter_by(status="draft").all()
+
+    return render_template("drafts.html", drafts=draft_posts, copyright_year=year)
+
+
+@app.route("/scheduled-posts", methods=["GET"])
+@admin_only
+def scheduled_posts():
+    post_scheduled = Post.query.filter_by(status="scheduled").all()  # Get all scheduled posts
+    return render_template("scheduled.html", post_scheduled=post_scheduled, copyright_year=year)
 
 
 @app.route("/Disclaimer")
 def disclaimer():
-    return render_template("disclaimer.html")
+    return render_template("disclaimer.html", copyright_year=year)
 
 
 @app.route("/Privacy-Policy")
 def privacy_policy():
-    return render_template("privacy_policy.html")
+    return render_template("privacy_policy.html", copyright_year=year)
 
 
 @app.route("/Terms-and-Conditions")
 def terms_and_conditions():
-    return render_template("terms_conditions.html")
+    return render_template("terms_conditions.html", copyright_year=year)
 
 
 if __name__ == "__main__":

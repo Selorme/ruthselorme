@@ -74,3 +74,35 @@ function initializeSubscriptionReminder() {
 }
 
 document.addEventListener('DOMContentLoaded', initializeSubscriptionReminder);
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    const scheduleBtn = document.querySelector('input[name="schedule"]');
+    const dateInput = document.querySelector('input[name="publish_date"]');
+    const timeInput = document.querySelector('input[name="publish_time"]');
+
+    // Function to toggle date/time fields
+    function toggleDateTimeFields() {
+        const isSchedule = scheduleBtn === document.activeElement;
+        dateInput.required = isSchedule;
+        timeInput.required = isSchedule;
+
+        if (isSchedule) {
+            dateInput.parentElement.style.display = 'block';
+            timeInput.parentElement.style.display = 'block';
+        } else {
+            dateInput.parentElement.style.display = 'none';
+            timeInput.parentElement.style.display = 'none';
+        }
+    }
+
+    // Initial state
+    toggleDateTimeFields();
+
+    // Add event listeners to all submit buttons
+    document.querySelectorAll('input[type="submit"]').forEach(btn => {
+        btn.addEventListener('click', function() {
+            toggleDateTimeFields();
+        });
+    });
+});

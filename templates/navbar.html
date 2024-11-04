@@ -57,19 +57,20 @@
               <a class="nav-link px-lg-3 py-3 py-lg-4" href="{{ url_for('logout') }}">Log Out</a>
             </li>
           {% endif %}
+
+          {% if current_user.id == 1: %}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle px-lg-3 py-3 py-lg-4" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Admin Console
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="{{url_for('add_new_post')}}">Create New Post</a></li>
+              <li><a class="dropdown-item" href="{{url_for('drafts')}}">Drafts</a></li>
+              <li><a class="dropdown-item" href="{{ url_for('scheduled_posts') }}">Scheduled Posts</a></li>
+            </ul>
+          </li>
+          {% endif %}
         </ul>
-
-        {% if current_user.id == 1: %}
-        <div class="nav-item">
-          <a class="nav-link px-lg-3 py-3 py-lg-4" href="{{url_for('add_new_post')}}">Create New Post</a>
-        </div>
-        {% endif %}
-
-
-
-
-
-
 
         <!-- Dark Mode Toggle Button -->
         <div class="form-check form-switch">
