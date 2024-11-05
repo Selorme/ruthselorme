@@ -1,105 +1,108 @@
 console.log("JavaScript file loaded");
-
 window.addEventListener('DOMContentLoaded', () => {
     let scrollPos = 0;
     const mainNav = document.getElementById('mainNav');
-    const headerHeight = mainNav ? mainNav.clientHeight : 0;
+    const headerHeight = mainNav.clientHeight;
 
     window.addEventListener('scroll', function() {
         const currentTop = document.body.getBoundingClientRect().top * -1;
         if (currentTop < scrollPos) {
             // Scrolling Up
-            if (currentTop > 0 && mainNav && mainNav.classList.contains('is-fixed')) {
+            if (currentTop > 0 && mainNav.classList.contains('is-fixed')) {
                 mainNav.classList.add('is-visible');
-            } else if (mainNav) {
+            } else {
                 mainNav.classList.remove('is-visible', 'is-fixed');
             }
         } else {
             // Scrolling Down
-            if (mainNav) {
-                mainNav.classList.remove('is-visible');
-                if (currentTop > headerHeight && !mainNav.classList.contains('is-fixed')) {
-                    mainNav.classList.add('is-fixed');
-                }
+            mainNav.classList.remove('is-visible');
+            if (currentTop > headerHeight && !mainNav.classList.contains('is-fixed')) {
+                mainNav.classList.add('is-fixed');
             }
         }
         scrollPos = currentTop;
     });
+});
 
-    // Theme toggle functionality
-    const darkModeToggle = document.getElementById('darkModeToggle');
-    const currentTheme = localStorage.getItem('theme');
+// Theme toggle functionality
+document.addEventListener('DOMContentLoaded', () => {
+  const darkModeToggle = document.getElementById('darkModeToggle');
+  const currentTheme = localStorage.getItem('theme');
 
-    if (currentTheme === 'dark') {
-        document.body.classList.add('dark-mode');
-        if (darkModeToggle) {
-            darkModeToggle.checked = true;
-        }
+  if (currentTheme === 'dark') {
+    document.body.classList.add('dark-mode');
+    darkModeToggle.checked = true;
+  }
+
+  darkModeToggle.addEventListener('change', () => {
+    if (darkModeToggle.checked) {
+      document.body.classList.add('dark-mode');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.body.classList.remove('dark-mode');
+      localStorage.setItem('theme', 'light');
     }
+  });
+});
 
-    if (darkModeToggle) {
-        darkModeToggle.addEventListener('change', () => {
-            if (darkModeToggle.checked) {
-                document.body.classList.add('dark-mode');
-                localStorage.setItem('theme', 'dark');
-            } else {
-                document.body.classList.remove('dark-mode');
-                localStorage.setItem('theme', 'light');
-            }
-        });
-    }
-
-    // Reply form toggle
-    window.toggleReplyForm = function(commentId) {
+    function toggleReplyForm(commentId) {
         const replyForm = document.getElementById('replyForm' + commentId);
-        if (replyForm) {
-            replyForm.style.display = replyForm.style.display === 'none' ? 'block' : 'none';
-        }
-    };
-
-    // Subscription reminder
-    function initializeSubscriptionReminder() {
-        const isLoggedIn = document.body.getAttribute('data-user-authenticated') === 'true';
-
-        if (!isLoggedIn) {
-            setTimeout(() => {
-                const flashContainer = document.querySelector('.flash-messages');
-                if (flashContainer) {
-                    const alert = document.createElement('div');
-                    alert.className = 'alert alert-info alert-dismissible fade show';
-                    alert.innerHTML = `
-                        <strong>Stay Updated!</strong> Register to receive notifications about new blog posts.
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    `;
-                    flashContainer.appendChild(alert);
-                }
-            }, 1000); // Show after 1 second
+        if (replyForm.style.display === 'none') {
+            replyForm.style.display = 'block';
+        } else {
+            replyForm.style.display = 'none';
         }
     }
-    initializeSubscriptionReminder();
 
-    // Schedule toggle functionality
+function initializeSubscriptionReminder() {
+    const isLoggedIn = document.body.getAttribute('data-user-authenticated') === 'true';
+
+    if (!isLoggedIn) {
+        setTimeout(() => {
+            const flashContainer = document.querySelector('.flash-messages');
+            if (flashContainer) {
+                const alert = document.createElement('div');
+                alert.className = 'alert alert-info alert-dismissible fade show';
+                alert.innerHTML = `
+                    <strong>Stay Updated!</strong> Register to receive notifications about new blog posts.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                `;
+                flashContainer.appendChild(alert);
+            }
+        }, 1000); // Show after 1 seconds
+    }
+}
+
+document.addEventListener('DOMContentLoaded', initializeSubscriptionReminder);
+
+
+document.addEventListener('DOMContentLoaded', function() {
     const scheduleBtn = document.querySelector('input[name="schedule"]');
     const dateInput = document.querySelector('input[name="publish_date"]');
     const timeInput = document.querySelector('input[name="publish_time"]');
 
+    // Function to toggle date/time fields
     function toggleDateTimeFields() {
-        // Ensure elements exist before accessing properties
-        if (scheduleBtn && dateInput && timeInput) {
-            const isSchedule = scheduleBtn === document.activeElement;
-            dateInput.required = isSchedule;
-            timeInput.required = isSchedule;
+        const isSchedule = scheduleBtn === document.activeElement;
+        dateInput.required = isSchedule;
+        timeInput.required = isSchedule;
 
-            dateInput.parentElement.style.display = isSchedule ? 'block' : 'none';
-            timeInput.parentElement.style.display = isSchedule ? 'block' : 'none';
+        if (isSchedule) {
+            dateInput.parentElement.style.display = 'block';
+            timeInput.parentElement.style.display = 'block';
+        } else {
+            dateInput.parentElement.style.display = 'none';
+            timeInput.parentElement.style.display = 'none';
         }
     }
 
     // Initial state
     toggleDateTimeFields();
 
-    // Event listeners for submit buttons
+    // Add event listeners to all submit buttons
     document.querySelectorAll('input[type="submit"]').forEach(btn => {
-        btn.addEventListener('click', toggleDateTimeFields);
+        btn.addEventListener('click', function() {
+            toggleDateTimeFields();
+        });
     });
 });

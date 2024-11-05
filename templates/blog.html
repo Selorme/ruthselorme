@@ -13,7 +13,7 @@
             <div class="col-md-4 mb-4">
                 <div class="card">
                     <a href="{{ url_for('show_post', post_id=post.id) }}">
-                        <img src="{{ post.img_path|file_url }}" class="card-img-top" alt="{{ post.title }}">
+                        <img src="{{ post.img_url }}" class="card-img-top" alt="{{ post.title }}">
                         <div class="card-body">
                             <h5 class="card-title text-center">{{ post.title }}</h5>
                         </div>
