@@ -102,28 +102,4 @@ window.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('input[type="submit"]').forEach(btn => {
         btn.addEventListener('click', toggleDateTimeFields);
     });
-
-    // Initialize CKEditor with upload functionality
-    const editorContainer = document.getElementById("editor-container");
-    const uploadUrl = editorContainer ? editorContainer.getAttribute("data-upload-url") : '';
-
-    CKEDITOR.replace('body', {
-        extraPlugins: 'uploadimage',
-        filebrowserUploadUrl: uploadUrl,
-        filebrowserUploadMethod: 'form',
-        contentsCss: ['/static/css/ckeditor_custom.css'],
-        on: {
-            instanceReady: function(evt) {
-                const editor = evt.editor;
-                editor.document.on('drop', function(event) {
-                    setTimeout(() => {
-                        const images = editor.document.getBody().find('img');
-                        images.forEach(img => {
-                            img.addClass('img-fluid'); // Add img-fluid class to images
-                        });
-                    }, 100);
-                });
-            }
-        }
-    });
 });
