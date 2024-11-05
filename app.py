@@ -390,7 +390,7 @@ def edit_post(post_id):
     if edit_form.validate_on_submit():
 
         img_path = handle_file_upload(edit_form.img_file.data,
-                                      current_img_path=post.img_path) if edit_form.img_file.data else post.img_pat
+                                      current_img_path=post.img_path) if edit_form.img_file.data else post.img_path
 
         post.title = edit_form.title.data
         post.category = edit_form.category.data
