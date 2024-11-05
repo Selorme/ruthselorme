@@ -388,9 +388,13 @@ def edit_post(post_id):
         edit_form.publish_time.data = post.scheduled_datetime.time()
 
     if edit_form.validate_on_submit():
+
+        img_path = handle_file_upload(edit_form.img_file.data,
+                                      current_img_path=post.img_path) if edit_form.img_file.data else post.img_pat
+
         post.title = edit_form.title.data
         post.category = edit_form.category.data
-        post.img_file = edit_form.img_file.data
+        post.img_path = img_path
         post.body = edit_form.body.data
 
         if edit_form.publish.data:
