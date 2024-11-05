@@ -59,7 +59,7 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'mp4', 'svg'}
 
 # Setup upload folder
 app.config['UPLOAD_FOLDER'] = os.path.join(app.static_folder, 'uploads')
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file size
+app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024  # 16MB max file size
 
 # Create uploads folder if it doesn't exist
 if not os.path.exists(app.config['UPLOAD_FOLDER']):
