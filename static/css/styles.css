@@ -572,3 +572,8 @@ body.dark-mode .github {
 .flash {
   color: #ff182d;
 }
+
+/* ckeditor_custom.css */
+img {
+    max-width: 100%;
+}

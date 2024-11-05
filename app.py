@@ -1,5 +1,6 @@
-from flask import Flask, abort, render_template, request, redirect, url_for, flash
+from flask import Flask, abort, render_template, request, redirect, url_for, flash, current_app, jsonify
 from datetime import datetime, date
+import time
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 import smtplib
@@ -16,6 +17,7 @@ from forms import CreatePostForm, RegisterForm, LogInForm, CommentForm, ForgotPa
 from supabase import create_client, Client
 from flask_mail import Mail, Message
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired
+from werkzeug.utils import secure_filename
 
 # Load environment variables
 load_dotenv()
@@ -52,6 +54,17 @@ mail = Mail(app)
 app.config['MAIL_SECRET_KEY'] = os.getenv('MAIL_SECRET_KEY')
 s = URLSafeTimedSerializer(app.config['MAIL_SECRET_KEY'])
 
+# Configuration
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'mp4', 'svg'}
+
+# Setup upload folder
+app.config['UPLOAD_FOLDER'] = os.path.join(app.static_folder, 'uploads')
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file size
+
+# Create uploads folder if it doesn't exist
+if not os.path.exists(app.config['UPLOAD_FOLDER']):
+    os.makedirs(app.config['UPLOAD_FOLDER'])
+
 # Initialize the database
 class Base(DeclarativeBase):
     pass
@@ -78,7 +91,7 @@ class Post(db.Model):
     title: Mapped[int] = mapped_column(String, unique=True, nullable=False)
     date: Mapped[str] = mapped_column(String, nullable=False)
     body: Mapped[str] = mapped_column(Text, nullable=False)
-    img_url: Mapped[str] = mapped_column(String, nullable=False)
+    img_path: Mapped[str] = mapped_column(String, nullable=True)  # Update name to reflect file storage
     category: Mapped[str] = mapped_column(String, nullable=False)
 
     status: Mapped[str] = mapped_column(String, nullable=False, default="published")  # "draft" or "published"
@@ -136,6 +149,60 @@ def admin_only(func):
             return redirect(url_for('home'))
         return func(*args, **kwargs)
     return wrapper
+
+
+def handle_file_upload(file, current_img_path=None):
+    """
+    Handle file upload with proper validation and old file cleanup
+    Returns the relative path to be stored in database
+    """
+    if not file:
+        return current_img_path
+
+    if not allowed_file(file.filename):
+        raise ValueError("File type not allowed")
+
+    # Print debug info
+    print(f"Processing file upload: {file.filename}")
+
+    # Create upload directory if it doesn't exist
+    if not os.path.exists(current_app.config['UPLOAD_FOLDER']):
+        os.makedirs(current_app.config['UPLOAD_FOLDER'])
+        print(f"Created upload directory: {current_app.config['UPLOAD_FOLDER']}")
+
+    # Secure the filename and add timestamp
+    filename = secure_filename(file.filename)
+    timestamp = int(time.time())
+    filename = f"{timestamp}_{filename}"
+
+    # Generate paths
+    file_path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
+    relative_path = f"uploads/{filename}"  # Use forward slashes here
+
+    # Delete old file if it exists
+    if current_img_path:
+        try:
+            old_file_path = os.path.join(current_app.static_folder, current_img_path)
+            if os.path.exists(old_file_path):
+                os.remove(old_file_path)
+                print(f"Deleted old file: {old_file_path}")
+        except Exception as e:
+            print(f"Error deleting old file: {e}")
+
+    try:
+        # Save new file
+        file.save(file_path)
+        print(f"Saved new file to: {file_path}")
+        print(f"Returning relative path: {relative_path}")
+        return relative_path
+    except Exception as e:
+        print(f"Error saving file: {e}")
+        raise
+
+
+def allowed_file(filename):
+    return '.' in filename and \
+        filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
 # Define your routes
@@ -255,11 +322,14 @@ def add_new_post():
     form = CreatePostForm()
 
     if form.validate_on_submit():
+
+        img_path = handle_file_upload(form.img_file.data) if form.img_file.data else None
+
         new_post = Post(
             title=form.title.data,
             category=form.category.data,
             body=form.body.data,
-            img_url=form.img_url.data,
+            img_path=img_path,
             author=current_user,
             date=date.today().strftime("%B %d, %Y"),
         )
@@ -296,6 +366,16 @@ def add_new_post():
     return render_template("make-post.html", form=form, copyright_year=year)
 
 
+# Template helper function
+@app.template_filter('file_url')
+def file_url_filter(file_path):
+    """Convert relative file path to a static URL path"""
+    if not file_path:
+        return None
+    # Ensure path uses forward slashes and corrects format if needed
+    return url_for('static', filename=file_path.replace("\\", "/"))
+
+
 @app.route("/edit-post/<int:post_id>", methods=["GET", "POST"])
 @admin_only
 def edit_post(post_id):
@@ -310,25 +390,16 @@ def edit_post(post_id):
     if edit_form.validate_on_submit():
         post.title = edit_form.title.data
         post.category = edit_form.category.data
-        post.img_url = edit_form.img_url.data
+        post.img_file = edit_form.img_file.data
         post.body = edit_form.body.data
 
-        print("\nButton states:")
-        print(f"Publish: {edit_form.publish.data}")
-        print(f"Draft: {edit_form.draft.data}")
-        print(f"Schedule: {edit_form.schedule.data}")
-        print(f"Current post status: {post.status}")
-
         if edit_form.publish.data:
-            print("Setting status to published")
             post.status = "published"
             post.scheduled_datetime = None
         elif edit_form.draft.data:
-            print("Setting status to draft")
             post.status = "draft"
             post.scheduled_datetime = None
         elif edit_form.schedule.data:
-            print("Setting status to scheduled")
             post.status = "scheduled"
 
             # Combine the date and time fields
@@ -348,11 +419,8 @@ def edit_post(post_id):
                     copyright_year=year
                 )
 
-        print(f"Post status before commit: {post.status}")
-
         try:
             db.session.commit()
-            print(f"Post status after commit: {post.status}")
             flash("Post updated successfully!", "success")
             return redirect(url_for("show_post", post_id=post.id))
         except Exception as e:
@@ -554,6 +622,7 @@ def audacity():
 def show_post(post_id):
     requested_post = db.get_or_404(Post, post_id)
     comment_form = CommentForm()
+    filename = requested_post.img_path
 
     if comment_form.validate_on_submit():
         if current_user.is_authenticated:
@@ -586,6 +655,7 @@ def show_post(post_id):
         form=comment_form,
         all_posts=all_posts,
         categories=categories,
+        filename=filename,
         copyright_year=year
     )
 
@@ -615,6 +685,22 @@ def drafts():
 def scheduled_posts():
     post_scheduled = Post.query.filter_by(status="scheduled").all()  # Get all scheduled posts
     return render_template("scheduled.html", post_scheduled=post_scheduled, copyright_year=year)
+
+
+@app.route('/upload', methods=['POST'])
+def upload_image():
+    file = request.files.get('upload')
+    if not file:
+        return jsonify(error="No file uploaded"), 400
+
+    # Save the image to the uploads folder
+    filename = secure_filename(file.filename)
+    file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+    file.save(file_path)
+
+    # Return the URL of the uploaded image
+    url = url_for('static', filename=f'uploads/{filename}')
+    return jsonify({'uploaded': True, 'url': url})
 
 
 @app.route("/Disclaimer")
