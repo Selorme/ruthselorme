@@ -4,11 +4,6 @@
     transition: opacity 0.3s;
 }
 
-/* Ensures navbar drop down menu works when you hover over the drop down item */
-.nav-item.dropdown:hover .dropdown-menu {
-    display: block;
-}
-
 /* Add some padding between items on the navbar*/
 .nav-link {
     padding-right: 30px !important;
@@ -580,3 +575,4 @@ body.dark-mode .thumb {
 .flash {
   color: #ff182d;
 }
+

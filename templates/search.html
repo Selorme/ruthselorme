@@ -23,7 +23,7 @@
                     </a>
                     <!-- Display the first 300 characters of the content safely -->
                     <p>
-                        {{ post.content[:300]|safe }}...
+                        {{ post.body[:300]|safe }}...
                         <a class="btn btn-outline-success" href="{{ url_for('show_post', post_id=post.id) }}"><em>Read More...</em></a>
                     </p>
                 </div>

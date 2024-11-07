@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// Like button functionality with page reload
+// Like button functionality with dynamic update
 function likePost(postId) {
     fetch(`/post/${postId}/like`, {
         method: 'POST',
@@ -117,8 +117,10 @@ function likePost(postId) {
     })
     .then(response => response.json())
     .then(data => {
-        // Optional: Reload the page to update the like count
-        location.reload();  // Reload the current page
+        const likeCountElement = document.getElementById(`like-count-${postId}`);
+        if (likeCountElement) {
+            likeCountElement.textContent = `${data.likes} likes`; // Update the like count dynamically
+        }
     })
     .catch(error => console.error('Error:', error));
 }

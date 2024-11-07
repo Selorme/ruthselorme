@@ -611,7 +611,7 @@ def search():
     query = request.args.get('q')
     if query:
         results = Post.query.filter(
-            (Post.title.ilike(f'%{query}%')) | (Post.content.ilike(f'%{query}%'))
+            (Post.title.ilike(f'%{query}%')) | (Post.body.ilike(f'%{query}%'))
         ).all()
     else:
         results = []
