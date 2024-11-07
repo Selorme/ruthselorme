@@ -8,14 +8,12 @@ window.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('scroll', function() {
         const currentTop = document.body.getBoundingClientRect().top * -1;
         if (currentTop < scrollPos) {
-            // Scrolling Up
             if (currentTop > 0 && mainNav.classList.contains('is-fixed')) {
                 mainNav.classList.add('is-visible');
             } else {
                 mainNav.classList.remove('is-visible', 'is-fixed');
             }
         } else {
-            // Scrolling Down
             mainNav.classList.remove('is-visible');
             if (currentTop > headerHeight && !mainNav.classList.contains('is-fixed')) {
                 mainNav.classList.add('is-fixed');
@@ -70,7 +68,7 @@ function initializeSubscriptionReminder() {
                 `;
                 flashContainer.appendChild(alert);
             }
-        }, 1000); // Show after 1 seconds
+        }, 1000); // Show after 1 second
     }
 }
 
@@ -81,7 +79,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const dateInput = document.querySelector('input[name="publish_date"]');
     const timeInput = document.querySelector('input[name="publish_time"]');
 
-    // Function to toggle date/time fields
     function toggleDateTimeFields() {
         const isSchedule = scheduleBtn === document.activeElement;
         dateInput.required = isSchedule;
@@ -96,10 +93,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Initial state
     toggleDateTimeFields();
 
-    // Add event listeners to all submit buttons
     document.querySelectorAll('input[type="submit"]').forEach(btn => {
         btn.addEventListener('click', function() {
             toggleDateTimeFields();
@@ -107,7 +102,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// Like button functionality with dynamic update
+// Like button functionality with dynamic update and auto-refresh
 function likePost(postId) {
     fetch(`/post/${postId}/like`, {
         method: 'POST',
@@ -119,8 +114,10 @@ function likePost(postId) {
     .then(data => {
         const likeCountElement = document.getElementById(`like-count-${postId}`);
         if (likeCountElement) {
-            likeCountElement.textContent = `${data.likes} likes`; // Update the like count dynamically
+            likeCountElement.textContent = `${data.likes} likes`;
         }
+        // Refresh the page after a successful like to reflect the updated count
+        location.reload();
     })
     .catch(error => console.error('Error:', error));
 }
