@@ -29,6 +29,15 @@
                 </div>
                 <p class="text-muted">Category: {{ post.category }}</p>
 
+                <!--like counter-->
+                <div class="post-likes-views mt-3">
+                    <p><strong>{{ post.views }} </strong><img  class="eye" src="/static/img/eyedark.svg" alt="eye svg"/></p>
+                    <button id="like-button" onclick="likePost({{ post.id }})" class="btn btn-outline-primary mb-3">
+                        Like
+                    </button>
+                    <p id="like-count"><strong>{{ post.likes }} </strong><img class="thumb" src="/static/img/thumbsupdark.svg" alt="thumbs up svg"/></p>
+                </div>
+
                 <!-- Comment Form -->
                 <form action="{{ url_for('show_post', post_id=post.id) }}" method="post">
                     {{ form.hidden_tag() }}

@@ -1,4 +1,5 @@
 console.log("JavaScript file loaded");
+
 window.addEventListener('DOMContentLoaded', () => {
     let scrollPos = 0;
     const mainNav = document.getElementById('mainNav');
@@ -45,14 +46,14 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-    function toggleReplyForm(commentId) {
-        const replyForm = document.getElementById('replyForm' + commentId);
-        if (replyForm.style.display === 'none') {
-            replyForm.style.display = 'block';
-        } else {
-            replyForm.style.display = 'none';
-        }
+function toggleReplyForm(commentId) {
+    const replyForm = document.getElementById('replyForm' + commentId);
+    if (replyForm.style.display === 'none') {
+        replyForm.style.display = 'block';
+    } else {
+        replyForm.style.display = 'none';
     }
+}
 
 function initializeSubscriptionReminder() {
     const isLoggedIn = document.body.getAttribute('data-user-authenticated') === 'true';
@@ -74,7 +75,6 @@ function initializeSubscriptionReminder() {
 }
 
 document.addEventListener('DOMContentLoaded', initializeSubscriptionReminder);
-
 
 document.addEventListener('DOMContentLoaded', function() {
     const scheduleBtn = document.querySelector('input[name="schedule"]');
@@ -103,6 +103,33 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('input[type="submit"]').forEach(btn => {
         btn.addEventListener('click', function() {
             toggleDateTimeFields();
+        });
+    });
+});
+
+// Like button functionality with page reload
+function likePost(postId) {
+    fetch(`/post/${postId}/like`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Optional: Reload the page to update the like count
+        location.reload();  // Reload the current page
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+// Attach event listener to like buttons
+document.addEventListener('DOMContentLoaded', function() {
+    const likeButtons = document.querySelectorAll('.like-button');
+    likeButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const postId = this.getAttribute('data-post-id');
+            likePost(postId);
         });
     });
 });

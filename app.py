@@ -1,4 +1,4 @@
-from flask import Flask, abort, render_template, request, redirect, url_for, flash
+from flask import Flask, abort, render_template, request, redirect, url_for, flash, jsonify
 from datetime import datetime, date
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
@@ -85,6 +85,9 @@ class Post(db.Model):
     scheduled_datetime: Mapped[datetime] = mapped_column(db.DateTime, nullable=True)
 
     comments = relationship("Comment", back_populates="parent_post")
+
+    views: Mapped[int] = mapped_column(Integer, default=0)
+    likes: Mapped[int] = mapped_column(Integer, default=0)
 
 
 # Table for registered users
@@ -553,6 +556,10 @@ def audacity():
 @app.route("/post/<int:post_id>", methods=["GET", "POST"])
 def show_post(post_id):
     requested_post = db.get_or_404(Post, post_id)
+
+    requested_post.views += 1
+    db.session.commit()
+
     comment_form = CommentForm()
 
     if comment_form.validate_on_submit():
@@ -588,6 +595,16 @@ def show_post(post_id):
         categories=categories,
         copyright_year=year
     )
+
+
+# Route to handle the like functionality
+@app.route('/post/<int:post_id>/like', methods=['POST'])
+def like_post(post_id):
+    post = db.get_or_404(Post, post_id)
+    post.likes += 1
+    db.session.commit()
+    return jsonify({'likes': post.likes})  # Return updated likes count as JSON
+
 
 @app.route('/search')
 def search():

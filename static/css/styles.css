@@ -522,6 +522,14 @@ body.dark-mode .github {
     content: url('/static/img/github.svg');
 }
 
+body.dark-mode .eye {
+    content: url('/static/img/eye.svg');
+}
+
+body.dark-mode .thumb {
+    content: url('/static/img/thumbsup.svg')
+}
+
 .cke_editable p {
     text-align: left !important;
 }
