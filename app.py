@@ -553,6 +553,12 @@ def audacity():
     return render_template("audacity.html", posts=posts, copyright_year=year)
 
 
+@app.route("/My-Portfolio")
+def portfolio():
+    posts = Post.query.filter_by(category='My Portfolio', status='published').all()
+    return render_template("portfolio.html", posts=posts, copyright_year=year)
+
+
 @app.route("/post/<int:post_id>", methods=["GET", "POST"])
 def show_post(post_id):
     requested_post = db.get_or_404(Post, post_id)
