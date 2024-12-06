@@ -283,9 +283,41 @@ body.dark-mode .post-title-link {
     background-size: cover;
     background-position: center;
     color: #fff;
+    padding: 100px 0; /* Adjust as needed */
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+/* musings header in light mode */
+.musings {
+    background-image: url('/static/img/musingsdark.png');
+    background-size: cover;
+    background-position: center;
+    color: #fff;
     padding: 175px 0; /* Adjust as needed */
     text-align: center;
     margin-bottom: 10px;
+}
+
+/* dark mode for musings header*/
+body.dark-mode .musings {
+    background-image: url('/static/img/musings.png');
+}
+
+/* light mode for portfolio header*/
+.portfolio {
+    background-image: url('/static/img/portfoliodark.png');
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+    padding: 175px 0; /* Adjust as needed */
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+/* dark mode for portfolio header*/
+body.dark-mode .portfolio {
+    background-image: url('/static/img/portfolio-banner.png');
 }
 
 .post-heading h1 {
@@ -499,6 +531,8 @@ body.dark-mode .btn-outline-success {
 #reply-link {
     text-align: left;
 }
+
+
 
 /* svg control for dark and light mode */
 body.dark-mode .ins {
