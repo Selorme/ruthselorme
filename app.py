@@ -16,6 +16,7 @@ from forms import CreatePostForm, RegisterForm, LogInForm, CommentForm, ForgotPa
 from supabase import create_client, Client
 from flask_mail import Mail, Message
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired
+from flask_migrate import Migrate
 
 # Load environment variables
 load_dotenv()
@@ -61,6 +62,7 @@ db = SQLAlchemy(model_class=Base)
 db.init_app(app)
 login_manager.init_app(app)
 bootstrap = Bootstrap(app)
+migrate = Migrate(app, db)
 
 year = datetime.today().year
 
@@ -120,9 +122,10 @@ class Comment(db.Model):
 class PasswordResetToken(db.Model):
     __tablename__ = "password_reset_tokens"
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    email: Mapped[str] = mapped_column(String, nullable=False, unique=True)
-    token: Mapped[str] = mapped_column(String, nullable=False)
+    email: Mapped[str] = mapped_column(String, nullable=False)
+    token: Mapped[str] = mapped_column(String, nullable=False, unique=True)
     created_at: Mapped[datetime] = mapped_column(db.DateTime, default=datetime.utcnow)
+    is_used: Mapped[bool] = mapped_column(db.Boolean, nullable=False, default=False)
 
 
 with app.app_context():
@@ -456,8 +459,8 @@ def reset_password(token):
             user.password = generate_password_hash(new_password)
             db.session.commit()
 
-            # Delete the token after use
-            db.session.delete(reset_token)
+            # check if token is used
+            reset_token.is_used = True
             db.session.commit()
 
             flash("Password reset successful. Please log in.", "success")
