@@ -88,7 +88,7 @@
                     {% for p in all_posts %}
                         {% if p.id != post.id %}
                             <li>
-                                <a href="{{ url_for('show_post', post_id=p.id) }}">
+                                <a href="{{ url_for('show_post', category=category.replace(' ', '-'), post_id=p.id) }}">
                                     {{ loop.index }}. {{ p.title }}
                                 </a>
                             </li>
