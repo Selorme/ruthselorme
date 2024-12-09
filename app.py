@@ -200,34 +200,24 @@ def retry_post(post_data):
 @app.route("/login", methods=["GET", "POST"])
 def login():
     form = LogInForm()
-    next_page = request.args.get("next") or session.pop("next", None)
+    print(f"previous session url is {session['url']}")
 
     if form.validate_on_submit():
+        print(f"previous session url is {session['url']}")
         email = form.email.data
         password = form.password.data
         user = User.query.filter_by(email=email).first()
 
         if not user or not check_password_hash(user.password, password):
             flash("Invalid email or password.")
-            return redirect(url_for("login", next=next_page))
+            return redirect(url_for("login"))
 
+        print(f"previous session url is {session['url']}")
         login_user(user)
 
         # Check if there’s a saved action to replay
-        redirect_data = session.pop("redirect_after_login", None)
-        if redirect_data:
-            if redirect_data["method"] == "POST":
-                # Replay the POST action using Flask's test client
-                with app.test_request_context(
-                    redirect_data["url"], method="POST", data=redirect_data["data"]
-                ):
-                    response = app.dispatch_request()
-                    return response
-
-        # Safe redirect
-        if next_page and is_safe_url(next_page):
-            return redirect(next_page)
-
+        if 'url' in session:
+            return redirect(session['url'])
         return redirect(url_for("home"))
 
     return render_template("login.html", form=form)
@@ -238,9 +228,8 @@ def like_post(category, post_id):
     print(f"Like post requested: Category = {category}, Post ID = {post_id}")
 
     if not current_user.is_authenticated:
-        print("User is not authenticated. Redirecting to login.")
         # If not authenticated, redirect to login page and preserve the current URL
-        return redirect(url_for('login', next=request.url))
+        return redirect(url_for('login'))
 
     # Fetch the post
     category = category.replace("-", " ")  # Convert hyphenated category back to spaces
@@ -647,6 +636,8 @@ def show_post(post_id, category=None):
     requested_post.views += 1
     db.session.commit()
 
+    session['url'] = request.url
+
     comment_form = CommentForm()
 
     if comment_form.validate_on_submit():
@@ -666,7 +657,7 @@ def show_post(post_id, category=None):
         else:
             error = "Login Required! Please log in/Register to leave a comment"
             flash("Log in to leave a comment!")
-            return redirect(url_for("login", next=request.url))
+            return redirect(url_for("login", session=f"{session['url']}"))
     # Fetch all posts in the same category, excluding the current post
     top_level_comments = Comment.query.filter_by(post_id=post_id, parent_id=None).all()
     all_posts = Post.query.filter(Post.category == requested_post.category, Post.id != requested_post.id).all()

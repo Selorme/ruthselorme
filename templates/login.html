@@ -26,9 +26,6 @@
                 {% endwith %}
                 <form action="{{ url_for('login') }}" method="post">
                     {{ form.hidden_tag() }}
-                    {% if next %}
-                        <input type="hidden" name="next" value="{{ next }}">
-                    {% endif %}
                     <div class="mb-3">
                         <label for="{{ form.email.id }}" class="form-label">{{ form.email.label }}</label>
                         {{ form.email(class="form-control") }}
