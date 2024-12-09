@@ -1,5 +1,6 @@
 console.log("JavaScript file loaded");
 
+// Navbar scroll functionality
 window.addEventListener('DOMContentLoaded', () => {
     let scrollPos = 0;
     const mainNav = document.getElementById('mainNav');
@@ -25,25 +26,26 @@ window.addEventListener('DOMContentLoaded', () => {
 
 // Theme toggle functionality
 document.addEventListener('DOMContentLoaded', () => {
-  const darkModeToggle = document.getElementById('darkModeToggle');
-  const currentTheme = localStorage.getItem('theme');
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    const currentTheme = localStorage.getItem('theme');
 
-  if (currentTheme === 'dark') {
-    document.body.classList.add('dark-mode');
-    darkModeToggle.checked = true;
-  }
-
-  darkModeToggle.addEventListener('change', () => {
-    if (darkModeToggle.checked) {
-      document.body.classList.add('dark-mode');
-      localStorage.setItem('theme', 'dark');
-    } else {
-      document.body.classList.remove('dark-mode');
-      localStorage.setItem('theme', 'light');
+    if (currentTheme === 'dark') {
+        document.body.classList.add('dark-mode');
+        darkModeToggle.checked = true;
     }
-  });
+
+    darkModeToggle.addEventListener('change', () => {
+        if (darkModeToggle.checked) {
+            document.body.classList.add('dark-mode');
+            localStorage.setItem('theme', 'dark');
+        } else {
+            document.body.classList.remove('dark-mode');
+            localStorage.setItem('theme', 'light');
+        }
+    });
 });
 
+// Toggle visibility for the reply form
 function toggleReplyForm(commentId) {
     const replyForm = document.getElementById('replyForm' + commentId);
     if (replyForm.style.display === 'none') {
@@ -53,6 +55,7 @@ function toggleReplyForm(commentId) {
     }
 }
 
+// Show a reminder for non-logged-in users to subscribe
 function initializeSubscriptionReminder() {
     const isLoggedIn = document.body.getAttribute('data-user-authenticated') === 'true';
 
@@ -74,6 +77,7 @@ function initializeSubscriptionReminder() {
 
 document.addEventListener('DOMContentLoaded', initializeSubscriptionReminder);
 
+// Handle showing and hiding the datetime fields
 document.addEventListener('DOMContentLoaded', function() {
     const scheduleBtn = document.querySelector('input[name="schedule"]');
     const dateInput = document.querySelector('input[name="publish_date"]');
@@ -81,15 +85,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function toggleDateTimeFields() {
         const isSchedule = scheduleBtn === document.activeElement;
-        dateInput.required = isSchedule;
-        timeInput.required = isSchedule;
 
-        if (isSchedule) {
-            dateInput.parentElement.style.display = 'block';
-            timeInput.parentElement.style.display = 'block';
-        } else {
-            dateInput.parentElement.style.display = 'none';
-            timeInput.parentElement.style.display = 'none';
+        // Ensure the elements exist before accessing them
+        if (dateInput && timeInput) {
+            dateInput.required = isSchedule;
+            timeInput.required = isSchedule;
+
+            if (isSchedule) {
+                dateInput.parentElement.style.display = 'block';
+                timeInput.parentElement.style.display = 'block';
+            } else {
+                dateInput.parentElement.style.display = 'none';
+                timeInput.parentElement.style.display = 'none';
+            }
         }
     }
 
@@ -103,24 +111,37 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // Like button functionality with dynamic update and auto-refresh
-function likePost(postId) {
-    fetch(`/post/${postId}/like`, {
+function likePost(postId, category) {
+    fetch(`/${category}/post/${postId}/like`, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
-        }
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest' // Mark this as an AJAX request
+        },
+        credentials: 'same-origin', // Include cookies for session handling
     })
-    .then(response => response.json())
-    .then(data => {
-        const likeCountElement = document.getElementById(`like-count-${postId}`);
-        if (likeCountElement) {
-            likeCountElement.textContent = `${data.likes} likes`;
+    .then(response => {
+        // Handle redirect case
+        if (response.redirected) {
+            window.location.href = response.url; // Redirect user to the appropriate page
+            return;
         }
-        // Refresh the page after a successful like to reflect the updated count
-        location.reload();
+        return response.json();
+    })
+    .then(data => {
+        if (data && data.likes !== undefined) {
+            const likeCountElement = document.getElementById(`like-count-${postId}`);
+            if (likeCountElement) {
+                likeCountElement.innerHTML = `
+                    <strong>${data.likes}</strong>
+                    <img class="thumb" src="/static/img/thumbsupdark.svg" alt="thumbs up svg"/>
+                `;
+            }
+        }
     })
     .catch(error => console.error('Error:', error));
 }
+
 
 // Attach event listener to like buttons
 document.addEventListener('DOMContentLoaded', function() {
@@ -128,7 +149,8 @@ document.addEventListener('DOMContentLoaded', function() {
     likeButtons.forEach(button => {
         button.addEventListener('click', function() {
             const postId = this.getAttribute('data-post-id');
-            likePost(postId);
+            const category = this.getAttribute('data-category');
+            likePost(postId, category);
         });
     });
 });
