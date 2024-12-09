@@ -680,7 +680,8 @@ def show_post(post_id, category=None):
         form=comment_form,
         all_posts=all_posts,
         categories=categories,
-        copyright_year=year
+        copyright_year=year,
+        category=category
     )
 
 
