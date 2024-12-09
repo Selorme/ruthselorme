@@ -16,15 +16,15 @@
                 </div>
                 <!-- Title and content on the right on larger screens and below on smaller screens -->
                 <div>
-                    <a class="post-title-link" href="{{ url_for('show_post', category=category.replace(' ', '-'), post_id=post.id) }}">
-                        <h2 class="post-title">
+                    {% for post in results %}
+                        <a class="post-title-link" href="{{ url_for('show_post', category=post.category.replace(' ', '-'), post_id=post.id) }}">
                             {{ post.title }}
-                        </h2>
-                    </a>
+                        </a>
+                    {% endfor %}
                     <!-- Display the first 300 characters of the content safely -->
                     <p>
                         {{ post.body[:300]|safe }}...
-                        <a class="btn btn-outline-success" href="{{ url_for('show_post', post_id=post.id) }}"><em>Read More...</em></a>
+                        <a class="btn btn-outline-success" href="{{ url_for('show_post', category=post.category.replace(' ', '-'), post_id=post.id) }}"><em>Read More...</em></a>
                     </p>
                 </div>
             </div>
