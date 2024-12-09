@@ -680,8 +680,7 @@ def show_post(post_id, category=None):
         form=comment_form,
         all_posts=all_posts,
         categories=categories,
-        copyright_year=year,
-        category=category
+        copyright_year=year
     )
 
 
@@ -695,7 +694,10 @@ def search():
     else:
         results = []
 
-    return render_template('search.html', query=query, results=results, copyright_year=year)
+    # Query all unique categories
+    categories = [cat[0] for cat in db.session.query(Post.category).distinct().all()]
+
+    return render_template('search.html', query=query, results=results, copyright_year=year, categories=categories)
 
 
 @app.route("/drafts", methods=["GET", "POST"])
