@@ -235,15 +235,20 @@ def login():
 
 @app.route("/<string:category>/post/<int:post_id>/like", methods=["POST"])
 def like_post(category, post_id):
+    print(f"Like post requested: Category = {category}, Post ID = {post_id}")
+
     if not current_user.is_authenticated:
-        # Redirect unauthenticated users to the login page
+        print("User is not authenticated. Redirecting to login.")
+        # If not authenticated, redirect to login page and preserve the current URL
         return redirect(url_for('login', next=request.url))
 
-    category = category.replace("-", " ")
+    # Fetch the post
+    category = category.replace("-", " ")  # Convert hyphenated category back to spaces
     post = Post.query.filter_by(id=post_id, category=category).first()
 
     if not post:
-        # Redirect if the post is not found
+        print("Post not found. Redirecting to home page.")
+        # If post is not found, redirect to the home page
         flash('Post not found.', 'danger')
         return redirect(url_for('home'))
 
@@ -251,12 +256,16 @@ def like_post(category, post_id):
     post.likes += 1
     db.session.commit()
 
-    # If the request is AJAX, return JSON
+    print(f"Post found. Likes incremented. Current likes: {post.likes}")
+
+    # Handle AJAX requests
     if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        print("AJAX request detected. Returning like count in response.")
         return jsonify({'likes': post.likes})
 
-    # Otherwise, redirect back to the post
-    return redirect(url_for('show_post', category=category.replace(' ', '-'), post_id=post_id))
+    # Non-AJAX requests should redirect back to the post
+    print(f"Redirecting back to post page: Category = {category}, Post ID = {post_id}")
+    return redirect(url_for('show_post', category=category.replace(" ", "-"), post_id=post_id))
 
 
 @app.route('/logout')
