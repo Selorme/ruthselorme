@@ -69,7 +69,7 @@
                     <ul class="commentList">
                         {% for comment in post.comments %}
                             {% if not comment.parent_id %}
-                                {{ render_comment(comment, post, form) }}
+                                {{ render_comment(comment, post, form, category) }}
                             {% endif %}
                         {% endfor %}
                     </ul>
