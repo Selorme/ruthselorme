@@ -1,4 +1,4 @@
-{% macro render_comment(comment, post, form) %}
+{% macro render_comment(comment, post, form, category) %}
     <li>
         <div class="commenterImage">
             <img src="{{ comment.comment_author.email|gravatar }}" />
@@ -24,7 +24,7 @@
             {% if comment.replies %}
                 <ul class="nestedCommentList">
                     {% for reply in comment.replies %}
-                        {{ render_comment(reply, post, form) }}
+                        {{ render_comment(reply, post, form, category) }}
                     {% endfor %}
                 </ul>
             {% endif %}
