@@ -15,7 +15,7 @@
         <meta property="og:title" content="{{ post.title }}" />
         <meta property="og:description" content="{{ post.body|truncate(160, True) }}" />
         <meta property="og:image" content="{{ post.img_url }}" />
-        <meta property="og:url" content="{{ url_for('show_post', post_id=post.id, _external=True) }}" />
+        <meta property="og:url" content="{{ url_for('show_post', category=post.category.replace(' ', '-'), post_id=post.id, _external=True) }}" />
     {% else %}
         <meta property="og:image" content="{{ url_for('static', filename='path/to/default-image.jpg') }}" />
     {% endif %}

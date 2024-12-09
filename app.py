@@ -1,4 +1,4 @@
-from flask import Flask, abort, render_template, request, redirect, url_for, flash, jsonify
+from flask import Flask, abort, render_template, request, redirect, url_for, flash, jsonify, session
 from datetime import datetime, date
 from flask_bootstrap5 import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
@@ -17,6 +17,7 @@ from supabase import create_client, Client
 from flask_mail import Mail, Message
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired
 from flask_migrate import Migrate
+from urllib.parse import urlparse, urljoin
 
 # Load environment variables
 load_dotenv()
@@ -175,27 +176,87 @@ def load_user(user_id):
     return db.get_or_404(User, user_id)
 
 
-# TODO: Retrieve a user from the database based on their email.
-@app.route('/login', methods=['GET', 'POST'])
+def is_safe_url(target):
+    """Validate that the redirect URL is safe and within the same site."""
+    ref_url = urlparse(request.host_url)
+    test_url = urlparse(urljoin(request.host_url, target))
+    return test_url.scheme in ('http', 'https') and ref_url.netloc == test_url.netloc
+
+
+def retry_post(post_data):
+    """Re-run the saved POST request after login."""
+    post_url = post_data.get("url")
+    post_payload = post_data.get("data")
+
+    if post_url:
+        # Simulate the original POST request
+        with app.test_request_context(post_url, method="POST", data=post_payload):
+            # Call the appropriate route function
+            response = app.dispatch_request()
+            return response
+    return redirect(url_for('home'))
+
+
+@app.route("/login", methods=["GET", "POST"])
 def login():
     form = LogInForm()
+    next_page = request.args.get("next") or session.pop("next", None)
+
     if form.validate_on_submit():
         email = form.email.data
         password = form.password.data
-        result = db.session.execute(db.select(User).where(User.email == email))
-        user = result.scalar()
+        user = User.query.filter_by(email=email).first()
 
-        if not user:
-            flash("That email does not exist, please try again.")
-            return redirect(url_for('login'))
-        elif not check_password_hash(user.password, password):
-            flash('Password incorrect, please try again.')
-            return redirect(url_for('login'))
-        else:
-            login_user(user)
-            return redirect(url_for('home'))
+        if not user or not check_password_hash(user.password, password):
+            flash("Invalid email or password.")
+            return redirect(url_for("login", next=next_page))
 
-    return render_template("login.html", form=form, copyright_year=year)
+        login_user(user)
+
+        # Check if there’s a saved action to replay
+        redirect_data = session.pop("redirect_after_login", None)
+        if redirect_data:
+            if redirect_data["method"] == "POST":
+                # Replay the POST action using Flask's test client
+                with app.test_request_context(
+                    redirect_data["url"], method="POST", data=redirect_data["data"]
+                ):
+                    response = app.dispatch_request()
+                    return response
+
+        # Safe redirect
+        if next_page and is_safe_url(next_page):
+            return redirect(next_page)
+
+        return redirect(url_for("home"))
+
+    return render_template("login.html", form=form)
+
+
+@app.route("/<string:category>/post/<int:post_id>/like", methods=["POST"])
+def like_post(category, post_id):
+    if not current_user.is_authenticated:
+        # Redirect unauthenticated users to the login page
+        return redirect(url_for('login', next=request.url))
+
+    category = category.replace("-", " ")
+    post = Post.query.filter_by(id=post_id, category=category).first()
+
+    if not post:
+        # Redirect if the post is not found
+        flash('Post not found.', 'danger')
+        return redirect(url_for('home'))
+
+    # Increment likes
+    post.likes += 1
+    db.session.commit()
+
+    # If the request is AJAX, return JSON
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        return jsonify({'likes': post.likes})
+
+    # Otherwise, redirect back to the post
+    return redirect(url_for('show_post', category=category.replace(' ', '-'), post_id=post_id))
 
 
 @app.route('/logout')
@@ -562,9 +623,17 @@ def portfolio():
     return render_template("portfolio.html", posts=posts, copyright_year=year)
 
 
-@app.route("/post/<int:post_id>", methods=["GET", "POST"])
-def show_post(post_id):
-    requested_post = db.get_or_404(Post, post_id)
+@app.route("/<string:category>/post/<int:post_id>", methods=["GET", "POST"])
+def show_post(post_id, category=None):
+    # Fetch the post, optionally validating the category
+    if category:
+        category = category.replace("-", " ")
+        requested_post = Post.query.filter_by(id=post_id, category=category).first()
+        if not requested_post:
+            flash("Post not found in this category.", "warning")
+            return redirect(url_for("home"))
+    else:
+        requested_post = db.get_or_404(Post, post_id)
 
     requested_post.views += 1
     db.session.commit()
@@ -584,11 +653,11 @@ def show_post(post_id):
             )
             db.session.add(new_comment)
             db.session.commit()
-            return redirect(url_for('show_post', post_id=post_id))
+            return redirect(url_for('show_post', post_id=post_id, category=category))
         else:
             error = "Login Required! Please log in/Register to leave a comment"
             flash("Log in to leave a comment!")
-            return redirect(url_for("login"))
+            return redirect(url_for("login", next=request.url))
     # Fetch all posts in the same category, excluding the current post
     top_level_comments = Comment.query.filter_by(post_id=post_id, parent_id=None).all()
     all_posts = Post.query.filter(Post.category == requested_post.category, Post.id != requested_post.id).all()
@@ -604,15 +673,6 @@ def show_post(post_id):
         categories=categories,
         copyright_year=year
     )
-
-
-# Route to handle the like functionality
-@app.route('/post/<int:post_id>/like', methods=['POST'])
-def like_post(post_id):
-    post = db.get_or_404(Post, post_id)
-    post.likes += 1
-    db.session.commit()
-    return jsonify({'likes': post.likes})  # Return updated likes count as JSON
 
 
 @app.route('/search')
