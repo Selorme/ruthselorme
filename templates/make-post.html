@@ -75,7 +75,13 @@
 
             <div class="d-flex flex-column flex-md-row justify-content-between">
                 {{ form.draft(class="btn btn-primary mb-2 mb-md-0") }}
-                {{ form.publish(class="btn btn-primary mb-2 mb-md-0") }}
+                {% if post and post.status == 'published' %}
+                    <!-- If the post is published and being edited, show the "Update Post" button -->
+                    {{ form.update_post(class="btn btn-primary mb-2 mb-md-0") }}
+                {% else %}
+                    <!-- If the post is not published, show the "Publish" button -->
+                    {{ form.publish(class="btn btn-primary mb-2 mb-md-0") }}
+                {% endif %}
                 {{ form.schedule(class="btn btn-primary mb-2 mb-md-0") }}
             </div>
 

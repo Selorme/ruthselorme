@@ -141,7 +141,7 @@ def admin_only(func):
             return redirect(url_for('login'))
         elif current_user.id != 1:
             return redirect(url_for('home'))
-        return func(*args, **kwargs)
+        return func(*args, **kwargs)  # Make sure to pass args and kwargs to the wrapped function
     return wrapper
 
 
@@ -358,7 +358,7 @@ def add_new_post():
 
         return redirect(url_for("home"))
 
-    return render_template("make-post.html", form=form, copyright_year=year)
+    return render_template("make-post.html", form=form, copyright_year=year, post=None)
 
 
 @app.route("/edit-post/<int:post_id>", methods=["GET", "POST"])
@@ -373,6 +373,9 @@ def edit_post(post_id):
         edit_form.publish_time.data = post.scheduled_datetime.time()
 
     if edit_form.validate_on_submit():
+        # Backup original status before changes
+        original_status = post.status
+        # Update post attributes
         post.title = edit_form.title.data
         post.category = edit_form.category.data
         post.img_url = edit_form.img_url.data
@@ -417,9 +420,19 @@ def edit_post(post_id):
 
         try:
             db.session.commit()
+            # Check if the post's status was changed to 'published' and the previous status was draft or scheduled
+            if original_status != "published" and post.status == "published":
+                # Send email notification to users about the new post
+                if send_post_notification(post):
+                    flash("New post published and notification sent to subscribers!", "success")
+                else:
+                    flash("Post published, but there was an issue sending notifications.", "warning")
+            else:
+                flash("Post updated successfully!", "success")
             print(f"Post status after commit: {post.status}")
             flash("Post updated successfully!", "success")
-            return redirect(url_for("show_post", post_id=post.id))
+            # Check if there’s a saved action to replay
+            return redirect(url_for("show_post", post_id=post.id, category=post.category.replace(" ", "-")))
         except Exception as e:
             db.session.rollback()
             flash(f"Error updating post: {str(e)}", "danger")
@@ -636,7 +649,9 @@ def show_post(post_id, category=None):
     requested_post.views += 1
     db.session.commit()
 
-    session['url'] = request.url
+    # Only update session URL if it's not already the current post URL
+    if session.get('url') != request.url:
+        session['url'] = request.url
 
     comment_form = CommentForm()
 
