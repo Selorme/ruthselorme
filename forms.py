@@ -18,6 +18,7 @@ class CreatePostForm(FlaskForm):
     publish = SubmitField("Publish Your Post Now!")
     draft = SubmitField("Save Your Post as Draft!")
     schedule = SubmitField("Schedule Your Post!")
+    update_post = SubmitField("Update your post!")
 
     def validate(self, extra_validators=None):
         """Validate the form."""
