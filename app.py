@@ -18,9 +18,8 @@ from supabase import create_client, Client
 from flask_mail import Mail, Message
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired
 from flask_migrate import Migrate
-from urllib.parse import urlparse, urljoin
+from urllib.parse import urlparse, urljoin, urlencode
 from hashlib import md5
-
 
 # Load environment variables
 load_dotenv()
