@@ -17,13 +17,10 @@ from forms import CreatePostForm, RegisterForm, LogInForm, CommentForm, ForgotPa
 from supabase import create_client, Client
 from flask_mail import Mail, Message
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired
-<<<<<<< HEAD
 from flask_migrate import Migrate
 from urllib.parse import urlparse, urljoin
-=======
 from hashlib import md5
-from urllib.parse import urlencode
->>>>>>> df93302 (added two images for a post, updated gravatar)
+
 
 # Load environment variables
 load_dotenv()
