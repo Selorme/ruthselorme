@@ -6,7 +6,8 @@ import smtplib
 import os
 from dotenv import load_dotenv
 from flask_ckeditor import CKEditor
-from flask_gravatar import Gravatar
+# from flask_gravatar import Gravatar
+# from gravatar import Gravatar
 from flask_login import UserMixin, login_user, LoginManager, current_user, logout_user, login_required
 from sqlalchemy.orm import relationship, DeclarativeBase, Mapped, mapped_column
 from sqlalchemy import Integer, String, Text, DateTime
@@ -16,8 +17,13 @@ from forms import CreatePostForm, RegisterForm, LogInForm, CommentForm, ForgotPa
 from supabase import create_client, Client
 from flask_mail import Mail, Message
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired
+<<<<<<< HEAD
 from flask_migrate import Migrate
 from urllib.parse import urlparse, urljoin
+=======
+from hashlib import md5
+from urllib.parse import urlencode
+>>>>>>> df93302 (added two images for a post, updated gravatar)
 
 # Load environment variables
 load_dotenv()
@@ -31,7 +37,23 @@ supabase: Client = create_client(supabase_url, supabase_key)
 google_email = os.getenv('MY_WEBSITE_EMAIL')
 google_password = os.getenv('MY_WEBSITE_PASSWORD')
 
+
+def gravatar_url(email, size=100, rating='g', default='retro', force_default=False):
+    # Convert email to lowercase and hash with MD5 (Gravatar requirement)
+    email_hash = md5(email.strip().lower().encode('utf-8')).hexdigest()
+
+    # Build query parameters
+    query_params = {'d': default, 's': str(size), 'r': rating}
+    if force_default:
+        query_params['f'] = 'y'  # Gravatar expects 'f=y' if force_default is True
+
+    return f"https://www.gravatar.com/avatar/{email_hash}?{urlencode(query_params)}"
+
+
 app = Flask(__name__)
+
+# Add the filter for Jinja templates
+app.jinja_env.filters['gravatar'] = gravatar_url
 
 # Set up for email
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'  # e.g., smtp.gmail.com for Gmail
@@ -48,7 +70,6 @@ app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 app.config['CKEDITOR_PKG_TYPE'] = 'full'
 ckeditor = CKEditor(app)
 login_manager = LoginManager()
-gravatar = Gravatar(app, default='retro')
 
 mail = Mail(app)
 app.config['MAIL_SECRET_KEY'] = os.getenv('MAIL_SECRET_KEY')
