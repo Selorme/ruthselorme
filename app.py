@@ -217,10 +217,12 @@ def retry_post(post_data):
 @app.route("/login", methods=["GET", "POST"])
 def login():
     form = LogInForm()
-    print(f"previous session url is {session['url']}")
+
+    # Use session.get() to avoid KeyError
+    previous_url = session.get('url')
+    print(f"Previous session URL: {previous_url}")
 
     if form.validate_on_submit():
-        print(f"previous session url is {session['url']}")
         email = form.email.data
         password = form.password.data
         user = User.query.filter_by(email=email).first()
@@ -229,12 +231,13 @@ def login():
             flash("Invalid email or password.")
             return redirect(url_for("login"))
 
-        print(f"previous session url is {session['url']}")
         login_user(user)
 
-        # Check if there’s a saved action to replay
-        if 'url' in session:
-            return redirect(session['url'])
+        # Redirect user back to the page they tried to access before login
+        if previous_url:
+            session.pop('url')  # Remove 'url' after using it
+            return redirect(previous_url)
+
         return redirect(url_for("home"))
 
     return render_template("login.html", form=form)
