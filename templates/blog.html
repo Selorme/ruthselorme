@@ -12,7 +12,7 @@
         {% for post in posts %}
             <div class="col-md-4 mb-4">
                 <div class="card">
-                    <a href="{{ url_for('show_post', category=category.replace(' ', '-'), post_id=post.id) }}">
+                    <a href="{{ url_for('show_post', category=post.category.replace(' ', '-'), post_id=post.id) }}">
                         <img src="{{ post.img_url }}" class="card-img-top" alt="{{ post.title }}">
                         <div class="card-body">
                             <h5 class="card-title text-center">{{ post.title }}</h5>
@@ -32,7 +32,7 @@
                     {% for category in categories %}
                         <div class="category-item">
                             <!-- Replace spaces with hyphens for URL -->
-                            <a href="{{ url_for('show_category', category=category.replace(' ', '-')) }}">{{ category }}</a>
+                            <a href="{{ url_for('show_category', post.category=category.replace(' ', '-')) }}">{{ category }}</a>
                         </div>
                     {% endfor %}
                 </div>
