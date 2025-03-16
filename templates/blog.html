@@ -32,7 +32,7 @@
                     {% for category in categories %}
                         <div class="category-item">
                             <!-- Replace spaces with hyphens for URL -->
-                            <a href="{{ url_for('show_category', post.category=category.replace(' ', '-')) }}">{{ category }}</a>
+                            <a href="{{ url_for('show_category', category=post.category.replace(' ', '-')) }}">{{ category }}</a>
                         </div>
                     {% endfor %}
                 </div>
