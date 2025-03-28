@@ -1,4 +1,4 @@
-from flask import Flask, abort, render_template, request, redirect, url_for, flash, jsonify, session
+from flask import Flask, abort, render_template, request, redirect, url_for, flash, jsonify, session, Response
 from datetime import datetime, date
 from flask_bootstrap5 import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
@@ -148,6 +148,27 @@ class PasswordResetToken(db.Model):
 
 with app.app_context():
     db.create_all()
+
+
+@app.route('/sitemap.xml')
+def generate_sitemap():
+    pages = ['/', '/about', '/contact', '/blog', '/new-page']  # Add more pages dynamically
+    base_url = "https://ruthselormeacolatse.info"
+
+    xml_sitemap = """<?xml version="1.0" encoding="UTF-8"?>\n"""
+    xml_sitemap += """<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n"""
+
+    for page in pages:
+        xml_sitemap += f"""<url>
+            <loc>{base_url}{page}</loc>
+            <lastmod>{datetime.today().strftime('%Y-%m-%d')}</lastmod>
+            <changefreq>weekly</changefreq>
+            <priority>0.7</priority>
+        </url>\n"""
+
+    xml_sitemap += """</urlset>"""
+
+    return Response(xml_sitemap, mimetype="application/xml")
 
 
 # Wrapper for admin access
