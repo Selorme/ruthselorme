@@ -651,15 +651,15 @@ def contact():
         email = request.form['email']
         message = request.form['message']
 
-        # Honeypot field check: If the honeypot is filled out, treat it as spam
+        #Honeypot field check: If the honeypot is filled out, treat it as spam
         honeypot = request.form.get('honeypot')
         if honeypot:  # If honeypot is filled out, it's a bot
             return "Spam detected, ignoring form submission."
 
-        # Get reCAPTCHA response from form
+        #Get reCAPTCHA response from form
         captcha_response = request.form.get('g-recaptcha-response')
 
-        # Verify reCAPTCHA response with Google
+        #Verify reCAPTCHA response with Google
         payload = {
 
             'secret': RECAPTCHA_SECRET_KEY,
@@ -686,7 +686,7 @@ def contact():
                                     msg=f"Subject: New Message From Your Website!\n\nName: {name}\nEmail: {email}\nMessage: {message}")
 
             flash('Message sent successfully!', 'success')
-
+        #if recaptcha is not successful
         else:
             flash('reCAPTCHA verification failed. Please try again.', 'danger')
             return redirect(url_for('contact'))
