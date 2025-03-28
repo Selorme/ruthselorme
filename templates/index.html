@@ -119,9 +119,10 @@
       {% endif %}
       <h3 class="lead-text" id="call-to-action">Work with Selorme!</h3>
       <p>
-        For collaborations, partnerships, freelance opportunities, feedback, suggestions or any general enquiry, please fill the form below to send me a message:
+        For collaborations, partnerships, freelance opportunities, feedback, suggestions, or any general enquiry, please fill the form below to send me a message:
       </p>
       <form action="/contact" method="post" id="contactForm" name="sentMessage">
+        <input type="text" name="honeypot" style="display:none;">
         <div class="form-floating mb-3">
           <input class="form-control" id="name" name="name" type="text" required>
           <label for="name">Name</label>
@@ -134,9 +135,13 @@
           <textarea class="form-control" id="message" name="message" required style="height: 12rem"></textarea>
           <label for="message">Message</label>
         </div>
+        <!-- Google reCAPTCHA widget -->
+        <div class="g-recaptcha" data-sitekey="6Lel0AIrAAAAAKH1TDtsoJ2WQFDrIreP0CQA-ndc"></div>
         <button class="btn btn-primary text-uppercase w-100" id="submitButton" type="submit">Send</button>
       </form>
     </div>
   </section>
+  <!-- Google reCAPTCHA script -->
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
 {% endblock %}

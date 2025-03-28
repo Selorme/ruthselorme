@@ -20,6 +20,7 @@ from itsdangerous import URLSafeTimedSerializer, SignatureExpired
 from flask_migrate import Migrate
 from urllib.parse import urlparse, urljoin, urlencode
 from hashlib import md5
+import requests
 
 # Load environment variables
 load_dotenv()
@@ -70,6 +71,8 @@ login_manager = LoginManager()
 mail = Mail(app)
 app.config['MAIL_SECRET_KEY'] = os.getenv('MAIL_SECRET_KEY')
 s = URLSafeTimedSerializer(app.config['MAIL_SECRET_KEY'])
+
+RECAPTCHA_SECRET_KEY = os.getenv('RECAPTCHA_SECRET_KEY')
 
 # Initialize the database
 class Base(DeclarativeBase):
@@ -648,17 +651,45 @@ def contact():
         email = request.form['email']
         message = request.form['message']
 
-        my_email = google_email
-        password = google_password
+        # Honeypot field check: If the honeypot is filled out, treat it as spam
+        honeypot = request.form.get('honeypot')
+        if honeypot:  # If honeypot is filled out, it's a bot
+            return "Spam detected, ignoring form submission."
 
-        with smtplib.SMTP("smtp.gmail.com", 587) as connection:
-            connection.starttls()
-            connection.login(user=my_email, password=password)
-            connection.sendmail(from_addr=my_email, to_addrs=my_email,
-                                msg=f"Subject: New Message From Your Website!\n\nName: {name}\nEmail: {email}\nMessage: {message}")
+        # Get reCAPTCHA response from form
+        captcha_response = request.form.get('g-recaptcha-response')
 
-        flash('Message sent successfully!', 'success')
-        return redirect(url_for('contact'))
+        # Verify reCAPTCHA response with Google
+        payload = {
+
+            'secret': RECAPTCHA_SECRET_KEY,
+
+            'response': captcha_response
+
+        }
+
+        verify_url = "https://www.google.com/recaptcha/api/siteverify"
+        response = requests.post(verify_url, data=payload)
+        result = response.json()
+
+        # If reCAPTCHA verification is successful
+        if result.get('success'):
+            # Send email
+
+            my_email = google_email
+            password = google_password
+
+            with smtplib.SMTP("smtp.gmail.com", 587) as connection:
+                connection.starttls()
+                connection.login(user=my_email, password=password)
+                connection.sendmail(from_addr=my_email, to_addrs=my_email,
+                                    msg=f"Subject: New Message From Your Website!\n\nName: {name}\nEmail: {email}\nMessage: {message}")
+
+            flash('Message sent successfully!', 'success')
+
+        else:
+            flash('reCAPTCHA verification failed. Please try again.', 'danger')
+            return redirect(url_for('contact'))
 
     return render_template("index.html", message_sent=False, copyright_year=year)
 
