@@ -13,9 +13,9 @@ class SEOMiddleware:
         # Default SEO metadata
         g.seo = {
             "title": "Ruth Selorme Acolatse",
-            "description": "Explore Ruth Selorme Acolatse's blogs, projects, and more.",
-            "keywords": "blog, tech, writing, programming",
-            "image": url_for('static', filename='images/default-image.jpg', _external=True),
+            "description": "Welcome to ruthselormeacolatse. Explore my blog posts, portfolio, projects, and more.",
+            "keywords": "blog, tech, writing, programming, python, data science, journalism",
+            "image": url_for('static', filename='img/aboutpage.jpg', _external=True),
             "url": request.base_url
         }
 

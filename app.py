@@ -22,6 +22,7 @@ from urllib.parse import urlparse, urljoin, urlencode
 from hashlib import md5
 import requests
 from middleware import SEOMiddleware
+from flask import send_from_directory
 
 # Load environment variables
 load_dotenv()
@@ -157,6 +158,11 @@ with app.app_context():
     db.create_all()
 
 
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory('static/images', 'favicon.ico', mimetype='image/vnd.microsoft.icon')
+
+
 @app.route('/sitemap.xml')
 def generate_sitemap():
     pages = ['/', '/about', '/contact', '/blog', '/new-page']  # Add more pages dynamically
@@ -176,6 +182,11 @@ def generate_sitemap():
     xml_sitemap += """</urlset>"""
 
     return Response(xml_sitemap, mimetype="application/xml")
+
+
+@app.route('/ads.txt')
+def ads_txt():
+    return send_from_directory('static', 'ads.txt', mimetype='text/plain')
 
 
 # Wrapper for admin access
