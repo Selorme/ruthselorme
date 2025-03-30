@@ -13,7 +13,7 @@ class SEOMiddleware:
         # Default SEO metadata
         g.seo = {
             "title": "Ruth Selorme Acolatse",
-            "description": "Welcome to ruthselormeacolatse. Explore my blog posts, portfolio, projects, and more.",
+            "description": "Welcome to ruthselormeacolatse.com Explore my blog posts, portfolio, projects, and more.",
             "keywords": "blog, tech, writing, programming, python, data science, journalism",
             "image": url_for('static', filename='img/aboutpage.jpg', _external=True),
             "url": request.base_url
