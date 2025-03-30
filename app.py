@@ -181,7 +181,12 @@ def generate_sitemap():
 
     xml_sitemap += """</urlset>"""
 
-    return Response(xml_sitemap, mimetype="application/xml")
+    response = Response(xml_sitemap, mimetype="application/xml")
+
+    # Print out the response headers for debugging
+    print(response.headers)
+
+    return response
 
 
 @app.route('/ads.txt')
