@@ -21,6 +21,7 @@ from flask_migrate import Migrate
 from urllib.parse import urlparse, urljoin, urlencode
 from hashlib import md5
 import requests
+from middleware import SEOMiddleware
 
 # Load environment variables
 load_dotenv()
@@ -73,6 +74,9 @@ app.config['MAIL_SECRET_KEY'] = os.getenv('MAIL_SECRET_KEY')
 s = URLSafeTimedSerializer(app.config['MAIL_SECRET_KEY'])
 
 RECAPTCHA_SECRET_KEY = os.getenv('RECAPTCHA_SECRET_KEY')
+
+# Register SEO Middleware
+SEOMiddleware(app)
 
 # Initialize the database
 class Base(DeclarativeBase):
