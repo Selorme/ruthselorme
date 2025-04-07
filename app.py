@@ -737,10 +737,18 @@ def portfolio():
 def show_post(post_id, category=None):
     # Fetch the post, optionally validating the category
     if category:
-        category = category.replace("-", " ")
-        requested_post = Post.query.filter_by(id=post_id, category=category).first()
+        category = category.replace("-", " ")  # Replace hyphen with space
+        print(f"[DEBUG] Searching for post with ID {post_id} in category '{category}'.")
+
+        # Use filter() with ilike() for case-insensitive comparison
+        requested_post = Post.query.filter(
+            Post.id == post_id,
+            Post.category.ilike(category)  # ilike() performs case-insensitive search
+        ).first()
+
         if not requested_post:
-            flash("Post not found in this category.", "warning")
+            print(f"[DEBUG] Post not found in category '{category}' with ID {post_id}. Redirecting to home.")
+            flash(f"Post with ID {post_id} not found in category {category}.", "warning")
             return redirect(url_for("home"))
     else:
         requested_post = db.get_or_404(Post, post_id)
