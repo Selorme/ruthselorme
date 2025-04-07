@@ -201,7 +201,10 @@ def normalize_url():
         category = request.view_args["category"]
         # Normalize only the category part to lowercase
         request.view_args["category"] = category.lower()
-    # No need for an else here since image URLs and others don't need modification
+
+    # Redirect if the entire URL path is not in lowercase (except for static files)
+    if request.path != request.path.lower() and not request.path.startswith('/static/'):
+        return redirect(request.path.lower(), code=301)
 
 
 # Wrapper for admin access
