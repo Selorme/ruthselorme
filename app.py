@@ -194,6 +194,13 @@ def ads_txt():
     return send_from_directory('static', 'ads.txt', mimetype='text/plain')
 
 
+# Normalize the URL to lowercase before handling the request
+@app.before_request
+def normalize_url():
+    if request.path != request.path.lower():
+        return redirect(request.path.lower(), code=301)  # Redirect to lowercase URL
+
+
 # Wrapper for admin access
 def admin_only(func):
     @wraps(func)
@@ -636,7 +643,7 @@ def show_category(category):
     return render_template("category.html", posts=posts, category=category, copyright_year=year)
 
 
-@app.route("/Projects")
+@app.route("/projects")
 def projects():
     posts = Post.query.filter_by(category='Projects', status='published').all()
     return render_template("projects.html", posts=posts, copyright_year=year)
@@ -647,7 +654,7 @@ def cvresume():
     return render_template("cvresume.html", copyright_year=year)
 
 
-@app.route("/UG-Escapades")
+@app.route("/ug-escapades")
 def ugescapades():
     posts = Post.query.filter_by(category='UG Escapades', status='published').all()
     return render_template("ugescapades.html", posts=posts, copyright_year=year)
@@ -658,7 +665,7 @@ def random_musings():
     posts = Post.query.filter_by(category='Random Musings', status='published').all()
     return render_template("randommusings.html", posts=posts, copyright_year=year)
 
-@app.route("/Türkiye-Geçilmez")
+@app.route("/türkiye-geçilmez")
 def turkiyegecilmez():
     posts = Post.query.filter_by(category='Türkiye Geçilmez', status='published').all()
     return render_template("turkiyegecilmez.html", posts=posts, copyright_year=year)
@@ -714,13 +721,13 @@ def contact():
     return render_template("index.html", message_sent=False, copyright_year=year)
 
 
-@app.route("/Audacious-Men-Series")
+@app.route("/audacious-men-series")
 def audacity():
     posts = Post.query.filter_by(category='Audacious Men Series', status='published').all()
     return render_template("audacity.html", posts=posts, copyright_year=year)
 
 
-@app.route("/My-Portfolio")
+@app.route("/my-portfolio")
 def portfolio():
     posts = Post.query.filter_by(category='My Portfolio', status='published').all()
     return render_template("portfolio.html", posts=posts, copyright_year=year)
@@ -814,17 +821,17 @@ def scheduled_posts():
     return render_template("scheduled.html", post_scheduled=post_scheduled, copyright_year=year)
 
 
-@app.route("/Disclaimer")
+@app.route("/disclaimer")
 def disclaimer():
     return render_template("disclaimer.html", copyright_year=year)
 
 
-@app.route("/Privacy-Policy")
+@app.route("/privacy-policy")
 def privacy_policy():
     return render_template("privacy_policy.html", copyright_year=year)
 
 
-@app.route("/Terms-and-Conditions")
+@app.route("/terms-and-conditions")
 def terms_and_conditions():
     return render_template("terms_conditions.html", copyright_year=year)
 
