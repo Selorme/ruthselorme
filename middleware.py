@@ -36,7 +36,7 @@ class SEOMiddleware:
                 # Ensure canonical URL is in lowercase
                 g.seo["canonical"] = urljoin(request.host_url,
                                              url_for('show_post', category=post.category.replace(" ", "-").lower(),
-                                                     post_id=post.id).lower())
+                                                     post_id=post.id))
 
         elif request.endpoint == "about":
             g.seo["title"] = "About - Ruth Selorme Acolatse"
