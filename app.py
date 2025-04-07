@@ -201,9 +201,7 @@ def normalize_url():
         category = request.view_args["category"]
         # Normalize only the category part to lowercase
         request.view_args["category"] = category.lower()
-    else:
-        # Allow other URLs (e.g., image paths) to remain case-sensitive
-        pass
+    # No need for an else here since image URLs and others don't need modification
 
 
 # Wrapper for admin access
