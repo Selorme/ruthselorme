@@ -194,11 +194,16 @@ def ads_txt():
     return send_from_directory('static', 'ads.txt', mimetype='text/plain')
 
 
-# Normalize the URL to lowercase before handling the request
 @app.before_request
 def normalize_url():
-    if request.path != request.path.lower():
-        return redirect(request.path.lower(), code=301)  # Redirect to lowercase URL
+    # Only normalize category-based URLs (if necessary)
+    if "category" in request.view_args:
+        category = request.view_args["category"]
+        # Normalize only the category part to lowercase
+        request.view_args["category"] = category.lower()
+    else:
+        # Allow other URLs (e.g., image paths) to remain case-sensitive
+        pass
 
 
 # Wrapper for admin access
