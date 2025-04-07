@@ -16,7 +16,8 @@ class SEOMiddleware:
             "description": "Welcome to ruthselormeacolatse.com Explore my blog posts, portfolio, projects, and more.",
             "keywords": "blog, tech, writing, programming, python, data science, journalism",
             "image": url_for('static', filename='img/aboutpage.jpg', _external=True),
-            "url": request.base_url
+            "url": request.base_url,
+            "canonical": request.base_url  # Default to current URL (will override below if needed)
         }
 
         # Google Tag Manager ID
@@ -32,6 +33,11 @@ class SEOMiddleware:
                 g.seo["url"] = urljoin(request.host_url,
                                        url_for('show_post', category=post.category.replace(" ", "-"), post_id=post.id))
 
+                # Ensure canonical URL is in lowercase
+                g.seo["canonical"] = urljoin(request.host_url,
+                                             url_for('show_post', category=post.category.replace(" ", "-").lower(),
+                                                     post_id=post.id).lower())
+
         elif request.endpoint == "about":
             g.seo["title"] = "About - Ruth Selorme Acolatse"
             g.seo["description"] = "Learn more about Ruth Selorme Acolatse."
@@ -39,4 +45,3 @@ class SEOMiddleware:
         elif request.endpoint == "contact":
             g.seo["title"] = "Contact - Ruth Selorme Acolatse"
             g.seo["description"] = "Get in touch with Ruth Selorme Acolatse."
-
