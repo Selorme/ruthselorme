@@ -160,7 +160,7 @@ with app.app_context():
 
 @app.route('/favicon.ico')
 def favicon():
-    return send_from_directory('static/images', 'favicon.ico', mimetype='image/vnd.microsoft.icon')
+    return send_from_directory('static/img', 'favicon.png', mimetype='image/vnd.microsoft.icon')
 
 
 @app.route('/sitemap.xml')
