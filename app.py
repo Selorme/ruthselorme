@@ -753,6 +753,10 @@ def show_post(post_id, category=None):
     else:
         requested_post = db.get_or_404(Post, post_id)
 
+
+    # Debug print to confirm image URL
+    print(f"[DEBUG] Image URL before transformation: {requested_post.img_url}")
+
     requested_post.views += 1
     db.session.commit()
 
