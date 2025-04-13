@@ -13,7 +13,7 @@ class SEOMiddleware:
         # Default SEO metadata
         g.seo = {
             "title": "Ruth Selorme Acolatse",
-            "description": "Welcome to ruthselormeacolatse.com Explore my blog posts, portfolio, projects, and more.",
+            "description": "Hi, I'm Ruth Selorme Acolatse — a budding computational journalist, award winning world-traveling debate judge, and public speaking enthusiast. Based in Istanbul, I explore storytelling, culture, and the power of language through journalism, debate, and now, coding. Follow my adventures in communication, food, travel, and computational journalism!",
             "keywords": "blog, tech, writing, programming, python, data science, journalism",
             "image": url_for('static', filename='img/aboutpage.jpg', _external=True),
             "url": request.base_url,
