@@ -23,6 +23,7 @@ from hashlib import md5
 import requests
 from middleware import SEOMiddleware
 from flask import send_from_directory
+from werkzeug.middleware.proxy_fix import ProxyFix
 
 # Load environment variables
 load_dotenv()
@@ -50,6 +51,9 @@ def gravatar_url(email, size=100, rating='g', default='retro', force_default=Fal
 
 
 app = Flask(__name__)
+
+# Trust Render’s proxy (1 proxy layer)
+app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
 
 # Add the filter for Jinja templates
 app.jinja_env.filters['gravatar'] = gravatar_url
