@@ -350,45 +350,51 @@ def send_post_notification(post):
     try:
         # Get all registered users' emails
         users = User.query.all()
-        recipients = ["ruthselormeacolatse.website@gmail.com"]
-        bcc = [user.email for user in users if user.email]
+        for user in users:
+            if not user.email:
+                continue
 
-        # Create the email
-        subject = f"New Blog Post: {post.title}"
+            # Create the email
+            subject = f"New Blog Post: {post.title}"
 
-        # Create HTML email content
-        html_content = f'''
-        <html>
-            <body>
-                <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-                    <h2>{post.title}</h2>
-                    <p>A new post has been published on our blog!</p>
-                    <div style="margin: 20px 0;">
-                        <p>Category: {post.category}</p>
+            def truncate_text(text, word_limit=300):
+                words = text.split()
+                return " ".join(words[:word_limit]) + "..." if len(words) > word_limit else text
+
+            preview_text = truncate_text(post.body)
+
+            # Create HTML email content
+            html_content = f'''
+            <html>
+                <body>
+                    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                        <h2>{post.title}</h2>
+                        <p>{preview_text}</p>
+                        <div style="margin: 20px 0;">
+                            <p>Category: {post.category}</p>
+                        </div>
+                        <a href="{url_for('show_post', category=post.category, post_id=post.id, _external=True)}" 
+                           style="background-color: #007bff; color: white; padding: 10px 20px; 
+                                  text-decoration: none; border-radius: 5px;">
+                            Read More
+                        </a>
+                        <hr style="margin-top: 30px;">
+                        <p style="font-size: 12px; color: #666;">
+                            You received this email because you're registered on our blog. 
+                            If you'd like to unsubscribe, please update your preferences in your account settings.
+                        </p>
                     </div>
-                    <a href="{url_for('show_post', post_id=post.id, _external=True)}" 
-                       style="background-color: #007bff; color: white; padding: 10px 20px; 
-                              text-decoration: none; border-radius: 5px;">
-                        Read More
-                    </a>
-                    <hr style="margin-top: 30px;">
-                    <p style="font-size: 12px; color: #666;">
-                        You received this email because you're registered on our blog. 
-                        If you'd like to unsubscribe, please update your preferences in your account settings.
-                    </p>
-                </div>
-            </body>
-        </html>
-        '''
+                </body>
+            </html>
+            '''
 
-        msg = Message(
-            subject=subject,
-            recipients=recipients,
-            bcc=bcc,
-            html=html_content
-        )
+            msg = Message(
+                subject=subject,
+                recipients=[user.email],
+                html=html_content
+            )
 
-        mail.send(msg)
+            mail.send(msg)
         return True
     except Exception as e:
         print(f"Error sending notification: {e}")
