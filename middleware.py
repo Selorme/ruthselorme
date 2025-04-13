@@ -15,7 +15,7 @@ class SEOMiddleware:
             "title": "Ruth Selorme Acolatse",
             "description": "Hi, I'm Ruth Selorme Acolatse — a budding computational journalist, award winning world-traveling debate judge, and public speaking enthusiast. Based in Istanbul, I explore storytelling, culture, and the power of language through journalism, debate, and now, coding. Follow my adventures in communication, food, travel, and computational journalism!",
             "keywords": "blog, tech, writing, programming, python, data science, journalism",
-            "image": url_for('static', filename='img/aboutpage.jpg', _external=True),
+            "image": url_for('static', filename='img/ogmetaimage.png', _external=True),
             "url": request.base_url,
             "canonical": request.base_url  # Default to current URL (will override below if needed)
         }
