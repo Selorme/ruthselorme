@@ -78,7 +78,7 @@ mail = Mail(app)
 app.config['MAIL_SECRET_KEY'] = os.getenv('MAIL_SECRET_KEY')
 s = URLSafeTimedSerializer(app.config['MAIL_SECRET_KEY'])
 
-RECAPTCHA_SECRET_KEY = os.getenv('RECAPTCHA_SECRET_KEY')
+HCAPTCHA_SECRET_KEY = os.getenv('HCAPTCHA_SECRET_KEY')
 
 # Register SEO Middleware
 SEOMiddleware(app)
@@ -694,22 +694,22 @@ def contact():
             return "Spam detected, ignoring form submission."
 
         #Get reCAPTCHA response from form
-        captcha_response = request.form.get('g-recaptcha-response')
+        captcha_response = request.form.get('h-captcha-response')
 
-        #Verify reCAPTCHA response with Google
+        #Verify HCAPTCHA response
         payload = {
 
-            'secret': RECAPTCHA_SECRET_KEY,
+            'secret': HCAPTCHA_SECRET_KEY,
 
             'response': captcha_response
 
         }
 
-        verify_url = "https://www.google.com/recaptcha/api/siteverify"
+        verify_url = "https://hcaptcha.com/siteverify"
         response = requests.post(verify_url, data=payload)
         result = response.json()
 
-        # If reCAPTCHA verification is successful
+        # If HCAPTCHA verification is successful
         if result.get('success'):
             # Send email
 
@@ -725,7 +725,7 @@ def contact():
             flash('Message sent successfully!', 'success')
         #if recaptcha is not successful
         else:
-            flash('reCAPTCHA verification failed. Please try again.', 'danger')
+            flash('HCAPTCHA verification failed. Please try again.', 'danger')
             return redirect(url_for('contact'))
 
     return render_template("index.html", message_sent=False, copyright_year=year)
