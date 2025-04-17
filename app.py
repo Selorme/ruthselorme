@@ -193,6 +193,11 @@ def generate_sitemap():
     return response
 
 
+@app.route("/robots.txt")
+def robots():
+    return send_from_directory(app.static_folder, "robots.txt", mimetype="text/plain")
+
+
 @app.route('/ads.txt')
 def ads_txt():
     return send_from_directory('static', 'ads.txt', mimetype='text/plain')
@@ -798,7 +803,7 @@ def show_post(post_id, category=None):
             return redirect(url_for('show_post', post_id=post_id, category=category))
         else:
             error = "Login Required! Please log in/Register to leave a comment"
-            flash("Log in to leave a comment!")
+            flash(f"{error}. Log in!")
             return redirect(url_for("login", session=f"{session['url']}"))
     # Fetch all posts in the same category, excluding the current post
     top_level_comments = Comment.query.filter_by(post_id=post_id, parent_id=None).all()
