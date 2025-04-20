@@ -24,6 +24,9 @@ import requests
 from middleware import SEOMiddleware
 from flask import send_from_directory
 from werkzeug.middleware.proxy_fix import ProxyFix
+from flask_assets import Environment, Bundle
+from flask_minify import Minify
+from flask_compress import Compress
 
 # Load environment variables
 load_dotenv()
@@ -51,6 +54,19 @@ def gravatar_url(email, size=100, rating='g', default='retro', force_default=Fal
 
 
 app = Flask(__name__)
+
+
+assets = Environment(app)
+
+# Define JS and CSS bundles
+js = Bundle('src/js/*.js', filters='jsmin', output='dist/js/bundle.js')
+css = Bundle('src/css/*.css', filters='cssmin', output='dist/css/styles.css')
+
+assets.register('js_all', js)
+assets.register('css_all', css)
+
+compress = Compress(app)
+
 
 # Trust Render’s proxy (1 proxy layer)
 app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
@@ -164,7 +180,7 @@ with app.app_context():
 
 @app.route('/favicon.ico')
 def favicon():
-    return send_from_directory('static/img', 'favicon.png', mimetype='image/vnd.microsoft.icon')
+    return send_from_directory('static/img', 'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 
 @app.route('/sitemap.xml')
@@ -193,6 +209,12 @@ def generate_sitemap():
     return response
 
 
+@app.after_request
+def add_header(response):
+    response.headers['Cache-Control'] = 'public, max-age=31536000'
+    return response
+
+
 @app.route("/robots.txt")
 def robots():
     return send_from_directory(app.static_folder, "robots.txt", mimetype="text/plain")
@@ -209,11 +231,19 @@ def normalize_url():
     if "category" in request.view_args:
         category = request.view_args["category"]
         # Normalize only the category part to lowercase
-        request.view_args["category"] = category.lower()
+        if request.view_args.get("category"):
+            request.view_args["category"] = request.view_args["category"].lower()
 
     # Redirect if the entire URL path is not in lowercase (except for static files)
     if request.path != request.path.lower() and not request.path.startswith('/static/'):
         return redirect(request.path.lower(), code=301)
+
+
+@app.after_request
+def add_cache_control(response):
+    if request.path.startswith('/static'):
+        response.cache_control.max_age = 31536000  # 1 year
+    return response
 
 
 # Wrapper for admin access
@@ -739,7 +769,7 @@ def contact():
             flash('HCAPTCHA verification failed. Please try again.', 'danger')
             return redirect(url_for('contact'))
 
-    return render_template("index.html", message_sent=False, copyright_year=year)
+    return render_template("contact.html", message_sent=False, copyright_year=year)
 
 
 @app.route("/audacious-men-series")

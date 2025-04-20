@@ -24,7 +24,11 @@
             <div class="post-preview d-flex flex-column flex-md-row mb-4">
                  <!-- Image on top on smaller screens and on the left on larger screens -->
                 <div class="mb-3 mb-md-0 me-md-3">
-                    <img class="img-fluid" src="{{ post.img_url }}" alt="{{ post.title }}" style="max-width: 200px; height: auto;">
+                    {% set webp_url = post.img_url.replace('.jpg', '.webp').replace('.jpeg', '.webp').replace('.png', '.webp') %}
+                        <picture>
+                          <source srcset="{{ webp_url }}" type="image/webp">
+                          <img class="img-fluid" src="{{ post.img_url }}" alt="{{ post.title }}" style="max-width: 200px; height: auto;">
+                        </picture>
                 </div>
                 <!-- Title and content on the right on larger screens and below on smaller screens -->
                 <div>

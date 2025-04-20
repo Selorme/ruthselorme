@@ -1,4 +1,5 @@
 .env
+convert_to_webp.py
 export_posts.py
 # Byte-compiled / optimized / DLL files
 __pycache__/

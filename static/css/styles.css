@@ -1,5 +1,6 @@
 /* Ensures navbar scrolls smoothly and is visible*/
 .navbar {
+    background-color: #c8c9ca !important;
     opacity: 100;
     transition: opacity 0.3s;
 }
@@ -31,6 +32,7 @@ body {
     height: auto;
 }
 
+
 /* Dark Mode Styles */
 body.dark-mode {
     background-color: #212121;
@@ -38,7 +40,7 @@ body.dark-mode {
 }
 
 body.dark-mode .navbar {
-    background-color: #212121 !important;
+    background-color: #111 !important;
     color: #e0e0e0 !important;
 }
 
@@ -151,13 +153,20 @@ body.dark-mode .toggler-icon span {
 
 /* Ensures the image doesn't overflow its container */
 .responsive-image-index {
-    width: 100%; /* Fill the width of the container */
+    width: 100%;
+    height: 200px; /* or whatever height works best */
+    object-fit: cover; /* Crop image while preserving aspect ratio */
     border-radius: 15px
 }
 
 /* Makes the border of the logo image not rounder*/
 .logo {
     border-radius: 15px
+}
+
+/* light mode logo */
+body.dark-mode .logo {
+    content: url('/static/img/websitelogo.jpg');
 }
 
 @font-face {
@@ -200,22 +209,23 @@ body.dark-mode .toggler-icon span {
     padding: 30px;
 }
 
+#fifth-project {
+    padding: 30px;
+}
+
+#sixth-project {
+    padding: 30px;
+}
+
 /* Background image for footer */
 .footer-section {
-    background-image: url('/static/img/rsbglight.png'); /* Path to your background image */
-    background-size: contain; /* Ensure the image covers the entire footer */
-    background-position: center; /* Center the image */
-    background-repeat: no-repeat; /* Prevent image repetition */
-    color: white; /* Optional: Change text color for contrast */
+    background-color: #c8c9ca;; /* Optional: Change text color for contrast */
 }
 
 body.dark-mode .footer-section {
-    background-image: url('/static/img/footerdarkimg.png');
-    background-size: contain; /* Ensure the image covers the entire footer */
-    background-position: center; /* Center the image */
-    background-repeat: no-repeat; /* Prevent image repetition */
-    color: white; /* Optional: Change text color for contrast */
+    background-color: #111; /* Optional: Change text color for contrast */
 }
+
 
 /* control the styling for blog text */
 #blog{
@@ -228,6 +238,10 @@ body.dark-mode .footer-section {
 }
 
 #ugescapades{
+    padding: 30px;
+}
+
+#musings{
     padding: 30px;
 }
 
@@ -445,6 +459,10 @@ body.dark-mode .card {
     color: white;
 }
 
+.card {
+    height: 100%;
+}
+
 .form-control {
     color: black !important; /* Change the text color to white */
     background-color: transparent; /* Optional: If you want a transparent background */
@@ -479,7 +497,7 @@ body.dark-mode .btn-outline-success {
 .btn-outline-success {
     --bs-btn-color: white;
     --bs-btn-border-color: black;
-    --bs-btn-bg: #007bff;
+    --bs-btn-bg: #00346b;
     --bs-btn-hover-color: #fff;
     --bs-btn-hover-bg: #198754;
     --bs-btn-hover-border-color: black;
@@ -492,10 +510,6 @@ body.dark-mode .btn-outline-success {
     --bs-btn-disabled-bg: transparent;
     --bs-btn-disabled-border-color: black;
     --bs-gradient: none;
-}
-
-.text-muted {
-    color: black !important;
 }
 
 /* modal title color */
@@ -524,8 +538,12 @@ body.dark-mode .btn-outline-success {
 }
 
 .text-muted {
-    color: #6c757d !important; /* Bootstrap's muted color */
+    color: #000000 !important; /* Bootstrap's muted color */
     font-size: 0.875em !important; /* Optional: Adjust size to be smaller */
+}
+
+body.dark-mode .text-muted{
+    color: white !important;
 }
 
 #reply-link {
@@ -608,5 +626,153 @@ body.dark-mode .thumb {
 
 .flash {
   color: #ff182d;
+}
+
+#aboutme{
+    text-transform: uppercase;
+    margin: 0 0 30px;
+    font-family: "Lato", sans-serif;
+    font-weight: 300;
+    letter-spacing: 1px;
+    padding-top: 80px;
+    padding-bottom: 20px;
+}
+
+#intro {
+    background: url(../img/indexbg.jpg) no-repeat center center fixed;
+    background-size: cover;
+    background-color: #000; /* Fallback if image doesn't load */
+    color: #000;
+    min-height: 80vh;
+    width: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#intro p.subtitle {
+    color: #ddd;
+}
+
+#intro h1 {
+    color: #FFF;
+    font-size: 60px;
+    font-weight: 300;
+    letter-spacing: 3px;
+}
+
+@media screen and (max-width: 1000px) {
+    .intro-content {
+        padding: 25% 0 5% 0;
+    }
+}
+
+#about p {
+    font-size: 16px;
+    max-width: 650px;
+    margin: 30px auto;
+}
+p {
+    margin: 0 0 25px;
+    font-size: 16px;
+    line-height: 1.7;
+    font-family: 'Roboto Slab', serif;
+    font-weight: 300;
+}
+
+#about #tl-dr h7 {
+    font-weight: 300;
+    font-size: 14px;
+    font-family: 'Roboto Slab', sans-serif;
+    text-transform: capitalize;
+    letter-spacing: 0.5px;
+}
+
+#tl-dr {
+    background: #f0f0f0;
+    color: #555;
+    text-align: center;
+    margin: 0 auto;
+    padding: 20px;
+    max-width: 650px;
+}
+
+#tl-dr {
+    background: #f0f0f0;
+    flex-wrap: wrap;
+    color: #555;
+    text-align: center;
+    margin: 0 auto;
+    padding: 20px;
+    max-width: 650px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+#tl-dr .row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.tldr-proc {
+    width: 30%;
+    display: inline-block;
+    vertical-align: top;
+}
+
+#aboutpage{
+    text-transform: uppercase;
+    margin: 0 0 30px;
+    font-family: "Lato", sans-serif;
+    font-weight: 300;
+    letter-spacing: 1px;
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+#projects{
+    text-transform: uppercase;
+    font-family: "Lato", sans-serif;
+    font-weight: 300;
+    letter-spacing: 1px;
+    padding-top: 80px;
+}
+
+#blogs{
+    text-transform: uppercase;
+    font-family: "Lato", sans-serif;
+    font-weight: 300;
+    letter-spacing: 1px;
+    padding-top: 30px;
+}
+
+#contact{
+    text-transform: uppercase;
+    font-family: "Lato", sans-serif;
+    font-weight: 300;
+    letter-spacing: 1px;
+    text-align: center;
+    padding-bottom: 30px;
+}
+
+.blog-thumbnail {
+    width: 100%;
+    height: 200px; /* or whatever height you want */
+    object-fit: cover; /* crops & centers the image */
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+}
+
+.captcha {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 20px 0; /* optional spacing */
 }
 

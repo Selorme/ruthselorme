@@ -3,7 +3,7 @@
   <nav class="navbar navbar-expand-lg bg-body-tertiary" id="mainNav">
     <div class="container-fluid">
       <a class="navbar-brand" href="{{ url_for('home') }}">
-        <img class="logo" src="{{ url_for('static', filename='img/rs1.png') }}" height="60" alt="Ruth Selorme Logo">
+        <img class="logo" id="logo" src="{{ url_for('static', filename='img/websitelogodark.png') }}" height="60" alt="Ruth Selorme Logo">
       </a>
       <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <div class="toggler-icon">
@@ -40,10 +40,10 @@
             </ul>
           </li>
           <li class="nav-item">
-            <a class="nav-link px-lg-3 py-3 py-lg-4" href="#" data-bs-toggle="modal" data-bs-target="#emailModal">Contact</a>
+            <a class="nav-link px-lg-3 py-3 py-lg-4" href="{{ url_for('contact') }}">Contact</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link px-lg-3 py-3 py-lg-4" href="{{ url_for('about') }}">About</a>
+            <a class="nav-link px-lg-3 py-3 py-lg-4" href="{{ url_for('about') }}">About Us</a>
           </li>
           {% if not current_user.is_authenticated:%}
           <li class="nav-item">
