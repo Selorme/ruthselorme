@@ -26,7 +26,6 @@ from flask import send_from_directory
 from werkzeug.middleware.proxy_fix import ProxyFix
 from flask_assets import Environment, Bundle
 from flask_compress import Compress
-from flask_htmlmin import HTMLMIN
 
 
 # Load environment variables
