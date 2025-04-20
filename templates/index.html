@@ -14,14 +14,14 @@
                           <img
                             src="{{ url_for('static', filename='img/prof-img.png') }}"
                             alt="Ruth Selorme Headshot"
-                            width="200" height="auto"
+                            width="200" height="200"
                             loading="lazy" decoding="async">
                         </picture>
                         <p>
-                            Hey! I'm Ruth Selorme. I'm a web developer with a passion for back end development, database management, and data science. I recently graduated
-                            <a href="https://www.marmara.edu.tr/" target="_blank">Marmara University</a> with a degree in Journalism.
+                            Hey! I'm Ruth Selorme. I'm a web developer with a passion for back end development, database management, and data science. I recently graduated from <a class="btn btn-outline-success" href="https://www.marmara.edu.tr/" target="_blank"><em>Marmara University</em></a>
+                            with a degree in Journalism.
                             <br>
-                            <br> When I'm not on the computer, I enjoy debating, coloring, and cooking. You can read more about me <a href="{{ url_for('about') }}">here...</a>
+                            <br> When I'm not on the computer, I enjoy debating, coloring, and cooking. You can read more about me <a class="btn btn-outline-success" href="{{ url_for('about') }}" target="_blank"><em>here...</em></a>
 
                         </p>
                     </div>
@@ -30,22 +30,22 @@
                 <div class="row text-center">
                     <div id="tl-dr">
                         <div class="tldr-proc">
-                            <div class="tldr-icon" id="tldr-keyboard"><i class="fa fa-keyboard-o"></i>
-                            <img src="/static/img/keyboard.svg" width="30" height="30">
+                            <div class="tldr-icon"><i class="fa fa-tree"></i>
+                            <img src="/static/img/pencil-square.svg" width="30" height="30" alt="pencil and square">
                             </div>
-                            <h6>Web Developer</h6>
+                            <h6>Content Creator</h6>
                         </div>
                         <div class="tldr-proc">
                             <div class="tldr-icon"><i class="fa fa-pencil"></i>
-                            <img src="/static/img/journal-album.svg" width="30" height="30">
+                            <img src="/static/img/journal-album.svg" width="30" height="30" alt="journal">
                             </div>
                             <h6>Journalist</h6>
                         </div>
                         <div class="tldr-proc">
-                            <div class="tldr-icon"><i class="fa fa-tree"></i>
-                            <img src="/static/img/pencil-square.svg" width="30" height="30">
+                            <div class="tldr-icon" id="tldr-keyboard"><i class="fa fa-keyboard-o"></i>
+                            <img src="/static/img/keyboard.svg" width="30" height="30" alt="keyboard">
                             </div>
-                            <h6>Content Creator</h6>
+                            <h6>Web Developer</h6>
                         </div>
                     </div>
                 </div>
