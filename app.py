@@ -25,7 +25,6 @@ from middleware import SEOMiddleware
 from flask import send_from_directory
 from werkzeug.middleware.proxy_fix import ProxyFix
 from flask_assets import Environment, Bundle
-from flask_minify import Minify
 from flask_compress import Compress
 
 # Load environment variables
