@@ -13,7 +13,7 @@ class SEOMiddleware:
         # Default SEO metadata
         g.seo = {
             "title": "Ruth Selorme Acolatse",
-            "description": "Hi, I'm Ruth Selorme Acolatse — a budding computational journalist, award winning world-traveling debate judge, and public speaking enthusiast. Based in Istanbul, I explore storytelling, culture, and the power of language through journalism, debate, and now, coding. Follow my adventures in communication, food, travel, and computational journalism!",
+            "description": "Hi, I'm Ruth Selorme Acolatse — a journalist and web developer. I explore storytelling and the power of language through journalism, debate, and coding.",
             "keywords": "blog, tech, writing, programming, python, data science, journalism",
             "image": url_for('static', filename='img/ogmetaimage.png', _external=True),
             "url": request.base_url,
@@ -45,3 +45,5 @@ class SEOMiddleware:
         elif request.endpoint == "contact":
             g.seo["title"] = "Contact - Ruth Selorme Acolatse"
             g.seo["description"] = "Get in touch with Ruth Selorme Acolatse."
+
+#Hi, I'm Ruth Selorme Acolatse — a budding computational journalist, award winning world-traveling debate judge, and public speaking enthusiast. Based in Istanbul, I explore storytelling, culture, and the power of language through journalism, debate, and now, coding. Follow my adventures in communication, food, travel, and computational journalism!",
