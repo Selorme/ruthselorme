@@ -824,7 +824,7 @@ def portfolio():
 def show_post(post_id, category=None):
     # URL-encode the category to handle special characters properly
     if category:
-        category = quote(category.replace("-", " "))  # Replace hyphen with space and encode
+        category = category.replace("-", " ").lower()  # Replace hyphen with space and encode
         print(f"[DEBUG] Searching for post with ID {post_id} in category '{category}'.")
 
         # Use filter() with ilike() for case-insensitive comparison
