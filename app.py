@@ -396,8 +396,8 @@ def like_post(category, post_id):
 
     # Increment likes
     if request.method == "POST":
-    post.likes += 1
-    db.session.commit()
+        post.likes += 1
+        db.session.commit()
 
     print(f"Post found. Likes incremented. Current likes: {post.likes}")
 
