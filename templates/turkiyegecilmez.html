@@ -36,7 +36,7 @@
                     <!-- Display the first three lines of the content -->
                     <p>
                         {{ post.body|truncate(300, True, '...')|safe }}
-                        <a class="btn btn-outline-success"  href="{{ url_for('show_post', category=post.category.replace(' ', '-'), post_id=post.id) }}"><em>Read More...</em></a>
+                        <a class="btn btn-outline-success"  href="{{ url_for('show_post', category=post.category.replace(' ', '-').lower(), post_id=post.id) }}"><em>Read More...</em></a>
                     </p>
                 </div>
             </div>
