@@ -186,12 +186,28 @@ def favicon():
 
 @app.route('/sitemap.xml')
 def generate_sitemap():
-    pages = ['/', '/about', '/contact', '/blog', '/new-page']  # Add more pages dynamically
-    base_url = "https://ruthselormeacolatse.info"
+    # Static pages
+    pages = [
+        '/',
+        '/about',
+        '/contact',
+        '/privacy-policy',  # Privacy Policy page
+        '/terms-and-conditions',  # Terms and Conditions page
+        '/disclaimer'  # Disclaimer page
+    ]
 
+    # Dynamically adding blog posts and categories
+    blog_posts = Post.query.filter_by(status="published").all()  # Get all published posts
+    categories = set(post.category for post in blog_posts)  # Get unique categories
+
+    # Base URL for your site
+    base_url = "https://www.ruthselormeacolatse.info"
+
+    # Start the XML Sitemap
     xml_sitemap = """<?xml version="1.0" encoding="UTF-8"?>\n"""
     xml_sitemap += """<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n"""
 
+    # Add static pages to the sitemap
     for page in pages:
         xml_sitemap += f"""<url>
             <loc>{base_url}{page}</loc>
@@ -200,13 +216,28 @@ def generate_sitemap():
             <priority>0.7</priority>
         </url>\n"""
 
+    # Add blog post URLs to the sitemap
+    for post in blog_posts:
+        xml_sitemap += f"""<url>
+            <loc>{base_url}/blog/{post.title.replace(' ', '-').lower()}</loc>
+            <lastmod>{post.date}</lastmod>
+            <changefreq>weekly</changefreq>
+            <priority>0.7</priority>
+        </url>\n"""
+
+    # Add category URLs to the sitemap (assuming you have category routes set up)
+    for category in categories:
+        xml_sitemap += f"""<url>
+            <loc>{base_url}/category/{category.lower()}</loc>
+            <lastmod>{datetime.today().strftime('%Y-%m-%d')}</lastmod>
+            <changefreq>monthly</changefreq>
+            <priority>0.6</priority>
+        </url>\n"""
+
+    # Close the XML
     xml_sitemap += """</urlset>"""
 
     response = Response(xml_sitemap, mimetype="application/xml")
-
-    # Print out the response headers for debugging
-    print(response.headers)
-
     return response
 
 
