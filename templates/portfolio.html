@@ -32,7 +32,7 @@
                 </div>
                 <!-- Title and content on the right on larger screens and below on smaller screens -->
                 <div>
-                    <a class="post-title-link" href="{{ url_for('show_post', category=post.category.replace(' ', '-'), post_id=post.id) }}">
+                    <a class="post-title-link" href="{{ url_for('show_post', category=post.category.replace(' ', '-').lower(), post_id=post.id) }}">
                         <h2 class="post-title">
                             {{ post.title }}
                         </h2>

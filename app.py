@@ -266,12 +266,16 @@ def normalize_url():
     # Only normalize category-based URLs for GET requests
     if request.method == 'GET' and request.view_args and "category" in request.view_args:
         category = request.view_args["category"]
-        fixed = category.lower()
 
-        # Normalize the category part to lowercase
-        if category != fixed:
-            # Redirect to lowercase version of the category URL (ensure POST isn't interrupted)
-            return redirect(request.url.lower(), code=308)
+        # Ensure category is not None before proceeding
+        if category:
+            # Normalize to lowercase
+            fixed = category.lower()
+
+            # Check if the current category is not already lowercase
+            if category != fixed:
+                # Redirect to lowercase version of the category URL
+                return redirect(request.url.replace(category, fixed), code=308)
 
 
 @app.after_request
@@ -822,24 +826,26 @@ def portfolio():
 
 @app.route("/<string:category>/post/<int:post_id>", methods=["GET", "POST"])
 def show_post(post_id, category=None):
-    # URL-encode the category to handle special characters properly
-    if category:
-        category = category.replace("-", " ").lower()  # Replace hyphen with space and encode
-        print(f"[DEBUG] Searching for post with ID {post_id} in category '{category}'.")
+    normalized_category = category.lower()
 
-        # Use filter() with ilike() for case-insensitive comparison
-        requested_post = Post.query.filter(
-            Post.id == post_id,
-            Post.category.ilike(category)  # ilike() performs case-insensitive search
-        ).first()
+    # Redirect if the incoming category is not lowercase
+    if category != normalized_category:
+        return redirect(url_for("show_post", post_id=post_id, category=normalized_category), code=301)
 
-        if not requested_post:
-            print(f"[DEBUG] Post not found in category '{category}' with ID {post_id}. Redirecting to home.")
-            flash(f"Post with ID {post_id} not found in category {category}.", "warning")
-            return redirect(url_for("home"))
-    else:
-        requested_post = db.get_or_404(Post, post_id)
+    category = normalized_category.replace("-", " ").lower()
 
+    print(f"[DEBUG] Searching for post with ID {post_id} in category '{category}'.")
+
+    # Use filter() with ilike() for case-insensitive comparison
+    requested_post = Post.query.filter(
+        Post.id == post_id,
+        Post.category.ilike(category)  # ilike() performs case-insensitive search
+    ).first()
+
+    if not requested_post:
+        print(f"[DEBUG] Post not found in category '{category}' with ID {post_id}. Redirecting to home.")
+        flash(f"Post with ID {post_id} not found in category {category}.", "warning")
+        return redirect(url_for("home"))
 
     # Debug print to confirm image URL
     print(f"[DEBUG] Image URL before transformation: {requested_post.img_url}")
