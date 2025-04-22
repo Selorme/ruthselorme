@@ -7,8 +7,12 @@ class SEOMiddleware:
         self.app = app
         app.before_request(self.before_request)
 
+
     def before_request(self):
         """Inject dynamic SEO metadata and GTM ID into Flask global `g`."""
+
+        # Compute clean path
+        path = request.path.rstrip('/') or '/'
 
         # Default SEO metadata
         g.seo = {
@@ -17,7 +21,7 @@ class SEOMiddleware:
             "keywords": "blog, tech, writing, programming, python, data science, journalism",
             "image": url_for('static', filename='img/ogmetaimage.png', _external=True),
             "url": request.base_url,
-            "canonical": f"https://www.ruthselormeacolatse.info{request.path}"
+            "canonical": f"https://www.ruthselormeacolatse.info{path}"
         }
 
         # Google Tag Manager ID
