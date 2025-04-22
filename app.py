@@ -375,7 +375,7 @@ def login():
     return render_template("login.html", form=form)
 
 
-@app.route("/<string:category>/post/<int:post_id>/like", methods=["POST"])
+@app.route("/<string:category>/post/<int:post_id>/like", methods=["GET", "POST"])
 def like_post(category, post_id):
     print(f"Like post requested: Category = {category}, Post ID = {post_id}")
 
