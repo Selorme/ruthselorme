@@ -186,63 +186,63 @@ def favicon():
 
 @app.route('/sitemap.xml')
 def generate_sitemap():
+    base_url = "https://www.ruthselormeacolatse.info"
+    today = datetime.today().strftime('%Y-%m-%d')
+
     # Static pages
-    pages = [
+    static_pages = [
         '/',
         '/about',
         '/contact',
         '/register',
         '/login',
         '/cvresume',
-        '/privacy-policy',  # Privacy Policy page
-        '/terms-and-conditions',  # Terms and Conditions page
-        '/disclaimer'  # Disclaimer page
+        '/privacy-policy',
+        '/terms-and-conditions',
+        '/disclaimer',
+        '/projects'
     ]
 
-    # Dynamically adding blog posts and categories
-    blog_posts = Post.query.filter_by(status="published").all()  # Get all published posts
-    categories = sorted(set(post.category for post in blog_posts))  # Get unique categories
+    blog_posts = Post.query.filter_by(status="published").all()
+    categories = sorted(set(post.category.strip() for post in blog_posts))
 
-    # Base URL for your site
-    base_url = "https://www.ruthselormeacolatse.info"
 
-    # Start the XML Sitemap
     xml_sitemap = """<?xml version="1.0" encoding="UTF-8"?>\n"""
     xml_sitemap += """<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n"""
 
-    # Add static pages to the sitemap
-    for page in pages:
+    # Static pages
+    for page in static_pages:
+        clean_path = page.strip('/')
         xml_sitemap += f"""<url>
-            <loc>{base_url}/{page}</loc>
-            <lastmod>{datetime.today().strftime('%Y-%m-%d')}</lastmod>
-            <changefreq>weekly</changefreq>
-            <priority>0.7</priority>
-        </url>\n"""
+    <loc>{base_url}/{clean_path}</loc>
+    <lastmod>{today}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+</url>\n"""
 
-    # Add blog post URLs to the sitemap
+    # Blog posts
     for post in blog_posts:
+        slug = post.title.strip().lower().replace(' ', '-')
         xml_sitemap += f"""<url>
-            <loc>{base_url}/{post.title.replace(' ', '-').lower()}</loc>
-            <lastmod>{post.date}</lastmod>
-            <changefreq>weekly</changefreq>
-            <priority>0.7</priority>
-        </url>\n"""
+    <loc>{base_url}/{slug}</loc>
+    <lastmod>{post.date}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+</url>\n"""
 
-    # Add category URLs to the sitemap (assuming you have category routes set up)
+    # Category pages
     for category in categories:
-        slug = category.strip().lower().replace(" ", "-")
+        cat_slug = category.strip().lower().replace(" ", "-")
         xml_sitemap += f"""<url>
-            <loc>{base_url}/{slug}</loc>
-            <lastmod>{datetime.today().strftime('%Y-%m-%d')}</lastmod>
-            <changefreq>monthly</changefreq>
-            <priority>0.5</priority>
-        </url>\n"""
+    <loc>{base_url}/{cat_slug}</loc>
+    <lastmod>{today}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+    </url>\n"""
 
-    # Close the XML
-    xml_sitemap += """</urlset>"""
+    xml_sitemap += "</urlset>"
 
-    response = Response(xml_sitemap, mimetype="application/xml")
-    return response
+    return Response(xml_sitemap, mimetype="application/xml")
 
 
 @app.after_request
