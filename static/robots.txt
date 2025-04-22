@@ -7,4 +7,4 @@ Disallow:
 # Disallow: http://ruthselormeacolatse.info/
 
 # Point search engines to your sitemap
-Sitemap: https://ruthselormeacolatse.info/sitemap.xml
+Sitemap: https://www.ruthselormeacolatse.info/sitemap.xml
