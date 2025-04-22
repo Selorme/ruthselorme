@@ -263,17 +263,15 @@ def ads_txt():
 
 @app.before_request
 def normalize_url():
-    # Redirect to lowercase URL if needed (ignores static files)
-    if request.path != request.path.lower() and not request.path.startswith('/static/'):
-        return redirect(request.path.lower(), code=308)  # or use 307
+    # Only normalize category-based URLs for GET requests
+    if request.method == 'GET' and request.view_args and "category" in request.view_args:
+        category = request.view_args["category"]
+        fixed = category.lower()
 
-    # Normalize category in view_args if available
-    if request.endpoint:
-        view_args = request.view_args
-        if view_args and "category" in view_args:
-            category = view_args["category"]
-            if isinstance(category, str):
-                view_args["category"] = category.lower()
+        # Normalize the category part to lowercase
+        if category != fixed:
+            # Redirect to lowercase version of the category URL (ensure POST isn't interrupted)
+            return redirect(request.url.lower(), code=308)
 
 
 @app.after_request
@@ -376,7 +374,7 @@ def login():
     return render_template("login.html", form=form)
 
 
-@app.route("/<string:category>/post/<int:post_id>/like", methods=["GET", "POST"])
+@app.route("/<string:category>/post/<int:post_id>/like", methods=["POST"])
 def like_post(category, post_id):
     print(f"Like post requested: Category = {category}, Post ID = {post_id}")
 
@@ -846,6 +844,11 @@ def show_post(post_id, category=None):
     # Debug print to confirm image URL
     print(f"[DEBUG] Image URL before transformation: {requested_post.img_url}")
 
+    # Set dynamic meta information
+    meta_title = requested_post.title
+    meta_description = requested_post.description if requested_post.description else "A short description of the blog post."
+    meta_image = requested_post.img_url if requested_post.img_url else "adulting.jpg"  # Default image if none exists
+
     requested_post.views += 1
     db.session.commit()
 
@@ -887,7 +890,10 @@ def show_post(post_id, category=None):
         all_posts=all_posts,
         categories=categories,
         copyright_year=year,
-        category=category
+        category=category,
+        meta_title=meta_title,
+        meta_description=meta_description,
+        meta_image=meta_image
     )
 
 
