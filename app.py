@@ -191,6 +191,9 @@ def generate_sitemap():
         '/',
         '/about',
         '/contact',
+        '/register',
+        '/login',
+        '/cvresume',
         '/privacy-policy',  # Privacy Policy page
         '/terms-and-conditions',  # Terms and Conditions page
         '/disclaimer'  # Disclaimer page
@@ -198,7 +201,7 @@ def generate_sitemap():
 
     # Dynamically adding blog posts and categories
     blog_posts = Post.query.filter_by(status="published").all()  # Get all published posts
-    categories = set(post.category for post in blog_posts)  # Get unique categories
+    categories = sorted(set(post.category for post in blog_posts))  # Get unique categories
 
     # Base URL for your site
     base_url = "https://www.ruthselormeacolatse.info"
@@ -210,7 +213,7 @@ def generate_sitemap():
     # Add static pages to the sitemap
     for page in pages:
         xml_sitemap += f"""<url>
-            <loc>{base_url}{page}</loc>
+            <loc>{base_url}/{page}</loc>
             <lastmod>{datetime.today().strftime('%Y-%m-%d')}</lastmod>
             <changefreq>weekly</changefreq>
             <priority>0.7</priority>
@@ -219,7 +222,7 @@ def generate_sitemap():
     # Add blog post URLs to the sitemap
     for post in blog_posts:
         xml_sitemap += f"""<url>
-            <loc>{base_url}/blog/{post.title.replace(' ', '-').lower()}</loc>
+            <loc>{base_url}/{post.title.replace(' ', '-').lower()}</loc>
             <lastmod>{post.date}</lastmod>
             <changefreq>weekly</changefreq>
             <priority>0.7</priority>
@@ -227,11 +230,12 @@ def generate_sitemap():
 
     # Add category URLs to the sitemap (assuming you have category routes set up)
     for category in categories:
+        slug = category.strip().lower().replace(" ", "-")
         xml_sitemap += f"""<url>
-            <loc>{base_url}/category/{category.lower()}</loc>
+            <loc>{base_url}/{slug}</loc>
             <lastmod>{datetime.today().strftime('%Y-%m-%d')}</lastmod>
             <changefreq>monthly</changefreq>
-            <priority>0.6</priority>
+            <priority>0.5</priority>
         </url>\n"""
 
     # Close the XML
