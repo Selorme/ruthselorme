@@ -264,7 +264,7 @@ def ads_txt():
 @app.before_request
 def normalize_url():
     # Only normalize category-based URLs (if necessary)
-    if "category" in request.view_args:
+    if request.view_args and "category" in request.view_args:
         category = request.view_args["category"]
         # Normalize only the category part to lowercase
         if request.view_args.get("category"):
