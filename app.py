@@ -18,7 +18,7 @@ from supabase import create_client, Client
 from flask_mail import Mail, Message
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired
 from flask_migrate import Migrate
-from urllib.parse import urlparse, urljoin, urlencode
+from urllib.parse import urlparse, urljoin, urlencode, quote
 from hashlib import md5
 import requests
 from middleware import SEOMiddleware
@@ -218,17 +218,17 @@ def generate_sitemap():
     <lastmod>{today}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
-</url>\n"""
+    </url>\n"""
 
-    # Blog posts
+    # Add blog post URLs with category and post id
     for post in blog_posts:
-        slug = post.title.strip().lower().replace(' ', '-')
+        category_slug = quote(post.category.strip().lower().replace(" ", "-"))  # URL-encoded category
         xml_sitemap += f"""<url>
-    <loc>{base_url}/{slug}</loc>
-    <lastmod>{post.date}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-</url>\n"""
+            <loc>{base_url}/{category_slug}/post/{post.id}</loc>
+            <lastmod>{post.date}</lastmod>
+            <changefreq>weekly</changefreq>
+            <priority>0.7</priority>
+        </url>\n"""
 
     # Category pages
     for category in categories:
@@ -822,9 +822,9 @@ def portfolio():
 
 @app.route("/<string:category>/post/<int:post_id>", methods=["GET", "POST"])
 def show_post(post_id, category=None):
-    # Fetch the post, optionally validating the category
+    # URL-encode the category to handle special characters properly
     if category:
-        category = category.replace("-", " ")  # Replace hyphen with space
+        category = quote(category.replace("-", " "))  # Replace hyphen with space and encode
         print(f"[DEBUG] Searching for post with ID {post_id} in category '{category}'.")
 
         # Use filter() with ilike() for case-insensitive comparison
