@@ -265,7 +265,7 @@ def ads_txt():
 def normalize_url():
     # Redirect to lowercase URL if needed (ignores static files)
     if request.path != request.path.lower() and not request.path.startswith('/static/'):
-        return redirect(request.path.lower(), code=301)
+        return redirect(request.path.lower(), code=308)  # or use 307
 
     # Normalize category in view_args if available
     if request.endpoint:
