@@ -263,16 +263,17 @@ def ads_txt():
 
 @app.before_request
 def normalize_url():
-    # Only normalize category-based URLs (if necessary)
-    if request.view_args and "category" in request.view_args:
-        category = request.view_args["category"]
-        # Normalize only the category part to lowercase
-        if request.view_args.get("category"):
-            request.view_args["category"] = request.view_args["category"].lower()
-
-    # Redirect if the entire URL path is not in lowercase (except for static files)
+    # Redirect to lowercase URL if needed (ignores static files)
     if request.path != request.path.lower() and not request.path.startswith('/static/'):
         return redirect(request.path.lower(), code=301)
+
+    # Normalize category in view_args if available
+    if request.endpoint:
+        view_args = request.view_args
+        if view_args and "category" in view_args:
+            category = view_args["category"]
+            if isinstance(category, str):
+                view_args["category"] = category.lower()
 
 
 @app.after_request
@@ -394,6 +395,7 @@ def like_post(category, post_id):
         return redirect(url_for('home'))
 
     # Increment likes
+    if request.method == "POST":
     post.likes += 1
     db.session.commit()
 
