@@ -844,11 +844,6 @@ def show_post(post_id, category=None):
     # Debug print to confirm image URL
     print(f"[DEBUG] Image URL before transformation: {requested_post.img_url}")
 
-    # Set dynamic meta information
-    meta_title = requested_post.title
-    meta_description = requested_post.description if requested_post.description else "A short description of the blog post."
-    meta_image = requested_post.img_url if requested_post.img_url else "adulting.jpg"  # Default image if none exists
-
     requested_post.views += 1
     db.session.commit()
 
@@ -891,9 +886,6 @@ def show_post(post_id, category=None):
         categories=categories,
         copyright_year=year,
         category=category,
-        meta_title=meta_title,
-        meta_description=meta_description,
-        meta_image=meta_image
     )
 
 
