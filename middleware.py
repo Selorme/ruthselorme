@@ -17,7 +17,7 @@ class SEOMiddleware:
             "keywords": "blog, tech, writing, programming, python, data science, journalism",
             "image": url_for('static', filename='img/ogmetaimage.png', _external=True),
             "url": request.base_url,
-            "canonical": request.base_url  # Default to current URL (will override below if needed)
+            "canonical": f"https://www.ruthselormeacolatse.info{request.path}"
         }
 
         # Google Tag Manager ID
