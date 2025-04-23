@@ -8,7 +8,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-8 col-md-offset-2 wp1">
-                        <h1 id="aboutme">A Little Bit About Me</h1>
+                        <h1 id="aboutme">RUTH SELORME ACOLATSE - Web Developer, Content Creator, Journalist</h1>
                         <picture>
                           <source srcset="{{ url_for('static', filename='img/prof-img.webp') }}" type="image/webp">
                           <img
@@ -117,9 +117,9 @@
                   alt="snake game screenshot"
                   loading="lazy" decoding="async">
               </picture>
-              <h3 class="title">Quiz Game</h3>
+              <h3 class="title">Snake Game using Turtle</h3>
               <p class="align-left">The classic snake game we played in our childhood can never be forgotten. In this project, I build the entire game with a couple of updates to enhance your experience using Turtle graphics! This project is a fun way to learn about game development, collision detection, and user interaction in Python. Play to find out how many levels you can survive...</p>
-              <p><a class="btn btn-outline-success" href="Projects/post/32"><em>Read More...</em></a></p>
+              <p><a class="btn btn-outline-success" href="Projects/post/34"><em>Read More...</em></a></p>
             </div>
 
             <!-- Fifth Project -->
@@ -132,9 +132,9 @@
                   alt="password manager image"
                   loading="lazy" decoding="async">
               </picture>
-              <h3 class="title">Quiz Game</h3>
+              <h3 class="title">Password Manager</h3>
               <p class="align-left">In today's digital age, managing and securing your passwords is crucial. This Python Tkinter project is designed to help you keep track of your passwords efficiently and securely. Our Password Manager app allows you to generate strong passwords, save them along with your website and email, and retrieve them seamlessly whenever you want...</p>
-              <p><a class="btn btn-outline-success" href="Projects/post/32"><em>Read More...</em></a></p>
+              <p><a class="btn btn-outline-success" href="Projects/post/31"><em>Read More...</em></a></p>
             </div>
 
             <!-- sixth Project -->
@@ -147,7 +147,7 @@
                   alt="quiz interface"
                   loading="lazy" decoding="async">
               </picture>
-              <h3 class="title">Quiz Game</h3>
+              <h3 class="title">Quiz Game with Quiz_Brain</h3>
               <p class="align-left">So you think you are smart and can best any quiz at all? Can you face off Quiz_Brain in this tkinter designed game and come out victorious? Answer questions about general and weirdly specific knowledge to test the limits of your intellectual capacity while having fun. No! Do not ask GPT for the answers...</p>
               <p><a class="btn btn-outline-success" href="Projects/post/32"><em>Read More...</em></a></p>
             </div>
@@ -155,8 +155,9 @@
           </div>
           <!-- Button Below Grid -->
           <div class="mt-4">
-            <a class="btn btn-outline-success" href="{{ url_for('projects') }}"><em>View More Projects...</em></a>
+            <a class="btn btn-outline-success" href="Projects/post/24"><em>View More Projects...</em></a>
           </div>
+        </div>
         </div>
       </div>
     </div>
@@ -167,7 +168,7 @@
     <div class="container text-center">
       <!-- Header Section -->
       <div class="row flex-lg-row-reverse align-items-center g-5 py-3 mx-5">
-        <h3 class="lead-text" id="blogs">My Blog Posts</h3>
+        <h2 class="lead-text" id="blogs">My Blog Posts</h2>
         <!-- Align Recent Posts to Left -->
         <div class="col-12 d-flex justify-content-start">
             <p><a class="btn btn-outline-success" href="{{ url_for('blogs') }}" id="blog-text"><em>Recent Posts...</em></a></p>
@@ -177,7 +178,7 @@
         <div class="col-lg-12">
           <div class="row row-cols-1 row-cols-md-3 row-cols-lg-3 g-4">
             <!-- First Project -->
-            <div class="col" id="python-blog">
+            <div class="col blogs" id="python-blog">
               <picture>
                 <source srcset="{{ url_for('static', filename='img/python.webp') }}" type="image/webp">
                 <img
@@ -218,8 +219,54 @@
               </picture>
               <h3 class="title">Yapping about everything</h3>
               <p class="align-left">If it is not obvious already, I have an overactive mind. One minute I'm debating, the next I'm coloring, and the very next I'm programming. I seem to somehow never run out of ideas so here's where I'm going to tell you about everything that goes on in my mind and outside it...</p>
-              <p><a class="btn btn-outline-success" href="{{ url_for('ugescapades') }}"><em>Read More...</em></a></p>
+              <p><a class="btn btn-outline-success" href="{{ url_for('random_musings') }}"><em>Read More...</em></a></p>
             </div>
+
+            <!-- fourth blog -->
+            <div class="col" id="turkey">
+               <picture>
+                <source srcset="{{ url_for('static', filename='img/tg3.webp') }}" type="image/webp">
+                <img
+                  src="{{ url_for('static', filename='img/tg3.jpg') }}"
+                  class="responsive-image-index"
+                  alt="header image"
+                  loading="lazy" decoding="async">
+              </picture>
+              <h3 class="title">Why Türkiye?</h3>
+              <p class="align-left">People are usually curious about why I chose Türkiye of all the places to study at for my undergraduate. I love to see it as a series of red string theory events falling miraculously into place as dreamt of by 15 year old me. So I give her grace and talk about the events that led me to Istanbul here...</p>
+              <p><a class="btn btn-outline-success" href="{{ url_for('turkiyegecilmez') }}"><em>Read More...</em></a></p>
+            </div>
+
+            <!-- fifth Blog -->
+            <div class="col" id="audacity">
+               <picture>
+                <source srcset="{{ url_for('static', filename='img/audacity.webp') }}" type="image/webp">
+                <img
+                  src="{{ url_for('static', filename='img/audacity.jpg') }}"
+                  class="responsive-image-index"
+                  alt="journal page"
+                  loading="lazy" decoding="async">
+              </picture>
+              <h3 class="title">Where men exist...</h3>
+              <p class="align-left">I like to think of myself as a reasonable young woman. However, all reason seems to find a way to fly through the window whenever the infinite well of audacity men draw from is brought into the picture. In this deeply intimate series of posts, I write about my various encounters in hopes of finding an escape...</p>
+              <p><a class="btn btn-outline-success" href="{{ url_for('audacity') }}"><em>Read More...</em></a></p>
+            </div>
+
+             <!-- sixth Blog -->
+            <div class="col" id="portfolio">
+               <picture>
+                <source srcset="{{ url_for('static', filename='img/portfolio-banner.webp') }}" type="image/webp">
+                <img
+                  src="{{ url_for('static', filename='img/portfolio-banner.png') }}"
+                  class="responsive-image-index"
+                  alt="journal page"
+                  loading="lazy" decoding="async">
+              </picture>
+              <h3 class="title">Portfolio</h3>
+              <p class="align-left">Everyone thinks they are the best at something, I am not claiming I am but here is where I try to persuade you to hire me so I deliver the best of experiences for you through all the skills I have gathered and continue to gather in my life. You'll see some of my most highly thought of pieces of work here...</p>
+              <p><a class="btn btn-outline-success" href="{{ url_for('portfolio') }}"><em>Read More...</em></a></p>
+            </div>
+
           </div>
         </div>
         <div class="mt-4">
@@ -228,6 +275,60 @@
       </div>
     </div>
   </section>
+
+
+
+
+
+  <section>
+    <div class="container text-center">
+        <div class="row flex-lg-row-reverse align-items-center g-5 py-3 mx-5">
+            <div class="col-md-12" id="services">
+              <div class="row justify-content-center" id="todo">
+                  <h2>WHAT I DO</h2>
+                  <div class="spacer-10"></div>
+              </div>
+
+              <div class="row justify-content-center">
+                <div class="col-md-4 wp2 animated fadeIn text-center ido">
+                   <img class="whatidokeyboard" src="/static/img/keyboard.svg" width="100" height="100" alt="keyboard">
+                   <div class="titletodo" ><h3>Web Development</h3></div>
+                  <p class="align-left">With a keen interest for design, I started my development journey after getting intrigued by the possibilities of fullstack development while on my Erasmus+ exchange program. Since then, I spend my days getting frustrated about Python dependencies, finding ways to optimize SEO results and barely eating as I strive to enhance my projects.</p>
+                </div>
+
+                <div class="col-md-4 wp2 delay-025s animated fadeIn text-center ido">
+                  <img class="whatidocontent" src="/static/img/pencil-square.svg" width="100" height="100" alt="pencil and square">
+                  <div class="titletodo" ><h3>Content Creation</h3></div>
+                  <p class="align-left">I create content across various social media platforms regarding natural hair. I am enthusiastic about empowering women with coily hair to love and embrace their coils, understand how to nourish them and keep them thriving. Follow me on TikTok, Instagram, Pinterest, YouTube or RedNote to stay updated on my hair adventures.</p>
+                </div>
+
+                <div class="col-md-4 wp2 delay-05s animated fadeIn text-center ido">
+                  <img class="whatidojournal" src="/static/img/journal-album.svg" width="100" height="100" alt="journal">
+                  <div class="titletodo" ><h3>Journalism</h3></div>
+                  <p class="align-left">Fascinated by the dissemination of information across various cultures and media since childhood, I recently earned a degree in Journalism from Marmara University, Istanbul. Though my degree is in traditional journalism, I am currently gravitating towards computational journalism which leverages AI and data driven decision-making to enhance journalistic endeavours.</p>
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>
+  </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   <!--contact form-->
   <section class="container d-flex justify-content-center align-items-center">
@@ -260,7 +361,7 @@
         <div class="captcha">
           <div class="h-captcha" data-sitekey="819499c6-e8cc-4900-9484-79bc9ed44f2c"></div>
         </div>
-        <button class="btn btn-primary text-uppercase w-100" id="submitButton" type="submit">Send</button>
+        <button class="btn btn-outline-success text-uppercase w-100" id="submitButton" type="submit">Send</button>
       </form>
     </div>
   </section>

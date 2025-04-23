@@ -38,6 +38,70 @@
 
     <title>{{ g.seo.title }}</title>
 
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Ruth Selorme Acolatse",
+      "url": "https://www.ruthselormeacolatse.info/",
+      "sameAs": [
+        "https://github.com/Selorme",
+        "https://www.linkedin.com/in/ruth-acolatse-0450181a1/",
+        "https://www.instagram.com/sselorme",
+        "https://www.facebook.com/sselorme"
+      ],
+      "jobTitle": "Web Developer, Content Creator, Journalist",
+      "image": "https://www.ruthselormeacolatse.info/static/img/prof-img.png",
+      "description": "Ruth Selorme Acolatse is a web developer, content creator, and journalist sharing projects, blogs, and digital stories on technology, creativity, and culture.",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://www.ruthselormeacolatse.info/"
+      }
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Ruth Selorme Acolatse",
+      "url": "https://www.ruthselormeacolatse.info/",
+      "author": {
+        "@type": "Person",
+        "name": "Ruth Selorme Acolatse"
+      },
+      "description": "Personal website and blog of Ruth Selorme Acolatse – showcasing web projects, digital content, and stories from a multi-talented developer and writer.",
+      "publisher": {
+        "@type": "Person",
+        "name": "Ruth Selorme Acolatse"
+      },
+      "inLanguage": "en"
+    }
+    </script>
+
+    {% for post in posts %}
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "{{ post.title }}",
+      "url": "{{ url_for('show_post', category=post.category.replace(' ', '-').lower(), post_id=post.id) }}",
+      "description": "{{ post.summary }}",
+      "author": {
+        "@type": "Person",
+        "name": "Ruth Selorme Acolatse",
+        "url": "https://www.ruthselormeacolatse.info/"
+      },
+      "publisher": {
+        "@type": "Person",
+        "name": "Ruth Selorme Acolatse",
+        "url": "https://www.ruthselormeacolatse.info/"
+      },
+      "image": "{{ post.image_url }}"
+    }
+    </script>
+    {% endfor %}
+
     <!-- Canonical Tag -->
     <link rel="canonical" href="{{ g.seo.canonical }}" />
 
