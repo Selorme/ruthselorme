@@ -371,7 +371,6 @@ def login():
 
     # Use session.get() to avoid KeyError
     previous_url = session.get('url')
-    print(f"Previous session URL: {previous_url}")
 
     if form.validate_on_submit():
         email = form.email.data
@@ -851,8 +850,6 @@ def show_post(category, post_id):
 
     category = normalized_category.replace("-", " ").lower()
 
-    print(f"[DEBUG] Searching for post with ID {post_id} in category '{category}'.")
-
     # Use filter() with ilike() for case-insensitive comparison
     requested_post = Post.query.filter(
         Post.id == post_id,
@@ -863,9 +860,6 @@ def show_post(category, post_id):
         print(f"[DEBUG] Post not found in category '{category}' with ID {post_id}. Redirecting to home.")
         flash(f"Post with ID {post_id} not found in category {category}.", "warning")
         return redirect(url_for("home"))
-
-    # Debug print to confirm image URL
-    print(f"[DEBUG] Image URL before transformation: {requested_post.img_url}")
 
     requested_post.views += 1
     db.session.commit()
