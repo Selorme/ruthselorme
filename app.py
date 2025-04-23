@@ -261,21 +261,34 @@ def ads_txt():
     return send_from_directory('static', 'ads.txt', mimetype='text/plain')
 
 
+# @app.before_request
+# def normalize_url():
+#     # Only normalize category-based URLs for GET requests
+#     if request.method == 'GET' and request.view_args and "category" in request.view_args:
+#         category = request.view_args["category"]
+#
+#         # Ensure category is not None before proceeding
+#         if category:
+#             # Normalize to lowercase
+#             fixed = category.lower()
+#
+#             # Check if the current category is not already lowercase
+#             if category != fixed:
+#                 # Redirect to lowercase version of the category URL
+#                 return redirect(request.url.replace(category, fixed), code=308)
+
+
 @app.before_request
 def normalize_url():
-    # Only normalize category-based URLs for GET requests
-    if request.method == 'GET' and request.view_args and "category" in request.view_args:
+    # Redirect to lowercase version of path (preserves method with 308)
+    if request.path != request.path.lower() and not request.path.startswith('/static/'):
+        return redirect(request.path.lower(), code=308)
+
+    # Normalize view_args["category"] for all requests, not just GET
+    if request.view_args and "category" in request.view_args:
         category = request.view_args["category"]
-
-        # Ensure category is not None before proceeding
-        if category:
-            # Normalize to lowercase
-            fixed = category.lower()
-
-            # Check if the current category is not already lowercase
-            if category != fixed:
-                # Redirect to lowercase version of the category URL
-                return redirect(request.url.replace(category, fixed), code=308)
+        if isinstance(category, str):
+            request.view_args["category"] = category.lower()
 
 
 @app.after_request
@@ -381,14 +394,16 @@ def login():
 @app.route("/<string:category>/post/<int:post_id>/like", methods=["POST"])
 def like_post(category, post_id):
     print(f"Like post requested: Category = {category}, Post ID = {post_id}")
+    #normalize category
+    category = category.lower().replace("-", " ")
 
     if not current_user.is_authenticated:
         # If not authenticated, redirect to login page and preserve the current URL
         return redirect(url_for('login'))
 
     # Fetch the post
-    category = category.replace("-", " ")  # Convert hyphenated category back to spaces
-    post = Post.query.filter_by(id=post_id, category=category).first()
+    post = Post.query.filter(Post.id == post_id, Post.category.ilike(category)).first()
+    print(post)
 
     if not post:
         print("Post not found. Redirecting to home page.")
@@ -397,9 +412,8 @@ def like_post(category, post_id):
         return redirect(url_for('home'))
 
     # Increment likes
-    if request.method == "POST":
-        post.likes += 1
-        db.session.commit()
+    post.likes += 1
+    db.session.commit()
 
     print(f"Post found. Likes incremented. Current likes: {post.likes}")
 
@@ -410,7 +424,7 @@ def like_post(category, post_id):
 
     # Non-AJAX requests should redirect back to the post
     print(f"Redirecting back to post page: Category = {category}, Post ID = {post_id}")
-    return redirect(url_for('show_post', category=category.replace(" ", "-"), post_id=post_id))
+    return redirect(url_for('show_post', category=category, post_id=post_id))
 
 
 @app.route('/logout')
@@ -825,8 +839,8 @@ def portfolio():
 
 
 @app.route("/<string:category>/post/<int:post_id>", methods=["GET", "POST"])
-def show_post(post_id, category=None):
-    normalized_category = category.lower()
+def show_post(category, post_id):
+    normalized_category = category.lower().replace(" ", "-")
 
     # Redirect if the incoming category is not lowercase
     if category != normalized_category:

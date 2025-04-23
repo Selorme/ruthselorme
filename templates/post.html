@@ -37,7 +37,7 @@
                     <p><strong>{{ post.views }} </strong><img class="eye" src="/static/img/eyedark.svg" alt="eye svg"/></p>
                     <button class="like-button btn btn-outline-primary mb-3"
                             data-post-id="{{ post.id }}"
-                            data-category="{{ post.category.replace(' ', '-') }}"
+                            data-category="{{ post.category.replace(' ', '-').lower() }}"
                             type="button">
                         Like
                     </button>
