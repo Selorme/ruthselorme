@@ -280,6 +280,9 @@ def ads_txt():
 
 @app.before_request
 def normalize_url():
+    # do not normalize reset token
+    if request.path.startswith("/reset-password/"):
+        return
     # Redirect to lowercase version of path (preserves method with 308)
     if request.path != request.path.lower() and not request.path.startswith('/static/'):
         return redirect(request.path.lower(), code=308)
