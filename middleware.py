@@ -71,7 +71,7 @@ class SEOMiddleware:
 
         elif request.endpoint == "ugescapades":
             g.seo["title"] = "University of Ghana Escapades"
-            g.seo["description"] = f"In {g.seo["title"]}, I explore my experiences as a student at the University of Ghana. Enjoy!"
+            g.seo["description"] = f"In {g.seo['title']}, I explore my experiences as a student at the University of Ghana. Enjoy!"
             g.seo["url"] = "https://www.ruthselormeacolatse.info/ug-escapades"
             g.seo["canonical"] = g.seo["url"]
             g.seo["image"] = url_for('static', filename='img/home-bg.jpg', _external=True)
@@ -80,7 +80,7 @@ class SEOMiddleware:
 
         elif request.endpoint == "turkiyegecilmez":
             g.seo["title"] = "Türkiye Geçilmez"
-            g.seo["description"] = f"In {g.seo["title"]}, I talk about what led me to choosing to study in Türkiye. Enjoy!"
+            g.seo["description"] = f"In {g.seo['title']}, I talk about what led me to choosing to study in Türkiye. Enjoy!"
             g.seo["url"] = "https://www.ruthselormeacolatse.info/türkiye-geçilmez"
             g.seo["canonical"] = g.seo["url"]
             g.seo["image"] = url_for('static', filename='img/header.jpg', _external=True)
@@ -89,7 +89,7 @@ class SEOMiddleware:
 
         elif request.endpoint == "audacity":
             g.seo["title"] = "Audacious Men Series"
-            g.seo["description"] = f"In {g.seo["title"]}, I open up about my encounters with the audacity men carry around the world and how that impacts myself and other women!"
+            g.seo["description"] = f"In {g.seo['title']}, I open up about my encounters with the audacity men carry around the world and how that impacts myself and other women!"
             g.seo["url"] = "https://www.ruthselormeacolatse.info/audacious-men-series"
             g.seo["canonical"] = g.seo["url"]
             g.seo["image"] = url_for('static', filename='img/home-bg.jpg', _external=True)
