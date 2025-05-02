@@ -767,11 +767,28 @@ def audacity():
     return render_template("audacity.html", posts=posts, copyright_year=year)
 
 
+@app.route("/news")
+def news():
+    posts = db.session.query(Post).filter_by(category='news', status='published').all()
+    return render_template("News.html", posts=posts, copyright_year=year)
+
+
+@app.route("/naturalhair")
+def naturalhair():
+    posts = db.session.query(Post).filter_by(category='Natural Hair', status='published').all()
+    return render_template("hair.html", posts=posts, copyright_year=year)
+
+
+@app.route("/technology")
+def technology():
+    posts = db.session.query(Post).filter_by(category='Technology', status='published').all()
+    return render_template("tech.html", posts=posts, copyright_year=year)
+
+
 @app.route("/my-portfolio")
 def portfolio():
     posts = db.session.query(Post).filter_by(category='My Portfolio', status='published').all()
     return render_template("portfolio.html", posts=posts, copyright_year=year)
-
 
 
 @app.route("/<string:category>/post/<int:post_id>/<string:slug>", methods=["GET", "POST"])

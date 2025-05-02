@@ -40,14 +40,19 @@
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle px-lg-3 py-3 py-lg-4" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Blog
+              Blogs
             </a>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="{{ url_for('ugescapades') }}">UG Escapades</a></li>
               <li><a class="dropdown-item" href="{{ url_for('turkiyegecilmez') }}">Türkiye Geçilmez</a></li>
               <li><a class="dropdown-item" href="{{ url_for('audacity') }}">Audacious Men Series</a></li>
               <li><a class="dropdown-item" href="{{ url_for('random_musings') }}">Musings of a Young Restless Mind</a></li>
+              <li><a class="dropdown-item" href="{{ url_for('technology') }}">Tech News</a></li>
+              <li><a class="dropdown-item" href="{{ url_for('naturalhair') }}">Natural Hair Blog</a></li>
             </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link px-lg-3 py-3 py-lg-4" href="{{ url_for('news') }}">News</a>
           </li>
           <li class="nav-item">
             <a class="nav-link px-lg-3 py-3 py-lg-4" href="{{ url_for('contact') }}">Contact</a>
