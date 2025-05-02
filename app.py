@@ -457,7 +457,7 @@ def add_new_post():
         db.session.add(new_post)
         db.session.commit()
 
-        if new_post.status == "published":
+        if new_post.status == "published" and new_post.category != "news":
             if send_post_notification(new_post):
                 flash("New post created and notification sent to subscribers!", "success")
             else:
