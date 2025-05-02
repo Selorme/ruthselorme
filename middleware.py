@@ -98,7 +98,7 @@ class SEOMiddleware:
 
         elif request.endpoint == "projects":
             g.seo["title"] = "Python Projects"
-            g.seo["description"] = f"In {g.seo["title"]}, I explain the various projects I have built with Python!"
+            g.seo["description"] = f"In {g.seo['title']}, I explain the various projects I have built with Python!"
             g.seo["url"] = "https://www.ruthselormeacolatse.info/projects"
             g.seo["canonical"] = g.seo["url"]
             g.seo["image"] = url_for('static', filename='img/projects.jpeg', _external=True)
