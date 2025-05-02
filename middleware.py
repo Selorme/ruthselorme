@@ -2,7 +2,7 @@ from flask import request, g, url_for
 from urllib.parse import urljoin
 from extensions import db
 from models import Post
-from utils import slugify
+from utils import slugify, strip_html
 
 class SEOMiddleware:
     def __init__(self, app):
@@ -51,7 +51,7 @@ class SEOMiddleware:
             print("Post query result:", requested_post)
             if requested_post:
                 g.seo["title"] = requested_post.title
-                g.seo["description"] = (requested_post.body[:160] + "...") if requested_post.body else "Check out this post."
+                g.seo["description"] = strip_html(requested_post.body[:160] + "...") if requested_post.body else "Check out this post."
                 g.seo["image"] = requested_post.img_url
                 g.seo["url"] = urljoin(request.host_url,
                                        url_for('show_post', category=requested_post.category.replace(" ", "-"), post_id=requested_post.id, slug=slugify(requested_post.title)))

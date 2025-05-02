@@ -25,6 +25,7 @@ from flask_compress import Compress
 from extensions import db
 from utils import slugify
 from werkzeug.utils import secure_filename
+import re
 
 
 # Load environment variables

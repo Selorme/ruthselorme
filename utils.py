@@ -8,3 +8,7 @@ def slugify(text):
     # Remove punctuation, replace spaces with hyphens, lowercase
     text = re.sub(r"[^\w\s-]", "", text).strip().lower()
     return re.sub(r"[-\s]+", "-", text)
+
+
+def strip_html(text):
+    return re.sub(r'<[^>]*?>', '', text)
