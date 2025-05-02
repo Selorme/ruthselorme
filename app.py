@@ -770,7 +770,7 @@ def audacity():
 @app.route("/news")
 def news():
     posts = db.session.query(Post).filter_by(category='news', status='published').all()
-    return render_template("News.html", posts=posts, copyright_year=year)
+    return render_template("news.html", posts=posts, copyright_year=year)
 
 
 @app.route("/naturalhair")
