@@ -11,7 +11,7 @@
             <button class="btn btn-link btn-sm reply-btn" onclick="toggleReplyForm({{ comment.id }})">Reply</button>
 
             <!-- Reply Form -->
-            <form id="replyForm{{ comment.id }}" action="{{ url_for('show_post', category=category.replace(' ', '-'), post_id=post.id) }}" method="post" style="display: none;">
+            <form id="replyForm{{ comment.id }}" action="{{ url_for('show_post', category=category.replace(' ', '-'), slug=slugify(post.title), post_id=post.id) }}" method="post" style="display: none;">
                 {{ form.hidden_tag() }}
                 <input type="hidden" name="parent_id" value="{{ comment.id }}">
                 <div class="mb-3">

@@ -15,11 +15,11 @@
                         {% for post in posts %}
                             <li class="post-item mb-3">
                                 <h2>
-                                    <a href="{{ url_for('show_post', category=category.replace(' ', '-'), post_id=post.id) }}">{{ post.title }}</a>
+                                    <a href="{{ url_for('show_post', category=category.replace(' ', '-'), slug=slugify(post.title), post_id=post.id) }}">{{ post.title }}</a>
                                 </h2>
                                 <p><small>Published on: {{ post.date }}</small></p>
                                 <p>{{ post.body[:150] }}...</p> <!-- Display a snippet of the post body -->
-                                <a href="{{ url_for('show_post', post_id=post.id) }}" class="btn btn-primary">Read More</a>
+                                <a href="{{ url_for('show_post', slug=slugify(post.title), post_id=post.id) }}" class="btn btn-primary">Read More</a>
                             </li>
                         {% endfor %}
                     </ul>

@@ -1,16 +1,12 @@
-from flask import Flask, abort, render_template, request, redirect, url_for, flash, jsonify, session, Response
+from flask import Flask, render_template, request, redirect, url_for, flash, jsonify, session, Response
 from datetime import datetime, date
 from flask_bootstrap5 import Bootstrap
-from flask_sqlalchemy import SQLAlchemy
 import smtplib
 import os
 from dotenv import load_dotenv
 from flask_ckeditor import CKEditor
-# from flask_gravatar import Gravatar
-# from gravatar import Gravatar
-from flask_login import UserMixin, login_user, LoginManager, current_user, logout_user, login_required
-from sqlalchemy.orm import relationship, DeclarativeBase, Mapped, mapped_column
-from sqlalchemy import Integer, String, Text, DateTime
+from models import Post, User, Comment, PasswordResetToken
+from flask_login import login_user, LoginManager, current_user, logout_user, login_required
 from functools import wraps
 from werkzeug.security import generate_password_hash, check_password_hash
 from forms import CreatePostForm, RegisterForm, LogInForm, CommentForm, ForgotPasswordForm, ResetPasswordForm
@@ -26,6 +22,9 @@ from flask import send_from_directory
 from werkzeug.middleware.proxy_fix import ProxyFix
 from flask_assets import Environment, Bundle
 from flask_compress import Compress
+from extensions import db
+from utils import slugify
+from werkzeug.utils import secure_filename
 
 
 # Load environment variables
@@ -35,6 +34,8 @@ load_dotenv()
 supabase_url = os.getenv('SUPABASE_URL')
 supabase_key = os.getenv('SUPABASE_KEY')
 supabase: Client = create_client(supabase_url, supabase_key)
+# Access the storage from Supabase
+bucket = supabase.storage.from_('blog-images')
 
 # Email and password
 google_email = os.getenv('MY_WEBSITE_EMAIL')
@@ -54,7 +55,6 @@ def gravatar_url(email, size=100, rating='g', default='retro', force_default=Fal
 
 
 app = Flask(__name__)
-
 
 
 assets = Environment(app)
@@ -98,82 +98,16 @@ s = URLSafeTimedSerializer(app.config['MAIL_SECRET_KEY'])
 HCAPTCHA_SECRET_KEY = os.getenv('HCAPTCHA_SECRET_KEY')
 
 # Register SEO Middleware
-SEOMiddleware(app)
+seo_middleware = SEOMiddleware(app)
 
-# Initialize the database
-class Base(DeclarativeBase):
-    pass
+app.jinja_env.globals.update(slugify=slugify)
 
-
-db = SQLAlchemy(model_class=Base)
 db.init_app(app)
 login_manager.init_app(app)
 bootstrap = Bootstrap(app)
 migrate = Migrate(app, db)
 
 year = datetime.today().year
-
-
-# Configure tables
-# Table to make posts
-class Post(db.Model):
-    __tablename__ = "blog_posts"
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
-
-    author_id: Mapped[int] = mapped_column(Integer, db.ForeignKey("users.id"))
-
-    author = relationship("User", back_populates="posts")
-
-    title: Mapped[int] = mapped_column(String, unique=True, nullable=False)
-    date: Mapped[str] = mapped_column(String, nullable=False)
-    body: Mapped[str] = mapped_column(Text, nullable=False)
-    img_url: Mapped[str] = mapped_column(String, nullable=False)
-    category: Mapped[str] = mapped_column(String, nullable=False)
-
-    status: Mapped[str] = mapped_column(String, nullable=False, default="published")  # "draft" or "published"
-    scheduled_datetime: Mapped[datetime] = mapped_column(db.DateTime, nullable=True)
-
-    comments = relationship("Comment", back_populates="parent_post")
-
-    views: Mapped[int] = mapped_column(Integer, default=0)
-    likes: Mapped[int] = mapped_column(Integer, default=0)
-
-
-# Table for registered users
-class User(UserMixin, db.Model):
-    __tablename__ = "users"
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    email: Mapped[str] = mapped_column(String, unique=True, nullable=False)
-    password: Mapped[str] = mapped_column(String, nullable=False)
-    name: Mapped[str] = mapped_column(String, nullable=False)
-
-    posts = relationship("Post", back_populates="author")
-    comments = relationship("Comment", back_populates="comment_author")
-
-
-# Table for comments
-class Comment(db.Model):
-    __tablename__ = "comments"
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    author_id: Mapped[int] = mapped_column(Integer, db.ForeignKey("users.id"))
-    comment_author = relationship("User", back_populates="comments")
-
-    post_id: Mapped[int] = mapped_column(Integer, db.ForeignKey("blog_posts.id"))
-    parent_post = relationship("Post", back_populates="comments")
-
-    text: Mapped[str] = mapped_column(Text, nullable=False)
-    parent_id: Mapped[int] = mapped_column(Integer, db.ForeignKey("comments.id"), nullable=True)
-    parent_comment = relationship("Comment", remote_side=[id], backref="replies")
-
-
-class PasswordResetToken(db.Model):
-    __tablename__ = "password_reset_tokens"
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    email: Mapped[str] = mapped_column(String, nullable=False)
-    token: Mapped[str] = mapped_column(String, nullable=False, unique=True)
-    created_at: Mapped[datetime] = mapped_column(db.DateTime, default=datetime.utcnow)
-    is_used: Mapped[bool] = mapped_column(db.Boolean, nullable=False, default=False)
-
 
 with app.app_context():
     db.create_all()
@@ -203,7 +137,7 @@ def generate_sitemap():
         '/projects'
     ]
 
-    blog_posts = Post.query.filter_by(status="published").all()
+    blog_posts = db.session.query(Post).filter_by(status="published").all()
     categories = sorted(set(post.category.strip() for post in blog_posts))
 
 
@@ -259,23 +193,6 @@ def robots():
 @app.route('/ads.txt')
 def ads_txt():
     return send_from_directory('static', 'ads.txt', mimetype='text/plain')
-
-
-# @app.before_request
-# def normalize_url():
-#     # Only normalize category-based URLs for GET requests
-#     if request.method == 'GET' and request.view_args and "category" in request.view_args:
-#         category = request.view_args["category"]
-#
-#         # Ensure category is not None before proceeding
-#         if category:
-#             # Normalize to lowercase
-#             fixed = category.lower()
-#
-#             # Check if the current category is not already lowercase
-#             if category != fixed:
-#                 # Redirect to lowercase version of the category URL
-#                 return redirect(request.url.replace(category, fixed), code=308)
 
 
 @app.before_request
@@ -375,7 +292,7 @@ def login():
     if form.validate_on_submit():
         email = form.email.data
         password = form.password.data
-        user = User.query.filter_by(email=email).first()
+        user = db.session.query(User).filter_by(email=email).first()
 
         if not user or not check_password_hash(user.password, password):
             flash("Invalid email or password.")
@@ -404,7 +321,7 @@ def like_post(category, post_id):
         return redirect(url_for('login'))
 
     # Fetch the post
-    post = Post.query.filter(Post.id == post_id, Post.category.ilike(category)).first()
+    post = db.session.query(Post).filter(Post.id == post_id, Post.category.ilike(category)).first()
     print(post)
 
     if not post:
@@ -426,7 +343,7 @@ def like_post(category, post_id):
 
     # Non-AJAX requests should redirect back to the post
     print(f"Redirecting back to post page: Category = {category}, Post ID = {post_id}")
-    return redirect(url_for('show_post', category=category, post_id=post_id))
+    return redirect(url_for('show_post', category=category, slug=slugify(post.title), post_id=post_id))
 
 
 @app.route('/logout')
@@ -440,7 +357,7 @@ def send_post_notification(post):
     """Send email notification about new blog post to all registered users."""
     try:
         # Get all registered users' emails
-        users = User.query.all()
+        users = db.session.query(User).all()
         for user in users:
             if not user.email:
                 continue
@@ -464,7 +381,7 @@ def send_post_notification(post):
                         <div style="margin: 20px 0;">
                             <p>Category: {post.category}</p>
                         </div>
-                        <a href="{url_for('show_post', category=post.category, post_id=post.id, _external=True)}" 
+                        <a href="{url_for('show_post', category=post.category, slug=slugify(post.title), post_id=post.id, _external=True)}" 
                            style="background-color: #007bff; color: white; padding: 10px 20px; 
                                   text-decoration: none; border-radius: 5px;">
                             Read More
@@ -498,11 +415,25 @@ def add_new_post():
     form = CreatePostForm()
 
     if form.validate_on_submit():
+        # Handle the image/video upload if there is one
+        file = form.img_url.data  # This is the file upload field from your form
+        img_url = form.img_url.data  # Default image URL from the form
+
+        if file:
+            # Secure the filename
+            filename = secure_filename(file.filename)
+
+            # Upload the file to Supabase bucket directly
+            upload_response = bucket.upload(f'posts/{filename}', file)  # 'posts' is the folder in your bucket
+            if upload_response:
+                # Get the public URL of the uploaded file
+                img_url = bucket.get_public_url(f'posts/{filename}').publicURL
+
         new_post = Post(
             title=form.title.data,
             category=form.category.data,
             body=form.body.data,
-            img_url=form.img_url.data,
+            img_url=img_url,
             author=current_user,
             date=date.today().strftime("%B %d, %Y"),
         )
@@ -663,12 +594,12 @@ def forgot_password():
     form = ForgotPasswordForm()
     if form.validate_on_submit():
         email = form.email.data
-        user = User.query.filter_by(email=email).first()
+        user = db.session.query(User).filter_by(email=email).first()
         if user:
             token = s.dumps(email, salt='email-reset')
 
             # save or update the password reset token in the database
-            reset_token = PasswordResetToken.query.filter_by(email=email).first()
+            reset_token = db.session.query(PasswordResetToken).filter_by(email=email).first()
             if reset_token:
                 reset_token.token = token
             else:
@@ -695,7 +626,7 @@ def reset_password(token):
         return redirect(url_for("forgot_password"))
 
     # Verify token exists and is valid
-    reset_token = PasswordResetToken.query.filter_by(email=email, token=token).first()
+    reset_token = db.session.query(PasswordResetToken).filter_by(email=email, token=token).first()
     if not reset_token:
         flash("Invalid or already used reset link.", "warning")
         return redirect(url_for("forgot_password"))
@@ -705,7 +636,7 @@ def reset_password(token):
         new_password = form.new_password.data
         confirm_password = form.confirm_password.data
         if new_password == confirm_password:
-            user = User.query.filter_by(email=email).first()
+            user = db.session.query(User).filter_by(email=email).first()
             user.password = generate_password_hash(new_password)
             db.session.commit()
 
@@ -723,7 +654,9 @@ def reset_password(token):
 
 @app.route("/")
 def home():
-    return render_template("index.html", copyright_year=year)
+    # Fetch the latest 6 posts ordered by the date (assuming 'created_at' is the column storing post creation date)
+    latest_posts = db.session.query(Post).order_by(Post.date.desc()).limit(6).all()
+    return render_template("index.html", copyright_year=year, latest_posts=latest_posts)
 
 
 @app.route("/about")
@@ -736,23 +669,23 @@ def about():
 def blogs(category):
     if category:
         # Filter posts by category and ensure they are published
-        posts = Post.query.filter_by(category=category.replace('-', ' '), status='published').all()
+        posts = db.session.query(Post).filter_by(category=category.replace('-', ' '), status='published').all()
     else:
         # Get all published posts
-        posts = Post.query.filter_by(status='published').all()
+        posts = db.session.query(Post).filter_by(status='published').all()
     return render_template("blog.html", posts=posts, copyright_year=year)
 
 
 @app.route("/<category>")
 def show_category(category):
     category = category.replace('-', ' ')
-    posts = Post.query.filter_by(category=category, status='published').all()
+    posts = db.session.query(Post).filter_by(category=category, status='published').all()
     return render_template("category.html", posts=posts, category=category, copyright_year=year)
 
 
 @app.route("/projects")
 def projects():
-    posts = Post.query.filter_by(category='Projects', status='published').all()
+    posts = db.session.query(Post).filter_by(category='Projects', status='published').all()
     return render_template("projects.html", posts=posts, copyright_year=year)
 
 
@@ -763,18 +696,18 @@ def cvresume():
 
 @app.route("/ug-escapades")
 def ugescapades():
-    posts = Post.query.filter_by(category='UG Escapades', status='published').all()
+    posts = db.session.query(Post).filter_by(category='UG Escapades', status='published').all()
     return render_template("ugescapades.html", posts=posts, copyright_year=year)
 
 
 @app.route("/random-musings")
 def random_musings():
-    posts = Post.query.filter_by(category='Random Musings', status='published').all()
+    posts = db.session.query(Post).filter_by(category='Random Musings', status='published').all()
     return render_template("randommusings.html", posts=posts, copyright_year=year)
 
 @app.route("/türkiye-geçilmez")
 def turkiyegecilmez():
-    posts = Post.query.filter_by(category='Türkiye Geçilmez', status='published').all()
+    posts = db.session.query(Post).filter_by(category='Türkiye Geçilmez', status='published').all()
     return render_template("turkiyegecilmez.html", posts=posts, copyright_year=year)
 
 
@@ -830,28 +763,30 @@ def contact():
 
 @app.route("/audacious-men-series")
 def audacity():
-    posts = Post.query.filter_by(category='Audacious Men Series', status='published').all()
+    posts = db.session.query(Post).filter_by(category='Audacious Men Series', status='published').all()
     return render_template("audacity.html", posts=posts, copyright_year=year)
 
 
 @app.route("/my-portfolio")
 def portfolio():
-    posts = Post.query.filter_by(category='My Portfolio', status='published').all()
+    posts = db.session.query(Post).filter_by(category='My Portfolio', status='published').all()
     return render_template("portfolio.html", posts=posts, copyright_year=year)
 
 
+
+@app.route("/<string:category>/post/<int:post_id>/<string:slug>", methods=["GET", "POST"])
 @app.route("/<string:category>/post/<int:post_id>", methods=["GET", "POST"])
-def show_post(category, post_id):
+def show_post(category, post_id, slug=None):
     normalized_category = category.lower().replace(" ", "-")
 
     # Redirect if the incoming category is not lowercase
     if category != normalized_category:
-        return redirect(url_for("show_post", post_id=post_id, category=normalized_category), code=301)
+        return redirect(url_for("show_post", post_id=post_id, category=normalized_category, slug=slug), code=301)
 
     category = normalized_category.replace("-", " ").lower()
 
     # Use filter() with ilike() for case-insensitive comparison
-    requested_post = Post.query.filter(
+    requested_post = db.session.query(Post).filter(
         Post.id == post_id,
         Post.category.ilike(category)  # ilike() performs case-insensitive search
     ).first()
@@ -860,6 +795,11 @@ def show_post(category, post_id):
         print(f"[DEBUG] Post not found in category '{category}' with ID {post_id}. Redirecting to home.")
         flash(f"Post with ID {post_id} not found in category {category}.", "warning")
         return redirect(url_for("home"))
+
+    expected_slug = slugify(requested_post.title)
+    if not slug or slug != expected_slug:
+        return redirect(url_for("show_post", post_id=post_id, category=normalized_category, slug=expected_slug),
+                        code=301)
 
     requested_post.views += 1
     db.session.commit()
@@ -883,14 +823,14 @@ def show_post(category, post_id):
             )
             db.session.add(new_comment)
             db.session.commit()
-            return redirect(url_for('show_post', post_id=post_id, category=category))
+            return redirect(url_for('show_post', post_id=post_id, category=category, slug=expected_slug))
         else:
             error = "Login Required! Please log in/Register to leave a comment"
             flash(f"{error}. Log in!")
             return redirect(url_for("login", session=f"{session['url']}"))
     # Fetch all posts in the same category, excluding the current post
-    top_level_comments = Comment.query.filter_by(post_id=post_id, parent_id=None).all()
-    all_posts = Post.query.filter(Post.category == requested_post.category, Post.id != requested_post.id).all()
+    top_level_comments = db.session.query(Comment).filter_by(post_id=post_id, parent_id=None).all()
+    all_posts = db.session.query(Post).filter(Post.category == requested_post.category, Post.id != requested_post.id).all()
     categories = [cat[0] for cat in db.session.query(Post.category).distinct().all()]
 
     return render_template(
@@ -910,7 +850,7 @@ def show_post(category, post_id):
 def search():
     query = request.args.get('q')
     if query:
-        results = Post.query.filter(
+        results = db.session.query(Post).filter(
             (Post.title.ilike(f'%{query}%')) | (Post.body.ilike(f'%{query}%'))
         ).all()
     else:
@@ -925,7 +865,7 @@ def search():
 @app.route("/drafts", methods=["GET", "POST"])
 @admin_only  # Ensure only admin can access
 def drafts():
-    draft_posts = Post.query.filter_by(status="draft").all()
+    draft_posts = db.session.query(Post).filter_by(status="draft").all()
 
     return render_template("drafts.html", drafts=draft_posts, copyright_year=year)
 
@@ -933,7 +873,7 @@ def drafts():
 @app.route("/scheduled-posts", methods=["GET"])
 @admin_only
 def scheduled_posts():
-    post_scheduled = Post.query.filter_by(status="scheduled").all()  # Get all scheduled posts
+    post_scheduled = db.session.query(Post).filter_by(status="scheduled").all()  # Get all scheduled posts
     return render_template("scheduled.html", post_scheduled=post_scheduled, copyright_year=year)
 
 

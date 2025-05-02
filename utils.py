@@ -1,0 +1,10 @@
+import re
+import unicodedata
+
+def slugify(text):
+    # Normalize Unicode characters
+    text = unicodedata.normalize("NFKD", text)
+    text = text.encode("ascii", "ignore").decode("utf-8")
+    # Remove punctuation, replace spaces with hyphens, lowercase
+    text = re.sub(r"[^\w\s-]", "", text).strip().lower()
+    return re.sub(r"[-\s]+", "-", text)

@@ -53,6 +53,30 @@
         </div>
     </section>
 
+
+    <section>
+        <div class="container text-center">
+            <div class="row flex-lg-row-reverse align-items-center g-5 py-5 mx-5">
+                <h2 class="lead-text" id="posts">Latest Posts</h2>
+                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                    {% for post in latest_posts %}
+                        <div class="col-md-4">
+                            <div class="card mb-4">
+                                <img src="{{ post.image_url }}" class="card-img-top" alt="{{ post.title }}">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ post.title }}</h5>
+                                    <p class="card-text">{{ post.excerpt }}</p>
+                                    <a href="{{ url_for('show_post', category=post.category.replace(' ', '-').lower(), slug=slugify(post.title), post_id=post.id) }}" class="btn btn-primary">Read More</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+
+
   <!-- Portfolio Section -->
   <section>
     <div class="container text-center">
@@ -61,7 +85,7 @@
         <h2 class="lead-text" id="projects">Projects I've worked on</h2>
         <!-- Projects Section -->
         <div class="col-lg-12">
-          <div class="row row-cols-1 row-cols-md-3 row-cols-lg-3 g-4">
+          <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
             <!-- First Project -->
             <div class="col" id="first-project">
               <picture>
@@ -285,7 +309,7 @@
         <div class="row flex-lg-row-reverse align-items-center g-5 py-3 mx-5">
             <div class="col-md-12" id="services">
               <div class="row justify-content-center" id="todo">
-                  <h2>WHAT I DO</h2>
+                  <h2>EXPERIENCE / SERVICES</h2>
                   <div class="spacer-10"></div>
               </div>
 

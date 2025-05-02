@@ -12,7 +12,7 @@
         {% for post in posts %}
             <div class="col-md-4 mb-4">
                 <div class="card">
-                    <a href="{{ url_for('show_post', category=post.category.replace(' ', '-'), post_id=post.id) }}">
+                    <a href="{{ url_for('show_post', category=post.category.replace(' ', '-'), slug=slugify(post.title), post_id=post.id) }}">
                         {% set webp_url = post.img_url.replace('.jpg', '.webp').replace('.jpeg', '.webp').replace('.png', '.webp') %}
                         <picture>
                           <source srcset="{{ webp_url }}" type="image/webp">
