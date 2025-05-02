@@ -25,8 +25,6 @@ from flask_compress import Compress
 from extensions import db
 from utils import slugify
 from werkzeug.utils import secure_filename
-import re
-
 
 # Load environment variables
 load_dotenv()
@@ -200,8 +198,8 @@ def ads_txt():
 def normalize_url():
     # do not normalize reset token
     if request.path.startswith("/reset-password/"):
-        return
-    # Redirect to lowercase version of path (preserves method with 308)
+        return None
+    # Redirect to the lowercase version of the path (preserves method with 308)
     if request.path != request.path.lower() and not request.path.startswith('/static/'):
         return redirect(request.path.lower(), code=308)
 
@@ -211,6 +209,7 @@ def normalize_url():
         if isinstance(category, str):
             request.view_args["category"] = category.lower()
 
+    return None
 
 @app.after_request
 def add_cache_control(response):
@@ -231,7 +230,7 @@ def admin_only(func):
     return wrapper
 
 
-# Define your routes
+# Define the routes
 # Route for registration of users
 # noinspection PyArgumentList
 @app.route('/register', methods=['GET', 'POST'])
@@ -327,7 +326,7 @@ def like_post(category, post_id):
 
     if not post:
         print("Post not found. Redirecting to home page.")
-        # If post is not found, redirect to the home page
+        # If the post is not found, redirect to the home page
         flash('Post not found.', 'danger')
         return redirect(url_for('home'))
 
@@ -355,7 +354,7 @@ def logout():
 
 
 def send_post_notification(post):
-    """Send email notification about new blog post to all registered users."""
+    """Send an email notification about new blog post to all registered users."""
     try:
         # Get all registered users' emails
         users = db.session.query(User).all()
@@ -621,7 +620,7 @@ def forgot_password():
 @app.route("/reset-password/<token>", methods=["GET", "POST"])
 def reset_password(token):
     try:
-        email = s.loads(token, salt="email-reset", max_age=3600)  # Token expires in 1 hour
+        email = s.loads(token, salt="email-reset", max_age=3600)  # The token expires in 1 hour
     except SignatureExpired:
         flash("The reset link is expired! Request for another one.", "warning")
         return redirect(url_for("forgot_password"))
@@ -655,7 +654,7 @@ def reset_password(token):
 
 @app.route("/")
 def home():
-    # Fetch the latest 6 posts ordered by the date (assuming 'created_at' is the column storing post creation date)
+    # Fetch the latest 6 posts ordered by the date (assuming 'created_at' is the column storing the post creation date)
     latest_posts = db.session.query(Post).order_by(Post.date.desc()).limit(6).all()
     return render_template("index.html", copyright_year=year, latest_posts=latest_posts)
 
