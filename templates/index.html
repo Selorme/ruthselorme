@@ -60,7 +60,7 @@
                 <h2 class="lead-text" id="posts">Latest Posts</h2>
                 <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
                     {% for post in latest_posts %}
-                        <div class="col-md-4">
+                        <div class="col">
                             <div class="card mb-4">
                                 <img src="{{ post.img_url }}" class="responsive-image-index card-img-top" alt="{{ post.title }}">
                                 <div class="card-body">
@@ -200,7 +200,7 @@
 
         <!-- Blog Section -->
         <div class="col-lg-12">
-          <div class="row row-cols-1 row-cols-md-3 row-cols-lg-3 g-4">
+          <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
             <!-- First Project -->
             <div class="col blogs" id="python-blog">
               <picture>
