@@ -417,17 +417,17 @@ def add_new_post():
     if form.validate_on_submit():
         # Handle the image/video upload if there is one
         file = form.img_url.data  # This is the file upload field from your form
-        img_url = None  # Default image URL from the form
+        img_url = file
 
         if file:
             # Secure the filename
             filename = secure_filename(file.filename)
 
             # Upload the file to Supabase bucket directly
-            upload_response = bucket.upload(f'posts/{filename}', file)  # 'posts' is the folder in your bucket
+            upload_response = bucket.upload(f'posts/{filename}', file.stream.read())  # 'posts' is the folder in your bucket
             if upload_response:
                 # Get the public URL of the uploaded file
-                img_url = bucket.get_public_url(f'posts/{filename}').publicURL
+                img_url = bucket.get_public_url(f'posts/{filename}')
 
         new_post = Post(
             title=form.title.data,

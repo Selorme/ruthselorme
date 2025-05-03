@@ -1,14 +1,14 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField, EmailField, SelectField, DateField, TimeField
-from wtforms.validators import DataRequired, URL, EqualTo, Email, Length, Regexp, Optional, ValidationError
+from wtforms import StringField, SubmitField, PasswordField, EmailField, DateField, TimeField
+from wtforms.validators import DataRequired, EqualTo, Email, Length, Regexp, Optional
 from flask_ckeditor import CKEditorField
-from flask_wtf.file import FileField
+from flask_wtf.file import FileField, FileAllowed, FileRequired
 
 
 # Form to submit a post
 class CreatePostForm(FlaskForm):
     title = StringField("Blog Post Title", validators=[DataRequired()])
-    img_url = FileField("Upload Image or Video", validators=[Optional()])
+    img_url = FileField("Upload Image or Video", validators=[FileRequired(), FileAllowed(['jpg', 'png', 'jpeg', 'gif'], 'Images only!')])
     body = CKEditorField("Blog Content", validators=[DataRequired()])
     category = StringField("Category", validators=[DataRequired()])
 
