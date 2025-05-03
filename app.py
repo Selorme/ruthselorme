@@ -654,8 +654,13 @@ def reset_password(token):
 
 @app.route("/")
 def home():
+    posts = db.session.query(Post).all()
+    # Convert date strings to datetime objects and sort posts
+    def parse_date(post):
+        # Assuming date is stored in 'Month Day, Year' format
+        return datetime.strptime(post.date, "%B %d, %Y")
     # Fetch the latest 6 posts ordered by the date (assuming 'created_at' is the column storing the post creation date)
-    latest_posts = db.session.query(Post).order_by(Post.date.desc()).limit(6).all()
+    latest_posts = sorted(posts, key=parse_date, reverse=True)[:6]
     return render_template("index.html", copyright_year=year, latest_posts=latest_posts)
 
 
