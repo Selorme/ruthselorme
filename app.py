@@ -417,7 +417,7 @@ def add_new_post():
     if form.validate_on_submit():
         # Handle the image/video upload if there is one
         file = form.img_url.data  # This is the file upload field from your form
-        img_url = form.img_url.data  # Default image URL from the form
+        img_url = None  # Default image URL from the form
 
         if file:
             # Secure the filename
