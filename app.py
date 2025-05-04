@@ -23,7 +23,7 @@ from werkzeug.middleware.proxy_fix import ProxyFix
 from flask_assets import Environment, Bundle
 from flask_compress import Compress
 from extensions import db
-from utils import slugify
+from utils import slugify, strip_html
 from werkzeug.utils import secure_filename
 
 # Load environment variables
@@ -369,7 +369,7 @@ def send_post_notification(post):
                 words = text.split()
                 return " ".join(words[:word_limit]) + "..." if len(words) > word_limit else text
 
-            preview_text = truncate_text(post.body)
+            preview_text = strip_html(truncate_text(post.body))
 
             # Create HTML email content
             html_content = f'''

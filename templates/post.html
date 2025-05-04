@@ -2,27 +2,14 @@
 {% block title %}{{ post.title }}{% endblock %}
 {% block content %}
 
-<header class="masthead" style="background-image: url('{{ post.img_url }}')">
-    <div class="container position-relative px-4 px-lg-5">
-        <div class="row gx-4 gx-lg-5 justify-content-center">
-            <div class="col-md-10 col-lg-8 col-xl-7">
-                <div class="post-heading">
-                    <h1>{{ post.title }}</h1>
-                    <span class="meta">
-                        Posted by <a href="{{ url_for('about') }}">{{ post.author.name }}</a>
-                        on {{ post.date }}
-                    </span>
-                </div>
-            </div>
-        </div>
-    </div>
-</header>
+<header class="masthead mb-4" style="background-image: url('{{ post.img_url }}')"></header>
 
 <article class="mb-4">
     <div class="container px-4 px-lg-5">
         <div class="row gx-4 gx-lg-5" id="post-text">
             <div class="col-md-10 col-lg-8 col-xl-7">
                 <div>
+                    <h1 class="post-heading justify-content-center">{{ post.title }}</h1>
                     {{ post.body|safe }}
                     {% if current_user.id == 1 %}
                     <div class="d-flex justify-content-end mb-4">
@@ -31,6 +18,10 @@
                     {% endif %}
                 </div>
                 <p class="text-muted">Category: {{ post.category }}</p>
+                 <span class="meta">
+                    Posted by <a href="{{ url_for('about') }}">{{ post.author.name }}</a>
+                    on {{ post.date }}
+                 </span>
 
                 <!--like counter-->
                 <div class="post-likes-views mt-3">
