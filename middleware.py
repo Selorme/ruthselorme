@@ -26,13 +26,6 @@ class SEOMiddleware:
             "canonical": f"https://www.ruthselormeacolatse.info{path}"
         }
 
-        # Debugging step: Check the seo object
-        print(f"SEO Metadata: {g.seo}")
-
-        print("Current endpoint:", request.endpoint)
-
-        print("View args:", request.view_args)
-
         # Google Tag Manager ID
         g.gtm_id = "GTM-KHCML67V"
 
@@ -46,9 +39,7 @@ class SEOMiddleware:
                 Post.id == post_id,
                 Post.category.ilike(category)  # ilike() performs case-insensitive search
             ).first()
-            print("Resolved category:", category)
-            print("Post ID:", post_id)
-            print("Post query result:", requested_post)
+
             if requested_post:
                 g.seo["title"] = requested_post.title
                 g.seo["description"] = strip_html(requested_post.body[:160] + "...") if requested_post.body else "Check out this post."
@@ -67,7 +58,6 @@ class SEOMiddleware:
             g.seo["url"] = "https://www.ruthselormeacolatse.info/random-musings"
             g.seo["canonical"] = g.seo["url"]
             g.seo["image"] = url_for('static', filename='img/musingsdark.png', _external=True)
-            print(f"SEO Metadata for category {g.seo}")
 
         elif request.endpoint == "ugescapades":
             g.seo["title"] = "University of Ghana Escapades"
@@ -76,7 +66,6 @@ class SEOMiddleware:
             g.seo["canonical"] = g.seo["url"]
             g.seo["image"] = url_for('static', filename='img/home-bg.jpg', _external=True)
             g.seo["keywords"] = "blog, university, writing, university of Ghana, housing, hostel, student life"
-            print(f"SEO Metadata for category {g.seo}")
 
         elif request.endpoint == "turkiyegecilmez":
             g.seo["title"] = "Türkiye Geçilmez"
@@ -85,7 +74,6 @@ class SEOMiddleware:
             g.seo["canonical"] = g.seo["url"]
             g.seo["image"] = url_for('static', filename='img/header.jpg', _external=True)
             g.seo["keywords"] = "blog, university, writing, Türkiye, Marmara University, International student, travel, student life"
-            print(f"SEO Metadata for category {g.seo}")
 
         elif request.endpoint == "audacity":
             g.seo["title"] = "Audacious Men Series"
@@ -94,7 +82,6 @@ class SEOMiddleware:
             g.seo["canonical"] = g.seo["url"]
             g.seo["image"] = url_for('static', filename='img/home-bg.jpg', _external=True)
             g.seo["keywords"] = "blog, men, dating, Türkiye, relationship, International student, travel, student life"
-            print(f"SEO Metadata for category {g.seo}")
 
         elif request.endpoint == "projects":
             g.seo["title"] = "Python Projects"
@@ -103,7 +90,6 @@ class SEOMiddleware:
             g.seo["canonical"] = g.seo["url"]
             g.seo["image"] = url_for('static', filename='img/projects.jpeg', _external=True)
             g.seo["keywords"] = "blog, python, programming, coding, web development"
-            print(f"SEO Metadata for category {g.seo}")
 
         elif request.endpoint == "about":
             g.seo["title"] = "About - Ruth Selorme Acolatse"

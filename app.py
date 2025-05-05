@@ -690,7 +690,15 @@ def show_category(category):
 
 @app.route("/projects")
 def projects():
-    posts = db.session.query(Post).filter_by(category='Projects', status='published').all()
+
+    raw_posts = db.session.query(Post).filter_by(category='Projects', status='published').all()
+
+    def parse_date(post):
+        # Assuming date is stored in 'Month Day, Year' format
+        return datetime.strptime(post.date, "%B %d, %Y")
+    # Fetch the latest 6 posts ordered by the date (assuming 'created_at' is the column storing the post creation date)
+    posts = sorted(raw_posts, key=parse_date, reverse=True)
+
     return render_template("projects.html", posts=posts, copyright_year=year)
 
 
@@ -701,18 +709,39 @@ def cvresume():
 
 @app.route("/ug-escapades")
 def ugescapades():
-    posts = db.session.query(Post).filter_by(category='UG Escapades', status='published').all()
+    raw_posts = db.session.query(Post).filter_by(category='UG Escapades', status='published').all()
+
+    def parse_date(post):
+        # Assuming date is stored in 'Month Day, Year' format
+        return datetime.strptime(post.date, "%B %d, %Y")
+    # Fetch all posts ordered by the date (assuming 'created_at' is the column storing the post-creation date)
+    posts = sorted(raw_posts, key=parse_date, reverse=True)
+
     return render_template("ugescapades.html", posts=posts, copyright_year=year)
 
 
 @app.route("/random-musings")
 def random_musings():
-    posts = db.session.query(Post).filter_by(category='Random Musings', status='published').all()
+    raw_posts = db.session.query(Post).filter_by(category='Random Musings', status='published').all()
+
+    def parse_date(post):
+        # Assuming date is stored in 'Month Day, Year' format
+        return datetime.strptime(post.date, "%B %d, %Y")
+    # Fetch all posts ordered by the date (assuming 'created_at' is the column storing the post-creation date)
+    posts = sorted(raw_posts, key=parse_date, reverse=True)
+
     return render_template("randommusings.html", posts=posts, copyright_year=year)
 
 @app.route("/türkiye-geçilmez")
 def turkiyegecilmez():
-    posts = db.session.query(Post).filter_by(category='Türkiye Geçilmez', status='published').all()
+    raw_posts = db.session.query(Post).filter_by(category='Türkiye Geçilmez', status='published').all()
+
+    def parse_date(post):
+        # Assuming date is stored in 'Month Day, Year' format
+        return datetime.strptime(post.date, "%B %d, %Y")
+    # Fetch all posts ordered by the date (assuming 'created_at' is the column storing the post-creation date)
+    posts = sorted(raw_posts, key=parse_date, reverse=True)
+
     return render_template("turkiyegecilmez.html", posts=posts, copyright_year=year)
 
 
@@ -768,31 +797,66 @@ def contact():
 
 @app.route("/audacious-men-series")
 def audacity():
-    posts = db.session.query(Post).filter_by(category='Audacious Men Series', status='published').all()
+    raw_posts = db.session.query(Post).filter_by(category='Audacious Men Series', status='published').all()
+
+    def parse_date(post):
+        # Assuming date is stored in 'Month Day, Year' format
+        return datetime.strptime(post.date, "%B %d, %Y")
+    # Fetch all posts ordered by the date (assuming 'created_at' is the column storing the post-creation date)
+    posts = sorted(raw_posts, key=parse_date, reverse=True)
+
     return render_template("audacity.html", posts=posts, copyright_year=year)
 
 
 @app.route("/news")
 def news():
-    posts = db.session.query(Post).filter_by(category='news', status='published').all()
+    raw_posts = db.session.query(Post).filter_by(category='news', status='published').all()
+
+    def parse_date(post):
+        # Assuming date is stored in 'Month Day, Year' format
+        return datetime.strptime(post.date, "%B %d, %Y")
+    # Fetch all posts ordered by the date (assuming 'created_at' is the column storing the post-creation date)
+    posts = sorted(raw_posts, key=parse_date, reverse=True)
+
     return render_template("news.html", posts=posts, copyright_year=year)
 
 
 @app.route("/naturalhair")
 def naturalhair():
-    posts = db.session.query(Post).filter_by(category='Natural Hair', status='published').all()
+    raw_posts = db.session.query(Post).filter_by(category='Natural Hair', status='published').all()
+
+    def parse_date(post):
+        # Assuming date is stored in 'Month Day, Year' format
+        return datetime.strptime(post.date, "%B %d, %Y")
+    # Fetch all posts ordered by the date (assuming 'created_at' is the column storing the post-creation date)
+    posts = sorted(raw_posts, key=parse_date, reverse=True)
+
     return render_template("hair.html", posts=posts, copyright_year=year)
 
 
 @app.route("/technology")
 def technology():
-    posts = db.session.query(Post).filter_by(category='Technology', status='published').all()
+    raw_posts = db.session.query(Post).filter_by(category='Technology', status='published').all()
+
+    def parse_date(post):
+        # Assuming date is stored in 'Month Day, Year' format
+        return datetime.strptime(post.date, "%B %d, %Y")
+    # Fetch all posts ordered by the date (assuming 'created_at' is the column storing the post-creation date)
+    posts = sorted(raw_posts, key=parse_date, reverse=True)
+
     return render_template("tech.html", posts=posts, copyright_year=year)
 
 
 @app.route("/my-portfolio")
 def portfolio():
-    posts = db.session.query(Post).filter_by(category='My Portfolio', status='published').all()
+    raw_posts = db.session.query(Post).filter_by(category='My Portfolio', status='published').all()
+
+    def parse_date(post):
+        # Assuming date is stored in 'Month Day, Year' format
+        return datetime.strptime(post.date, "%B %d, %Y")
+    # Fetch all posts ordered by the date (assuming 'created_at' is the column storing the post-creation date)
+    posts = sorted(raw_posts, key=parse_date, reverse=True)
+
     return render_template("portfolio.html", posts=posts, copyright_year=year)
 
 
