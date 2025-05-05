@@ -91,6 +91,30 @@ class SEOMiddleware:
             g.seo["image"] = url_for('static', filename='img/projects.jpeg', _external=True)
             g.seo["keywords"] = "blog, python, programming, coding, web development"
 
+        elif request.endpoint == "news":
+            g.seo["title"] = "Breaking News"
+            g.seo["description"] = f"{g.seo['title']}: access to all the headlines across the globe on your finger tip!"
+            g.seo["url"] = "https://www.ruthselormeacolatse.info/news"
+            g.seo["canonical"] = g.seo["url"]
+            g.seo["image"] = url_for('static', filename='img/breakingnews.png', _external=True)
+            g.seo["keywords"] = "news, headlines, daily updates, journalism, writing"
+
+        elif request.endpoint == "naturalhair":
+            g.seo["title"] = "Natural Hair"
+            g.seo["description"] = f"In {g.seo['title']} I teach you to care for and embrace your natural curls and coils."
+            g.seo["url"] = "https://www.ruthselormeacolatse.info/naturalhair"
+            g.seo["canonical"] = g.seo["url"]
+            g.seo["image"] = url_for('static', filename='img/naturalhair.png', _external=True)
+            g.seo["keywords"] = "natural hair, type 4 hair, 4c hair, curly hair, coily hair, hair"
+
+        elif request.endpoint == "technology":
+            g.seo["title"] = "Technology"
+            g.seo["description"] = f"Find all the up to date information about the latest {g.seo['title']} and Tech news"
+            g.seo["url"] = "https://www.ruthselormeacolatse.info/technology"
+            g.seo["canonical"] = g.seo["url"]
+            g.seo["image"] = url_for('static', filename='img/technews.png', _external=True)
+            g.seo["keywords"] = "latest tech news, future technology trends, AI tools 2025, machine learning vs AI, software development trends"
+
         elif request.endpoint == "about":
             g.seo["title"] = "About - Ruth Selorme Acolatse"
             g.seo["description"] = "Learn more about Ruth Selorme Acolatse."
