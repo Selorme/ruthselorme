@@ -2,8 +2,6 @@ import requests
 from bs4 import BeautifulSoup
 from datetime import datetime, timezone
 from supabase import create_client
-from PIL import Image
-from io import BytesIO
 from dotenv import load_dotenv
 from apscheduler.schedulers.blocking import BlockingScheduler
 import os
@@ -17,26 +15,6 @@ SUPABASE_KEY = os.getenv("SUPABASE_KEY")
 BUCKET_NAME = "blog-images"
 
 supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
-
-# === IMAGE COMPRESSION ===
-def compress_image(image_url, max_size_kb=10):
-    try:
-        response = requests.get(image_url, timeout=10)
-        img = Image.open(BytesIO(response.content)).convert("RGB")
-        img.thumbnail((600, 600))
-
-        for quality in range(85, 10, -5):
-            buffer = BytesIO()
-            img.save(buffer, format="JPEG", quality=quality)
-            size_kb = buffer.tell() / 1024
-            if size_kb <= max_size_kb:
-                buffer.seek(0)
-                return buffer
-        print("⚠️ Could not compress to target size")
-        return None
-    except Exception as e:
-        print("Image compression error:", e)
-        return None
 
 # === UPLOAD TO SUPABASE STORAGE ===
 def upload_to_supabase(file_name, image_buffer):
@@ -72,15 +50,7 @@ def scrape_scholarshipregion():
             date_tag = article.select_one("time.entry-date")
             deadline = date_tag.text.strip() if date_tag else "Deadline not specified"
 
-            img_tag = article.select_one("img")
-            original_img_url = img_tag["src"] if img_tag and "src" in img_tag.attrs else None
-
-            # Compress and upload image
-            if original_img_url:
-                img_buffer = compress_image(original_img_url)
-                img_url = upload_to_supabase(f"scholarships/scholarship_{i}.jpg", img_buffer) if img_buffer else "https://yourwebsite.com/default.jpg"
-            else:
-                img_url = "{{ url_for('static', filename='img/scholarships.png') }}"
+            img_url = "{{ url_for('static', filename='img/scholarships.png') }}"
 
             scholarships.append({
                 "title": title,
