@@ -457,7 +457,7 @@ def add_new_post():
         db.session.add(new_post)
         db.session.commit()
 
-        if new_post.status == "published" and new_post.category != "news":
+        if new_post.status == "published" and new_post.category not in ["news", "scholarship"]:
             if send_post_notification(new_post):
                 flash("New post created and notification sent to subscribers!", "success")
             else:
@@ -819,6 +819,19 @@ def news():
     posts = sorted(raw_posts, key=parse_date, reverse=True)
 
     return render_template("news.html", posts=posts, copyright_year=year)
+
+
+@app.route("/scholarships")
+def scholarships():
+    raw_posts = db.session.query(Post).filter_by(category='news', status='published').all()
+
+    def parse_date(post):
+        # Assuming date is stored in 'Month Day, Year' format
+        return datetime.strptime(post.date, "%B %d, %Y")
+    # Fetch all posts ordered by the date (assuming 'created_at' is the column storing the post-creation date)
+    posts = sorted(raw_posts, key=parse_date, reverse=True)
+
+    return render_template("scholarships.html", posts=posts, copyright_year=year)
 
 
 @app.route("/naturalhair")
