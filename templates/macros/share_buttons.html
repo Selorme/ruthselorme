@@ -1,0 +1,40 @@
+{% macro share_buttons(post_title, post_url) %}
+<div class="btn-outline-primary ">
+  <button class="share-toggle btn btn-outline-primary btn-sm" id="nativeShareBtn">
+    <i class="fas fa-share-alt"></i> Share
+  </button>
+
+  <!-- Fallback share links -->
+  <div class="share-links" id="fallbackShare" style="display: none;">
+    <a href="https://www.facebook.com/sharer/sharer.php?u={{ post_url }}" target="_blank" title="Share on Facebook">
+      <i class="fab fa-facebook"></i>
+    </a>
+    <a href="https://twitter.com/intent/tweet?url={{ post_url }}&text={{ post_title }}" target="_blank" title="Tweet this post">
+      <i class="fab fa-twitter"></i>
+    </a>
+    <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ post_url }}" target="_blank" title="Share on LinkedIn">
+      <i class="fab fa-linkedin"></i>
+    </a>
+    <a href="https://wa.me/?text={{ post_title }} {{ post_url }}" target="_blank" title="Share on WhatsApp">
+      <i class="fab fa-whatsapp"></i>
+    </a>
+  </div>
+</div>
+
+<script>
+  const nativeShareBtn = document.getElementById('nativeShareBtn');
+  const fallbackShare = document.getElementById('fallbackShare');
+
+  nativeShareBtn.addEventListener('click', () => {
+    if (navigator.share) {
+      navigator.share({
+        title: "{{ post_title }}",
+        url: "{{ post_url }}"
+      }).catch(console.error);
+    } else {
+      fallbackShare.style.display = fallbackShare.style.display === 'none' ? 'flex' : 'none';
+    }
+  });
+</script>
+
+{% endmacro %}
