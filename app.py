@@ -823,7 +823,7 @@ def news():
 
 @app.route("/scholarships")
 def scholarships():
-    raw_posts = db.session.query(Post).filter_by(category='news', status='published').all()
+    raw_posts = db.session.query(Post).filter_by(category='scholarships', status='published').all()
 
     def parse_date(post):
         # Assuming date is stored in 'Month Day, Year' format
