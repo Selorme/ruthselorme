@@ -107,6 +107,14 @@ class SEOMiddleware:
             g.seo["image"] = url_for('static', filename='img/naturalhair.png', _external=True)
             g.seo["keywords"] = "natural hair, type 4 hair, 4c hair, curly hair, coily hair, hair"
 
+        elif request.endpoint == "scholarships":
+            g.seo["title"] = "Scholarship Updates"
+            g.seo["description"] = f"Get daily {g.seo['title']} at your finger tip."
+            g.seo["url"] = "https://www.ruthselormeacolatse.info/scholarships"
+            g.seo["canonical"] = g.seo["url"]
+            g.seo["image"] = url_for('static', filename='img/scholarships.png', _external=True)
+            g.seo["keywords"] = "scholarship, education, university, full scholarship"
+
         elif request.endpoint == "technology":
             g.seo["title"] = "Technology"
             g.seo["description"] = f"Find all the up to date information about the latest {g.seo['title']} and Tech news"
