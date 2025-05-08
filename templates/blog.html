@@ -13,11 +13,15 @@
             <div class="col-md-4 mb-4">
                 <div class="card">
                     <a href="{{ url_for('show_post', category=post.category.replace(' ', '-'), slug=slugify(post.title), post_id=post.id) }}">
-                        {% set webp_url = post.img_url.replace('.jpg', '.webp').replace('.jpeg', '.webp').replace('.png', '.webp') %}
-                        <picture>
-                          <source srcset="{{ webp_url }}" type="image/webp">
-                          <img src="{{ post.img_url }}" class="card-img-top blog-thumbnail" alt="{{ post.title }}" loading="lazy" decoding="async">
-                        </picture>
+                        {% if post.img_url.endswith('.jpg') or post.img_url.endswith('.jpeg') or post.img_url.endswith('.png') %}
+                            {% set webp_url = post.img_url.rsplit('.', 1)[0] + '.webp' %}
+                            <picture>
+                                <source srcset="{{ webp_url }}" type="image/webp">
+                                <img src="{{ post.img_url }}" class="card-img-top blog-thumbnail" alt="{{ post.title }}" loading="lazy" decoding="async">
+                            </picture>
+                        {% else %}
+                            <img src="{{ post.img_url }}" class="card-img-top blog-thumbnail" alt="{{ post.title }}" loading="lazy" decoding="async">
+                        {% endif %}
                         <div class="card-body">
                             <h5 class="card-title text-center">{{ post.title }}</h5>
                         </div>
@@ -26,6 +30,7 @@
             </div>
         {% endfor %}
     </div>
+
 
     <!-- Blog Categories -->
     <div class="container mt-5">
