@@ -102,7 +102,7 @@ class SEOMiddleware:
         elif request.endpoint == "naturalhair":
             g.seo["title"] = "Natural Hair"
             g.seo["description"] = f"In {g.seo['title']} I teach you to care for and embrace your natural curls and coils."
-            g.seo["url"] = "https://www.ruthselormeacolatse.info/naturalhair"
+            g.seo["url"] = "https://www.ruthselormeacolatse.info/natural-hair"
             g.seo["canonical"] = g.seo["url"]
             g.seo["image"] = url_for('static', filename='img/naturalhair.png', _external=True)
             g.seo["keywords"] = "natural hair, type 4 hair, 4c hair, curly hair, coily hair, hair"
