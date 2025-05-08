@@ -41,7 +41,7 @@
                 {{ share_buttons(post.title, request.url) }}
 
                 <!-- Comment Form -->
-                <form action="{{ url_for('show_post', category=post.category.replace(' ', '-'), slug=slugify(post.title), post_id=post.id) }}" method="post">
+                <form action="{{ url_for('show_post', category=post.category.replace(' ', '-').lower(), slug=slugify(post.title), post_id=post.id) }}" method="post">
                     {{ form.hidden_tag() }}
                     <div class="mb-3">
                         <label for="{{ form.comment.id }}" class="form-label">{{ form.comment.label }}</label>
