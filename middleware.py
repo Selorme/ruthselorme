@@ -45,12 +45,12 @@ class SEOMiddleware:
                 g.seo["description"] = strip_html(requested_post.body[:160] + "...") if requested_post.body else "Check out this post."
                 g.seo["image"] = requested_post.img_url
                 g.seo["url"] = urljoin(request.host_url,
-                                       url_for('show_post', category=requested_post.category.replace(" ", "-"), post_id=requested_post.id, slug=slugify(requested_post.title)))
+                                       url_for('show_post', category=requested_post.category.replace(" ", "-").lower(), post_id=requested_post.id, slug=slugify(requested_post.title)))
 
                 # Ensure canonical URL is in lowercase
                 g.seo["canonical"] = urljoin(request.host_url,
                                              url_for('show_post', category=requested_post.category.replace(" ", "-").lower(),
-                                                     post_id=requested_post.id))
+                                                     post_id=requested_post.id, slug=slugify(requested_post.title)))
 
         elif request.endpoint == "random_musings":
             g.seo["title"] = "Random Musings"
