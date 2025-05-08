@@ -157,7 +157,7 @@ def generate_sitemap():
     for post in blog_posts:
         category_slug = quote(post.category.strip().lower().replace(" ", "-"))  # URL-encoded category
         xml_sitemap += f"""<url>
-            <loc>{base_url}/{category_slug}/post/{post.id}</loc>
+            <loc>{base_url}/{category_slug}/post/{post.id}/{slugify(post.title)}</loc>
             <lastmod>{post.date}</lastmod>
             <changefreq>weekly</changefreq>
             <priority>0.7</priority>
