@@ -8,7 +8,7 @@ from flask_wtf.file import FileField, FileAllowed, FileRequired
 # Form to submit a post
 class CreatePostForm(FlaskForm):
     title = StringField("Blog Post Title", validators=[DataRequired()])
-    img_url = FileField("Upload Image or Video", validators=[Optional(), FileAllowed(['jpg', 'png', 'jpeg', 'gif'], 'Images only!')])
+    img_url = FileField("Upload Image or Video", validators=[Optional(), FileAllowed(['jpg', 'png', 'jpeg', 'gif', 'webp'], 'Images only!')])
     body = CKEditorField("Blog Content", validators=[DataRequired()])
     category = StringField("Category", validators=[DataRequired()])
 
