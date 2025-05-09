@@ -72,39 +72,44 @@
     </div>
 </article>
 
-
-    <div class="container mt-5">
-        <div class="row">
-            <div class="col-md-12">
-                <h3>Other Posts in this Category</h3>
-                <ul class="list-unstyled">
-                    {% for p in all_posts %}
-                        {% if p.id != post.id %}
-                            <li>
-                                <a href="{{ url_for('show_post', category=category.replace(' ', '-'), slug=slugify(post.title), post_id=p.id) }}">
-                                    {{ loop.index }}. {{ p.title }}
-                                </a>
-                            </li>
-                        {% endif %}
-                    {% endfor %}
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <div class="container mt-5">
-        <div class="row">
-            <div class="col-md-12">
-                <h3>Other Blog Categories</h3>
-                <div class="category-list">
-                    {% for category in categories %}
-                        <div class="category-item">
-                            <a href="{{ url_for('show_category', category=category.replace(' ', '-')) }}">{{ category }}</a>
+<!--Other posts in this category-->
+<div class="container mt-4 my-unique-container">
+    <h3 class="mb-2">Other Posts in this Category</h3>
+    <div class="row row-cols-3 row-cols-md-6 g-3">
+        {% for p in all_posts %}
+            {% if p.id != post.id %}
+                <div class="col">
+                    <a href="{{ url_for('show_post', category=p.category.replace(' ', '-').lower(), slug=slugify(p.title), post_id=p.id) }}">
+                        <div class="card h-100 border-0">
+                            <img src="{{ p.img_url }}" class="card-img-top" alt="{{ p.title }}">
+                            <div class="card-body p-1">
+                                <small class="d-block">{{ p.title }}</small>
+                            </div>
                         </div>
-                    {% endfor %}
+                    </a>
                 </div>
-            </div>
-        </div>
+            {% endif %}
+        {% endfor %}
     </div>
+</div>
+
+
+<!-- Other Blog Categories -->
+<div class="container mt-4 mb-4 my-unique-container">
+    <h3 class="mb-2">Other Blog Categories</h3>
+    <div class="row row-cols-3 row-cols-md-6 g-3">
+        {% for cat in categories %}
+            <div class="col">
+                <a href="{{ url_for('show_category', category=cat.replace(' ', '-').lower()) }}">
+                    <div class="card h-100 border-0 text-center p-2">
+                        <small>{{ cat }}</small>
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+
 
 {% endblock %}
