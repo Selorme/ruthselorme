@@ -834,8 +834,8 @@ def scholarships():
     return render_template("scholarships.html", posts=posts, copyright_year=year)
 
 
-@app.route("/natural_hair")
-def naturalhair():
+@app.route("/natural-hair")
+def natural_hair():
     raw_posts = db.session.query(Post).filter_by(category='Natural Hair', status='published').all()
 
     def parse_date(post):
