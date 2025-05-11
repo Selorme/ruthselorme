@@ -369,7 +369,7 @@ def send_post_notification(post):
                 words = text.split()
                 return " ".join(words[:word_limit]) + "..." if len(words) > word_limit else text
 
-            preview_text = strip_html(truncate_text(post.body))
+            preview_text = truncate_text(post.body)
 
             # Create HTML email content
             html_content = f'''
