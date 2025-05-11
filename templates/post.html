@@ -41,7 +41,8 @@
                 {{ share_buttons(post.title, request.url) }}
 
                 <!-- Comment Form -->
-                <form action="{{ url_for('show_post', category=post.category.replace(' ', '-').lower(), slug=slugify(post.title), post_id=post.id) }}" method="post">
+                <form action="{{ g.seo.canonical }}" method="post">
+<!--                <form action="{{ url_for('show_post', category=post.category.replace(' ', '-').lower(), slug=slugify(post.title), post_id=post.id) }}" method="post">-->
                     {{ form.hidden_tag() }}
                     <div class="mb-3">
                         <label for="{{ form.comment.id }}" class="form-label">{{ form.comment.label }}</label>
@@ -79,7 +80,8 @@
         {% for p in all_posts %}
             {% if p.id != post.id %}
                 <div class="col">
-                    <a href="{{ url_for('show_post', category=p.category.replace(' ', '-').lower(), slug=slugify(p.title), post_id=p.id) }}">
+                    {% set p_slug = slugify(p.title) %}
+                    <a href="{{ url_for('show_post', category=p.category.replace(' ', '-').lower(), slug=p_slug, post_id=p.id) }}">
                         <div class="card h-100 border-0">
                             <img src="{{ p.img_url }}" class="card-img-top" alt="{{ p.title }}">
                             <div class="card-body p-1">
