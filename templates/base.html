@@ -3,14 +3,15 @@
 <head>
     <!-- Google Tag Manager (lazy-load below instead of sync) -->
     <script>
-      (function() {
+      window.addEventListener("scroll", function loadGTM() {
         const gtm = document.createElement("script");
         gtm.src = "https://www.googletagmanager.com/gtm.js?id={{ g.gtm_id }}";
         gtm.async = true;
         document.head.appendChild(gtm);
         window.dataLayer = window.dataLayer || [];
         dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
-      })();
+        window.removeEventListener("scroll", loadGTM);
+      }, { once: true });
     </script>
 
     <!-- Lazy-load AdSense -->
