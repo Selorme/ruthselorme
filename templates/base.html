@@ -194,111 +194,265 @@
     {% endblock %}
 
 
-     <!-- Cookie Consent Modal -->
-    <div id="cookie-consent-modal" class="cookie-consent-modal" style="display:none; position: fixed; top: 20%; left: 50%; transform: translateX(-50%); z-index: 9999; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">
-      <div class="cookie-consent-content">
-        <h2>Customize Cookies</h2>
-        <p>Select your preferences:</p>
-        <form id="cookie-consent-form">
-          <div class="cookie-category">
-            <label>
-              <input type="checkbox" id="necessary-cookies" checked disabled>
-              Necessary Cookies (Required)
-            </label>
-          </div>
-          <div class="cookie-category">
-            <label>
-              <input type="checkbox" id="analytics-cookies">
-              Analytics Cookies
-            </label>
-          </div>
-          <div class="cookie-category">
-            <label>
-              <input type="checkbox" id="marketing-cookies">
-              Marketing Cookies
-            </label>
-          </div>
-          <div class="cookie-buttons mt-3">
-            <button type="button" id="save-cookie-preferences" class="btn btn-primary">Save Preferences</button>
-            <button type="button" id="close-cookie-modal" class="btn btn-secondary">Close</button>
-          </div>
-        </form>
+
+
+
+
+
+
+
+
+    <!-- Cookie Consent Modal -->
+<div id="cookie-consent-modal" class="cookie-consent-modal" style="display:none; position: fixed; top: 20%; left: 50%; transform: translateX(-50%); z-index: 9999; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">
+  <div class="cookie-consent-content">
+    <h2>Customize Cookies</h2>
+    <p>Select your preferences:</p>
+    <form id="cookie-consent-form">
+      <div class="cookie-category">
+        <label>
+          <input type="checkbox" id="necessary-cookies" checked disabled>
+          Necessary Cookies (Required)
+        </label>
       </div>
-    </div>
+      <div class="cookie-category">
+        <label>
+          <input type="checkbox" id="analytics-cookies">
+          Analytics Cookies
+        </label>
+      </div>
+      <div class="cookie-category">
+        <label>
+          <input type="checkbox" id="marketing-cookies">
+          Marketing Cookies
+        </label>
+      </div>
+      <div class="cookie-buttons mt-3">
+        <button type="button" id="save-cookie-preferences" class="btn btn-primary">Save Preferences</button>
+        <button type="button" id="close-cookie-modal" class="btn btn-secondary">Close</button>
+      </div>
+    </form>
+  </div>
+</div>
 
-    <!-- Cookie Consent Scripts -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
-    <script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js"></script>
+<!-- Cookie Consent Scripts -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js"></script>
 
-    <script>
-      window.addEventListener("load", function () {
-        window.cookieconsent.initialise({
-          palette: {
-            popup: {
-              background: "#343a40",
-              text: "#ffffff"
-            },
-            button: {
-              background: "#ffc107",
-              text: "#000"
-            }
-          },
-          theme: "classic",
-          type: "opt-in",
-          content: {
-            message: "We use cookies to ensure you get the best experience.",
-            dismiss: "Accept all",
-            allow: "Accept necessary",
-            deny: "Customize",
-            link: "Learn more",
-            href: "/privacy-policy"
-          },
-          onInitialise: function (status) {
-            var didConsent = this.hasConsented();
-            if (didConsent) {
-              console.log("User accepted cookies:", this.hasConsented());
-            }
-          },
-          onStatusChange: function (status) {
-            if (status === "deny") {
-              showCookieCustomizeModal();
-            }
-          },
-          onRevokeChoice: function () {
-            console.log("User revoked their choice.");
-          }
-        });
-      });
-
-      function showCookieCustomizeModal() {
-        const modal = document.getElementById("cookie-consent-modal");
-        if (modal) {
-          modal.style.display = "block";
+<script>
+  window.addEventListener("load", function () {
+    window.cookieconsent.initialise({
+      palette: {
+        popup: {
+          background: "#343a40",
+          text: "#ffffff"
+        },
+        button: {
+          background: "#ffc107",
+          text: "#000"
         }
+      },
+      theme: "classic",
+      type: "opt-in",
+      content: {
+        message: "We use cookies to ensure you get the best experience.",
+        dismiss: "Accept all",
+        allow: "Accept necessary",
+        deny: "Customize",
+        link: "Learn more",
+        href: "/privacy-policy"
+      },
+      onInitialise: function (status) {
+        var didConsent = this.hasConsented();
+        if (didConsent) {
+          console.log("User accepted cookies:", this.hasConsented());
+          handleConsent(true); // All cookies accepted, activate necessary, analytics, and marketing
+        }
+      },
+      onStatusChange: function (status) {
+        if (status === "deny") {
+          showCookieCustomizeModal();
+        }
+      },
+      onRevokeChoice: function () {
+        console.log("User revoked their choice.");
+        handleConsent(false); // Disable all cookies if consent is revoked
       }
+    });
+  });
 
-      document.addEventListener("DOMContentLoaded", function () {
-        const closeBtn = document.getElementById("close-cookie-modal");
-        if (closeBtn) {
-          closeBtn.addEventListener("click", function () {
-            document.getElementById("cookie-consent-modal").style.display = "none";
-          });
-        }
-
-        const saveBtn = document.getElementById("save-cookie-preferences");
-        if (saveBtn) {
-          saveBtn.addEventListener("click", function () {
-            // Here you can save the preferences, e.g., to localStorage
-            console.log("Preferences saved (you can implement saving here)");
-            document.getElementById("cookie-consent-modal").style.display = "none";
-          });
-        }
+  function handleConsent(granted) {
+    // This function updates GTM with the consent choices
+    if (window.dataLayer) {
+      window.dataLayer.push({
+        event: "cookieConsent",
+        consent: granted ? "granted" : "denied"
       });
-    </script>
+    }
+    if (granted) {
+      // Enable Analytics and Marketing Cookies via GTM
+      window.dataLayer.push({ 'event': 'enableGTMAnalytics' });
+      window.dataLayer.push({ 'event': 'enableGTMMarketing' });
+    } else {
+      // Disable Analytics and Marketing Cookies via GTM
+      window.dataLayer.push({ 'event': 'disableGTMAnalytics' });
+      window.dataLayer.push({ 'event': 'disableGTMMarketing' });
+    }
+  }
+
+  function showCookieCustomizeModal() {
+    const modal = document.getElementById("cookie-consent-modal");
+    if (modal) {
+      modal.style.display = "block";
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const closeBtn = document.getElementById("close-cookie-modal");
+    if (closeBtn) {
+      closeBtn.addEventListener("click", function () {
+        document.getElementById("cookie-consent-modal").style.display = "none";
+      });
+    }
+
+    const saveBtn = document.getElementById("save-cookie-preferences");
+    if (saveBtn) {
+      saveBtn.addEventListener("click", function () {
+        const preferences = {
+          necessary: true, // Always required
+          analytics: document.getElementById("analytics-cookies").checked,
+          marketing: document.getElementById("marketing-cookies").checked
+        };
+
+        // Save preferences in local storage (optional)
+        localStorage.setItem('cookiePreferences,' JSON.stringify(preferences));
+
+        // Update GTM consent preferences
+        handleConsent(preferences.analytics || preferences.marketing);
+        document.getElementById("cookie-consent-modal").style.display = "none";
+
+        console.log("Preferences saved:", preferences);
+      });
+    }
+  });
+</script>
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--     &lt;!&ndash; Cookie Consent Modal &ndash;&gt;-->
+<!--    <div id="cookie-consent-modal" class="cookie-consent-modal" style="display:none; position: fixed; top: 20%; left: 50%; transform: translateX(-50%); z-index: 9999; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">-->
+<!--      <div class="cookie-consent-content">-->
+<!--        <h2>Customize Cookies</h2>-->
+<!--        <p>Select your preferences:</p>-->
+<!--        <form id="cookie-consent-form">-->
+<!--          <div class="cookie-category">-->
+<!--            <label>-->
+<!--              <input type="checkbox" id="necessary-cookies" checked disabled>-->
+<!--              Necessary Cookies (Required)-->
+<!--            </label>-->
+<!--          </div>-->
+<!--          <div class="cookie-category">-->
+<!--            <label>-->
+<!--              <input type="checkbox" id="analytics-cookies">-->
+<!--              Analytics Cookies-->
+<!--            </label>-->
+<!--          </div>-->
+<!--          <div class="cookie-category">-->
+<!--            <label>-->
+<!--              <input type="checkbox" id="marketing-cookies">-->
+<!--              Marketing Cookies-->
+<!--            </label>-->
+<!--          </div>-->
+<!--          <div class="cookie-buttons mt-3">-->
+<!--            <button type="button" id="save-cookie-preferences" class="btn btn-primary">Save Preferences</button>-->
+<!--            <button type="button" id="close-cookie-modal" class="btn btn-secondary">Close</button>-->
+<!--          </div>-->
+<!--        </form>-->
+<!--      </div>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; Cookie Consent Scripts &ndash;&gt;-->
+<!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />-->
+<!--    <script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js"></script>-->
+
+<!--    <script>-->
+<!--      window.addEventListener("load", function () {-->
+<!--        window.cookieconsent.initialise({-->
+<!--          palette: {-->
+<!--            popup: {-->
+<!--              background: "#343a40",-->
+<!--              text: "#ffffff"-->
+<!--            },-->
+<!--            button: {-->
+<!--              background: "#ffc107",-->
+<!--              text: "#000"-->
+<!--            }-->
+<!--          },-->
+<!--          theme: "classic",-->
+<!--          type: "opt-in",-->
+<!--          content: {-->
+<!--            message: "We use cookies to ensure you get the best experience.",-->
+<!--            dismiss: "Accept all",-->
+<!--            allow: "Accept necessary",-->
+<!--            deny: "Customize",-->
+<!--            link: "Learn more",-->
+<!--            href: "/privacy-policy"-->
+<!--          },-->
+<!--          onInitialise: function (status) {-->
+<!--            var didConsent = this.hasConsented();-->
+<!--            if (didConsent) {-->
+<!--              console.log("User accepted cookies:", this.hasConsented());-->
+<!--            }-->
+<!--          },-->
+<!--          onStatusChange: function (status) {-->
+<!--            if (status === "deny") {-->
+<!--              showCookieCustomizeModal();-->
+<!--            }-->
+<!--          },-->
+<!--          onRevokeChoice: function () {-->
+<!--            console.log("User revoked their choice.");-->
+<!--          }-->
+<!--        });-->
+<!--      });-->
+
+<!--      function showCookieCustomizeModal() {-->
+<!--        const modal = document.getElementById("cookie-consent-modal");-->
+<!--        if (modal) {-->
+<!--          modal.style.display = "block";-->
+<!--        }-->
+<!--      }-->
+
+<!--      document.addEventListener("DOMContentLoaded", function () {-->
+<!--        const closeBtn = document.getElementById("close-cookie-modal");-->
+<!--        if (closeBtn) {-->
+<!--          closeBtn.addEventListener("click", function () {-->
+<!--            document.getElementById("cookie-consent-modal").style.display = "none";-->
+<!--          });-->
+<!--        }-->
+
+<!--        const saveBtn = document.getElementById("save-cookie-preferences");-->
+<!--        if (saveBtn) {-->
+<!--          saveBtn.addEventListener("click", function () {-->
+<!--            // Here you can save the preferences, e.g., to localStorage-->
+<!--            console.log("Preferences saved (you can implement saving here)");-->
+<!--            document.getElementById("cookie-consent-modal").style.display = "none";-->
+<!--          });-->
+<!--        }-->
+<!--      });-->
+<!--    </script>-->
 
 </body>
 </html>

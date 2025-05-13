@@ -512,67 +512,6 @@ def add_new_post():
     return render_template("make-post.html", form=form, copyright_year=year, post=None)
 
 
-# @app.route("/new-post", methods=["GET", "POST"])
-# @admin_only
-# def add_new_post():
-#     form = CreatePostForm()
-#
-#     if form.validate_on_submit():
-#         # Handle the image/video upload if there is one
-#         file = form.img_url.data  # This is the file upload field from your form
-#         img_url = file
-#
-#         if file:
-#             # Secure the filename
-#             filename = secure_filename(file.filename)
-#
-#             # Upload the file to Supabase bucket directly
-#             upload_response = bucket.upload(f'posts/{filename}', file.stream.read())  # 'posts' is the folder in your bucket
-#             if upload_response:
-#                 # Get the public URL of the uploaded file
-#                 img_url = bucket.get_public_url(f'posts/{filename}')
-#
-#         new_post = Post(
-#             title=form.title.data,
-#             category=form.category.data,
-#             body=form.body.data,
-#             img_url=img_url,
-#             author=current_user,
-#             date=date.today().strftime("%B %d, %Y"),
-#         )
-#
-#         if form.publish.data:
-#             new_post.status = "published"
-#             new_post.scheduled_datetime = None
-#         elif form.draft.data:
-#             new_post.status = "draft"
-#             new_post.scheduled_datetime = None
-#         elif form.schedule.data:
-#             new_post.status = "scheduled"
-#             # Combine the date and time fields
-#             if form.publish_date.data and form.publish_time.data:
-#                 scheduled_datetime = datetime.combine(
-#                     form.publish_date.data,
-#                     form.publish_time.data
-#                 )
-#                 new_post.scheduled_datetime = scheduled_datetime
-#
-#         db.session.add(new_post)
-#         db.session.commit()
-#
-#         if new_post.status == "published" and new_post.category not in ["news", "scholarships"]:
-#             if send_post_notification(new_post):
-#                 flash("New post created and notification sent to subscribers!", "success")
-#             else:
-#                 flash("Post created, but there was an issue sending notifications.", "warning")
-#         else:
-#             flash("Post saved successfully!", "success")
-#
-#         return redirect(url_for("home"))
-#
-#     return render_template("make-post.html", form=form, copyright_year=year, post=None)
-
-
 @app.route("/edit-post/<int:post_id>", methods=["GET", "POST"])
 @admin_only
 def edit_post(post_id):
