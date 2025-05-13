@@ -23,8 +23,10 @@ from werkzeug.middleware.proxy_fix import ProxyFix
 from flask_assets import Environment, Bundle
 from flask_compress import Compress
 from extensions import db
-from utils import slugify, strip_html
+from utils import slugify
 from werkzeug.utils import secure_filename
+from sqlalchemy import func
+import sqlalchemy
 
 # Load environment variables
 load_dotenv()
@@ -424,50 +426,151 @@ def add_new_post():
             filename = secure_filename(file.filename)
 
             # Upload the file to Supabase bucket directly
-            upload_response = bucket.upload(f'posts/{filename}', file.stream.read())  # 'posts' is the folder in your bucket
+            upload_response = bucket.upload(f'posts/{filename}',
+                                            file.stream.read())  # 'posts' is the folder in your bucket
             if upload_response:
                 # Get the public URL of the uploaded file
                 img_url = bucket.get_public_url(f'posts/{filename}')
 
-        new_post = Post(
-            title=form.title.data,
-            category=form.category.data,
-            body=form.body.data,
-            img_url=img_url,
-            author=current_user,
-            date=date.today().strftime("%B %d, %Y"),
-        )
+        # Find the next available ID by incrementally trying IDs until we find one that works
+        max_attempts = 100  # Safeguard against infinite loops
+        attempts = 0
+        success = False
 
-        if form.publish.data:
-            new_post.status = "published"
-            new_post.scheduled_datetime = None
-        elif form.draft.data:
-            new_post.status = "draft"
-            new_post.scheduled_datetime = None
-        elif form.schedule.data:
-            new_post.status = "scheduled"
-            # Combine the date and time fields
-            if form.publish_date.data and form.publish_time.data:
-                scheduled_datetime = datetime.combine(
-                    form.publish_date.data,
-                    form.publish_time.data
+        # Get the initial max ID as our starting point
+        next_id = db.session.query(func.max(Post.id)).scalar() or 0
+        next_id += 1
+
+        while not success and attempts < max_attempts:
+            try:
+                # Create the new post with the current candidate ID
+                new_post = Post(
+                    id=next_id,
+                    title=form.title.data,
+                    category=form.category.data,
+                    body=form.body.data,
+                    img_url=img_url,
+                    author=current_user,
+                    date=date.today().strftime("%B %d, %Y"),
                 )
-                new_post.scheduled_datetime = scheduled_datetime
 
-        db.session.add(new_post)
-        db.session.commit()
+                if form.publish.data:
+                    new_post.status = "published"
+                    new_post.scheduled_datetime = None
+                elif form.draft.data:
+                    new_post.status = "draft"
+                    new_post.scheduled_datetime = None
+                elif form.schedule.data:
+                    new_post.status = "scheduled"
+                    # Combine the date and time fields
+                    if form.publish_date.data and form.publish_time.data:
+                        scheduled_datetime = datetime.combine(
+                            form.publish_date.data,
+                            form.publish_time.data
+                        )
+                        new_post.scheduled_datetime = scheduled_datetime
 
-        if new_post.status == "published" and new_post.category not in ["news", "scholarships"]:
-            if send_post_notification(new_post):
-                flash("New post created and notification sent to subscribers!", "success")
-            else:
-                flash("Post created, but there was an issue sending notifications.", "warning")
-        else:
-            flash("Post saved successfully!", "success")
+                db.session.add(new_post)
+                db.session.commit()
+                success = True
 
-        return redirect(url_for("home"))
+                # Log the ID that was used
+                app.logger.info(f"Post created with ID: {next_id}")
+
+                if new_post.status == "published" and new_post.category not in ["news", "scholarships"]:
+                    if send_post_notification(new_post):
+                        flash("New post created and notification sent to subscribers!", "success")
+                    else:
+                        flash("Post created, but there was an issue sending notifications.", "warning")
+                else:
+                    flash("Post saved successfully!", "success")
+
+                return redirect(url_for("home"))
+
+            except sqlalchemy.exc.IntegrityError as e:
+                # If we get an integrity error, roll back and try the next ID
+                db.session.rollback()
+
+                # Log the attempted ID for debugging
+                app.logger.info(f"ID {next_id} already exists, trying next ID")
+
+                # Check if this is specifically a unique constraint violation on the ID
+                if "duplicate key value violates unique constraint" in str(e) and "blog_posts_pkey" in str(e):
+                    # Increment to the next ID and try again
+                    next_id += 1
+                    attempts += 1
+                else:
+                    # If it's some other integrity error, re-raise it
+                    flash("An error occurred while saving the post.", "danger")
+                    app.logger.error(f"Database error: {str(e)}")
+                    return redirect(url_for("add_new_post"))
+
+        if not success:
+            flash("Could not find an available ID after multiple attempts.", "danger")
+            return redirect(url_for("add_new_post"))
 
     return render_template("make-post.html", form=form, copyright_year=year, post=None)
+
+
+# @app.route("/new-post", methods=["GET", "POST"])
+# @admin_only
+# def add_new_post():
+#     form = CreatePostForm()
+#
+#     if form.validate_on_submit():
+#         # Handle the image/video upload if there is one
+#         file = form.img_url.data  # This is the file upload field from your form
+#         img_url = file
+#
+#         if file:
+#             # Secure the filename
+#             filename = secure_filename(file.filename)
+#
+#             # Upload the file to Supabase bucket directly
+#             upload_response = bucket.upload(f'posts/{filename}', file.stream.read())  # 'posts' is the folder in your bucket
+#             if upload_response:
+#                 # Get the public URL of the uploaded file
+#                 img_url = bucket.get_public_url(f'posts/{filename}')
+#
+#         new_post = Post(
+#             title=form.title.data,
+#             category=form.category.data,
+#             body=form.body.data,
+#             img_url=img_url,
+#             author=current_user,
+#             date=date.today().strftime("%B %d, %Y"),
+#         )
+#
+#         if form.publish.data:
+#             new_post.status = "published"
+#             new_post.scheduled_datetime = None
+#         elif form.draft.data:
+#             new_post.status = "draft"
+#             new_post.scheduled_datetime = None
+#         elif form.schedule.data:
+#             new_post.status = "scheduled"
+#             # Combine the date and time fields
+#             if form.publish_date.data and form.publish_time.data:
+#                 scheduled_datetime = datetime.combine(
+#                     form.publish_date.data,
+#                     form.publish_time.data
+#                 )
+#                 new_post.scheduled_datetime = scheduled_datetime
+#
+#         db.session.add(new_post)
+#         db.session.commit()
+#
+#         if new_post.status == "published" and new_post.category not in ["news", "scholarships"]:
+#             if send_post_notification(new_post):
+#                 flash("New post created and notification sent to subscribers!", "success")
+#             else:
+#                 flash("Post created, but there was an issue sending notifications.", "warning")
+#         else:
+#             flash("Post saved successfully!", "success")
+#
+#         return redirect(url_for("home"))
+#
+#     return render_template("make-post.html", form=form, copyright_year=year, post=None)
 
 
 @app.route("/edit-post/<int:post_id>", methods=["GET", "POST"])
