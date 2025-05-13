@@ -1,29 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Google Tag Manager (lazy-load below instead of sync) -->
+    <!-- Google Tag Manager with Consent Mode -->
     <script>
-      window.addEventListener("scroll", function loadGTM() {
+      // Define dataLayer with default consent state
+      window.dataLayer = window.dataLayer || [];
+      dataLayer.push({
+        'gtm.start': new Date().getTime(),
+        event: 'gtm.js',
+        // Set default consent state - denied by default for GDPR compliance
+        'consent': {
+          'ad_storage': 'denied',
+          'analytics_storage': 'denied',
+          'functionality_storage': 'denied',
+          'personalization_storage': 'denied',
+          'security_storage': 'granted' // Security is typically always granted
+        }
+      });
+
+      // Load GTM script
+      (function() {
         const gtm = document.createElement("script");
         gtm.src = "https://www.googletagmanager.com/gtm.js?id={{ g.gtm_id }}";
         gtm.async = true;
         document.head.appendChild(gtm);
-        window.dataLayer = window.dataLayer || [];
-        dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
-        window.removeEventListener("scroll", loadGTM);
-      }, { once: true });
+      })();
     </script>
 
     <!-- Lazy-load AdSense -->
-    <script>
-      window.addEventListener('scroll', function () {
-        const script = document.createElement('script');
-        script.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4005746165664491';
-        script.async = true;
-        script.crossOrigin = "anonymous";
-        document.head.appendChild(script);
-      }, { once: true });
-    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4005746165664491" crossorigin="anonymous"></script>
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -229,11 +234,12 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js"></script>
 
+    <!-- Updated Cookie Consent Script -->
     <script>
       // Store preferences in localStorage
       function savePreferences(preferences) {
         localStorage.setItem('cookiePreferences', JSON.stringify(preferences));
-        updateGoogleConsent(preferences);
+        updateGTMConsent(preferences);
         console.log("Cookie preferences saved:", preferences);
       }
 
@@ -254,17 +260,21 @@
         };
       }
 
-      // Send consent update to Google
-      function updateGoogleConsent(preferences) {
-        if (typeof gtag === "function") {
-          gtag('consent', 'update', {
-            ad_storage: preferences.marketing ? 'granted' : 'denied',
-            analytics_storage: preferences.analytics ? 'granted' : 'denied',
-            functionality_storage: preferences.necessary ? 'granted' : 'denied',
-            personalization_storage: preferences.marketing ? 'granted' : 'denied',
-            security_storage: 'granted'
-          });
-        }
+      // Send consent update to Google Tag Manager
+      function updateGTMConsent(preferences) {
+        // Use dataLayer push instead of gtag for GTM compatibility
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+          'event': 'consent_update',
+          'consent': {
+            'ad_storage': preferences.marketing ? 'granted' : 'denied',
+            'analytics_storage': preferences.analytics ? 'granted' : 'denied',
+            'functionality_storage': preferences.necessary ? 'granted' : 'denied',
+            'personalization_storage': preferences.marketing ? 'granted' : 'denied',
+            'security_storage': 'granted'
+          }
+        });
+        console.log("Consent update sent to GTM:", preferences);
       }
 
       // Show the customize modal
@@ -278,14 +288,36 @@
         }
       }
 
-      // Hide the customize modal
+      // Hide the customized modal
       function hideCookieCustomizeModal() {
         const modal = document.getElementById("cookie-consent-modal");
         if (modal) modal.style.display = "none";
       }
 
+      // Apply stored preferences on page load
+      document.addEventListener("DOMContentLoaded", function() {
+        // Check if we have stored preferences and apply them immediately
+        const storedPrefs = getStoredPreferences();
+        if (storedPrefs) {
+          updateGTMConsent(storedPrefs);
+        }
+
+        // Set up modal event listeners
+        document.getElementById("close-cookie-modal").addEventListener("click", hideCookieCustomizeModal);
+
+        document.getElementById("save-cookie-preferences").addEventListener("click", function() {
+          const preferences = {
+            necessary: true,
+            analytics: document.getElementById("analytics-cookies").checked,
+            marketing: document.getElementById("marketing-cookies").checked
+          };
+          savePreferences(preferences);
+          hideCookieCustomizeModal();
+        });
+      });
+
       // Initialize CookieConsent
-      window.addEventListener("load", function () {
+      window.addEventListener("load", function() {
         window.cookieconsent.initialise({
           palette: {
             popup: { background: "#343a40", text: "#ffffff" },
@@ -301,7 +333,7 @@
             link: "Learn more",
             href: "/privacy-policy"
           },
-          onInitialise: function (status) {
+          onInitialise: function(status) {
             if (this.hasConsented()) {
               savePreferences({
                 necessary: true,
@@ -310,7 +342,7 @@
               });
             }
           },
-          onStatusChange: function (status) {
+          onStatusChange: function(status) {
             if (status === "allow") {
               savePreferences({
                 necessary: true,
@@ -327,10 +359,10 @@
               showCookieCustomizeModal();
             }
           },
-          onRevokeChoice: function () {
+          onRevokeChoice: function() {
             console.log("User revoked consent.");
             localStorage.removeItem("cookiePreferences");
-            updateGoogleConsent({
+            updateGTMConsent({
               necessary: true,
               analytics: false,
               marketing: false
@@ -338,23 +370,6 @@
           }
         });
       });
-
-      // Modal interactions
-      document.addEventListener("DOMContentLoaded", function () {
-        document.getElementById("close-cookie-modal").addEventListener("click", hideCookieCustomizeModal);
-
-        document.getElementById("save-cookie-preferences").addEventListener("click", function () {
-          const preferences = {
-            necessary: true,
-            analytics: document.getElementById("analytics-cookies").checked,
-            marketing: document.getElementById("marketing-cookies").checked
-          };
-          savePreferences(preferences);
-          hideCookieCustomizeModal();
-        });
-      });
     </script>
-
-
 </body>
 </html>
