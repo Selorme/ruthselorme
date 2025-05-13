@@ -193,16 +193,7 @@
         <script src="{{ url_for('static', filename='js/scripts.js') }}" defer></script>
     {% endblock %}
 
-
-
-
-
-
-
-
-
-
-    <!-- Cookie Consent Modal -->
+<!-- Cookie Consent Modal -->
 <div id="cookie-consent-modal" class="cookie-consent-modal" style="display:none; position: fixed; top: 20%; left: 50%; transform: translateX(-50%); z-index: 9999; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">
   <div class="cookie-consent-content">
     <h2>Customize Cookies</h2>
@@ -234,11 +225,66 @@
   </div>
 </div>
 
-<!-- Cookie Consent Scripts -->
+<!-- Cookie Consent Styles & Script -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
 <script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js"></script>
 
 <script>
+  // Store preferences
+  function savePreferences(preferences) {
+    localStorage.setItem('cookiePreferences', JSON.stringify(preferences));
+    updateGoogleConsent(preferences);
+    console.log("Cookie preferences saved:", preferences);
+  }
+
+  // Read stored preferences
+  function getStoredPreferences() {
+    const stored = localStorage.getItem('cookiePreferences');
+    if (stored) {
+      try {
+        return JSON.parse(stored);
+      } catch (e) {
+        console.error("Error parsing cookie preferences:", e);
+      }
+    }
+    return {
+      necessary: true,
+      analytics: false,
+      marketing: false
+    };
+  }
+
+  // Send to Google Consent Mode (if gtag is used)
+  function updateGoogleConsent(preferences) {
+    if (typeof gtag === "function") {
+      gtag('consent', 'update', {
+        ad_storage: preferences.marketing ? 'granted' : 'denied',
+        analytics_storage: preferences.analytics ? 'granted' : 'denied',
+        functionality_storage: preferences.necessary ? 'granted' : 'denied',
+        personalization_storage: preferences.marketing ? 'granted' : 'denied',
+        security_storage: 'granted'
+      });
+    }
+  }
+
+  // Show the customize modal
+  function showCookieCustomizeModal() {
+    const modal = document.getElementById("cookie-consent-modal");
+    if (modal) {
+      const prefs = getStoredPreferences();
+      document.getElementById("analytics-cookies").checked = prefs.analytics;
+      document.getElementById("marketing-cookies").checked = prefs.marketing;
+      modal.style.display = "block";
+    }
+  }
+
+  // Hide the customize modal
+  function hideCookieCustomizeModal() {
+    const modal = document.getElementById("cookie-consent-modal");
+    if (modal) modal.style.display = "none";
+  }
+
+  // Initialize CookieConsent
   window.addEventListener("load", function () {
     window.cookieconsent.initialise({
       palette: {
@@ -262,93 +308,58 @@
         href: "/privacy-policy"
       },
       onInitialise: function (status) {
-        var didConsent = this.hasConsented();
-        if (didConsent) {
-          console.log("User accepted cookies:", this.hasConsented());
-          handleConsent(true); // All cookies accepted, activate necessary, analytics, and marketing
+        if (this.hasConsented()) {
+          savePreferences({
+            necessary: true,
+            analytics: true,
+            marketing: true
+          });
         }
       },
       onStatusChange: function (status) {
-        if (status === "deny") {
+        if (status === "allow") {
+          savePreferences({
+            necessary: true,
+            analytics: false,
+            marketing: false
+          });
+        } else if (status === "dismiss") {
+          savePreferences({
+            necessary: true,
+            analytics: true,
+            marketing: true
+          });
+        } else if (status === "deny") {
           showCookieCustomizeModal();
         }
       },
       onRevokeChoice: function () {
-        console.log("User revoked their choice.");
-        handleConsent(false); // Disable all cookies if consent is revoked
+        console.log("User revoked consent.");
+        localStorage.removeItem("cookiePreferences");
+        updateGoogleConsent({
+          necessary: true,
+          analytics: false,
+          marketing: false
+        });
       }
     });
   });
 
-  function handleConsent(granted) {
-    // This function updates GTM with the consent choices
-    if (window.dataLayer) {
-      window.dataLayer.push({
-        event: "cookieConsent",
-        consent: granted ? "granted" : "denied"
-      });
-    }
-    if (granted) {
-      // Enable Analytics and Marketing Cookies via GTM
-      window.dataLayer.push({ 'event': 'enableGTMAnalytics' });
-      window.dataLayer.push({ 'event': 'enableGTMMarketing' });
-    } else {
-      // Disable Analytics and Marketing Cookies via GTM
-      window.dataLayer.push({ 'event': 'disableGTMAnalytics' });
-      window.dataLayer.push({ 'event': 'disableGTMMarketing' });
-    }
-  }
-
-  function showCookieCustomizeModal() {
-    const modal = document.getElementById("cookie-consent-modal");
-    if (modal) {
-      modal.style.display = "block";
-    }
-  }
-
+  // Modal interactions
   document.addEventListener("DOMContentLoaded", function () {
-    const closeBtn = document.getElementById("close-cookie-modal");
-    if (closeBtn) {
-      closeBtn.addEventListener("click", function () {
-        document.getElementById("cookie-consent-modal").style.display = "none";
-      });
-    }
+    document.getElementById("close-cookie-modal").addEventListener("click", hideCookieCustomizeModal);
 
-    const saveBtn = document.getElementById("save-cookie-preferences");
-    if (saveBtn) {
-      saveBtn.addEventListener("click", function () {
-        const preferences = {
-          necessary: true, // Always required
-          analytics: document.getElementById("analytics-cookies").checked,
-          marketing: document.getElementById("marketing-cookies").checked
-        };
-
-        // Save preferences in local storage (optional)
-        localStorage.setItem('cookiePreferences,' JSON.stringify(preferences));
-
-        // Update GTM consent preferences
-        handleConsent(preferences.analytics || preferences.marketing);
-        document.getElementById("cookie-consent-modal").style.display = "none";
-
-        console.log("Preferences saved:", preferences);
-      });
-    }
+    document.getElementById("save-cookie-preferences").addEventListener("click", function () {
+      const preferences = {
+        necessary: true,
+        analytics: document.getElementById("analytics-cookies").checked,
+        marketing: document.getElementById("marketing-cookies").checked
+      };
+      savePreferences(preferences);
+      hideCookieCustomizeModal();
+    });
   });
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
