@@ -733,7 +733,7 @@ def show_category(category):
 @app.route("/projects")
 def projects():
 
-    raw_posts = db.session.query(Post).filter_by(category='Projects', status='published').all()
+    raw_posts = db.session.query(Post).filter_by(category='projects', status='published').all()
 
     def parse_date(post):
         # Assuming date is stored in 'Month Day, Year' format
@@ -751,7 +751,7 @@ def cvresume():
 
 @app.route("/ug-escapades")
 def ugescapades():
-    raw_posts = db.session.query(Post).filter_by(category='UG Escapades', status='published').all()
+    raw_posts = db.session.query(Post).filter_by(category='ug escapades', status='published').all()
 
     def parse_date(post):
         # Assuming date is stored in 'Month Day, Year' format
@@ -764,7 +764,7 @@ def ugescapades():
 
 @app.route("/random-musings")
 def random_musings():
-    raw_posts = db.session.query(Post).filter_by(category='Random Musings', status='published').all()
+    raw_posts = db.session.query(Post).filter_by(category='random musings', status='published').all()
 
     def parse_date(post):
         # Assuming date is stored in 'Month Day, Year' format
@@ -776,7 +776,7 @@ def random_musings():
 
 @app.route("/türkiye-geçilmez")
 def turkiyegecilmez():
-    raw_posts = db.session.query(Post).filter_by(category='Türkiye Geçilmez', status='published').all()
+    raw_posts = db.session.query(Post).filter_by(category='türkiye geçilmez', status='published').all()
 
     def parse_date(post):
         # Assuming date is stored in 'Month Day, Year' format
@@ -839,7 +839,7 @@ def contact():
 
 @app.route("/audacious-men-series")
 def audacity():
-    raw_posts = db.session.query(Post).filter_by(category='Audacious Men Series', status='published').all()
+    raw_posts = db.session.query(Post).filter_by(category='audacious men series', status='published').all()
 
     def parse_date(post):
         # Assuming date is stored in 'Month Day, Year' format
@@ -878,7 +878,7 @@ def scholarships():
 
 @app.route("/natural-hair")
 def natural_hair():
-    raw_posts = db.session.query(Post).filter_by(category='Natural Hair', status='published').all()
+    raw_posts = db.session.query(Post).filter_by(category='natural hair', status='published').all()
 
     def parse_date(post):
         # Assuming date is stored in 'Month Day, Year' format
@@ -891,7 +891,7 @@ def natural_hair():
 
 @app.route("/technology")
 def technology():
-    raw_posts = db.session.query(Post).filter_by(category='Technology', status='published').all()
+    raw_posts = db.session.query(Post).filter_by(category='technology', status='published').all()
 
     def parse_date(post):
         # Assuming date is stored in 'Month Day, Year' format
@@ -904,7 +904,7 @@ def technology():
 
 @app.route("/my-portfolio")
 def portfolio():
-    raw_posts = db.session.query(Post).filter_by(category='My Portfolio', status='published').all()
+    raw_posts = db.session.query(Post).filter_by(category='my portfolio', status='published').all()
 
     def parse_date(post):
         # Assuming date is stored in 'Month Day, Year' format
