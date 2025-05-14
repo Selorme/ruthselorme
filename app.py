@@ -23,7 +23,7 @@ from werkzeug.middleware.proxy_fix import ProxyFix
 from flask_assets import Environment, Bundle
 from flask_compress import Compress
 from extensions import db
-from utils import slugify
+from utils import slugify, category_to_url, url_to_category
 from werkzeug.utils import secure_filename
 from sqlalchemy import func
 import sqlalchemy
@@ -114,9 +114,22 @@ with app.app_context():
     db.create_all()
 
 
+@app.errorhandler(404)
+def page_not_found():
+    return render_template('404.html', copyright_year=year), 404
+
+
 @app.route('/favicon.ico')
 def favicon():
     return send_from_directory('static/img', 'favicon.ico', mimetype='image/vnd.microsoft.icon')
+
+
+def get_post_url(post):
+    """Generate standard post-URL from a post-object"""
+    return url_for('show_post',
+                  post_id=post.id,
+                  category=category_to_url(post.category),
+                  slug=slugify(post.title))
 
 
 @app.route('/sitemap.xml')
@@ -157,7 +170,7 @@ def generate_sitemap():
 
     # Add blog post URLs with category and post id
     for post in blog_posts:
-        category_slug = quote(post.category.strip().lower().replace(" ", "-"))  # URL-encoded category
+        category_slug = quote(category_to_url(post.category))  # URL-encoded category
         xml_sitemap += f"""<url>
             <loc>{base_url}/{category_slug}/post/{post.id}/{slugify(post.title)}</loc>
             <lastmod>{post.date}</lastmod>
@@ -167,7 +180,7 @@ def generate_sitemap():
 
     # Category pages
     for category in categories:
-        cat_slug = category.strip().lower().replace(" ", "-")
+        cat_slug = category_to_url(category)
         xml_sitemap += f"""<url>
     <loc>{base_url}/{cat_slug}</loc>
     <lastmod>{today}</lastmod>
@@ -198,7 +211,7 @@ def ads_txt():
 
 @app.before_request
 def normalize_url():
-    # do not normalize reset token
+    # Skip normalization for reset token URLs
     if request.path.startswith("/reset-password/"):
         return None
     # Redirect to the lowercase version of the path (preserves method with 308)
@@ -209,9 +222,11 @@ def normalize_url():
     if request.view_args and "category" in request.view_args:
         category = request.view_args["category"]
         if isinstance(category, str):
+            # Store the normalized format consistently
             request.view_args["category"] = category.lower()
 
     return None
+
 
 @app.after_request
 def add_cache_control(response):
@@ -316,7 +331,7 @@ def login():
 def like_post(category, post_id):
     print(f"Like post requested: Category = {category}, Post ID = {post_id}")
     #normalize category
-    category = category.lower().replace("-", " ")
+    category = url_to_category(category)
 
     if not current_user.is_authenticated:
         # If not authenticated, redirect to login page and preserve the current URL
@@ -345,7 +360,7 @@ def like_post(category, post_id):
 
     # Non-AJAX requests should redirect back to the post
     print(f"Redirecting back to post page: Category = {category}, Post ID = {post_id}")
-    return redirect(url_for('show_post', category=category, slug=slugify(post.title), post_id=post_id))
+    return get_post_url(post)
 
 
 @app.route('/logout')
@@ -725,7 +740,7 @@ def blogs(category):
 
 @app.route("/<category>")
 def show_category(category):
-    category = category.replace('-', ' ')
+    category = url_to_category(category)
     posts = db.session.query(Post).filter_by(category=category, status='published').all()
     return render_template("category.html", posts=posts, category=category, copyright_year=year)
 
@@ -918,30 +933,27 @@ def portfolio():
 @app.route("/<string:category>/post/<int:post_id>/<string:slug>", methods=["GET", "POST"])
 @app.route("/<string:category>/post/<int:post_id>", methods=["GET", "POST"])
 def show_post(category, post_id, slug=None):
-    normalized_category = category.lower().replace(" ", "-")
-
-    # Redirect if the incoming category is not lowercase
-    if category != normalized_category:
-        return redirect(url_for("show_post", post_id=post_id, category=normalized_category, slug=slug), code=301)
-
-    category = normalized_category.replace("-", " ").lower()
-
-    # Use filter() with ilike() for case-insensitive comparison
-    requested_post = db.session.query(Post).filter(
-        Post.id == post_id,
-        Post.category.ilike(category)  # ilike() performs case-insensitive search
-    ).first()
+    # First, fetch the post by ID regardless of category
+    requested_post = db.session.query(Post).filter(Post.id == post_id).first()
 
     if not requested_post:
-        print(f"[DEBUG] Post not found in category '{category}' with ID {post_id}. Redirecting to home.")
-        flash(f"Post with ID {post_id} not found in category {category}.", "warning")
+        print(f"[DEBUG] Post not found with ID {post_id}. Redirecting to home.")
+        flash(f"Post with ID {post_id} not found.", "warning")
         return redirect(url_for("home"))
 
-    expected_slug = slugify(requested_post.title)
-    if not slug or slug != expected_slug:
-        return redirect(url_for("show_post", post_id=post_id, category=normalized_category, slug=expected_slug),
-                        code=301)
+    # Get the canonical URL components
+    canonical_category = category_to_url(requested_post.category)
+    canonical_slug = slugify(requested_post.title)
 
+    # If URL doesn't match canonical form, redirect (covers both category and slug issues)
+    if category != canonical_category or slug != canonical_slug:
+        return redirect(get_post_url(requested_post), code=301)
+
+
+    if slug is None:
+        return redirect(get_post_url(requested_post), code=301)
+
+    # Increment views and commit changes
     requested_post.views += 1
     db.session.commit()
 
@@ -953,7 +965,6 @@ def show_post(category, post_id, slug=None):
 
     if comment_form.validate_on_submit():
         if current_user.is_authenticated:
-
             parent_id = request.form.get("parent_id")
 
             new_comment = Comment(
@@ -964,14 +975,16 @@ def show_post(category, post_id, slug=None):
             )
             db.session.add(new_comment)
             db.session.commit()
-            return redirect(url_for('show_post', post_id=post_id, category=category, slug=expected_slug))
+            return redirect(get_post_url(requested_post))
         else:
             error = "Login Required! Please log in/Register to leave a comment"
             flash(f"{error}. Log in!")
             return redirect(url_for("login", session=f"{session['url']}"))
+
     # Fetch all posts in the same category, excluding the current post
     top_level_comments = db.session.query(Comment).filter_by(post_id=post_id, parent_id=None).all()
-    all_posts = db.session.query(Post).filter(Post.category == requested_post.category, Post.id != requested_post.id).all()
+    all_posts = db.session.query(Post).filter(Post.category == requested_post.category,
+                                              Post.id != requested_post.id).all()
     categories = [cat[0] for cat in db.session.query(Post.category).distinct().all()]
 
     return render_template(
@@ -983,7 +996,7 @@ def show_post(category, post_id, slug=None):
         all_posts=all_posts,
         categories=categories,
         copyright_year=year,
-        category=category,
+        category=canonical_category,  # Pass the normalized category
     )
 
 

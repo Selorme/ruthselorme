@@ -12,3 +12,11 @@ def slugify(text):
 
 def strip_html(text):
     return re.sub(r'<[^>]*?>', '', text)
+
+def category_to_url(category):
+    """Convert a category name to URL-friendly format"""
+    return category.strip().lower().replace(" ", "-")
+
+def url_to_category(category_url):
+    """Convert a URL-friendly category back to database format"""
+    return category_url.replace("-", " ")

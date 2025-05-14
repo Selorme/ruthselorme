@@ -39,11 +39,10 @@
                         <img class="thumb" src="/static/img/thumbsupdark.svg" alt="thumbs up svg"/>
                     </p>
                 </div>
-                {{ share_buttons(post.title, request.url) }}
+                {{ share_buttons(post.title, g.seo.canonical) }}
 
-                <!-- Comment Form -->
+                <!-- Comment Form - Use the canonical URL from g.seo -->
                 <form action="{{ g.seo.canonical }}" method="post">
-<!--                <form action="{{ url_for('show_post', category=post.category.replace(' ', '-').lower(), slug=slugify(post.title), post_id=post.id) }}" method="post">-->
                     {{ form.hidden_tag() }}
                     <div class="mb-3">
                         <label for="{{ form.comment.id }}" class="form-label">{{ form.comment.label }}</label>
@@ -112,7 +111,4 @@
         {% endfor %}
     </div>
 </div>
-
-
-
 {% endblock %}

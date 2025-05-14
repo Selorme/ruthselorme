@@ -1,5 +1,4 @@
 from flask import request, g, url_for
-from urllib.parse import urljoin
 from extensions import db
 from models import Post
 from utils import slugify, strip_html
@@ -23,7 +22,7 @@ class SEOMiddleware:
             "keywords": "blog, tech, writing, programming, python, data science, journalism, web development, content creation",
             "image": url_for('static', filename='img/ogmetaimage.png', _external=True),
             "url": request.base_url,
-            "canonical": f"https://www.ruthselormeacolatse.info{path}"  # CHANGED: Use the current path as default
+            "canonical": f"https://www.ruthselormeacolatse.info{path}"
         }
 
         # Google Tag Manager ID
@@ -31,15 +30,11 @@ class SEOMiddleware:
 
         # Customize SEO metadata for specific pages
         if request.endpoint == "show_post":
-            # Fetch post based on category and post_id
-            category = request.view_args.get('category', '').replace("-", " ").lower()
+            # Fetch post based on post_id only, not using category from URL
             post_id = request.view_args.get('post_id')
 
-            # Use filter() with ilike() for case-insensitive comparison
-            requested_post = db.session.query(Post).filter(
-                Post.id == post_id,
-                Post.category.ilike(category)  # ilike() performs case-insensitive search
-            ).first()
+            # Get the post directly by ID - don't filter by category from URL
+            requested_post = db.session.query(Post).filter(Post.id == post_id).first()
 
             if requested_post:
                 g.seo["title"] = requested_post.title
@@ -47,11 +42,11 @@ class SEOMiddleware:
                     requested_post.body[:160] + "...") if requested_post.body else "Check out this post."
                 g.seo["image"] = requested_post.img_url
 
-                # Generate consistent canonical URL
+                # Generate consistent canonical URL with the actual post-category and title
                 normalized_category = requested_post.category.replace(" ", "-").lower()
                 expected_slug = slugify(requested_post.title)
 
-                # IMPORTANT: Match parameter order with your route handler
+                # IMPORTANT: Create canonical URL using the actual post-data
                 post_canonical_url = url_for('show_post',
                                              category=normalized_category,
                                              post_id=requested_post.id,
@@ -149,5 +144,4 @@ class SEOMiddleware:
             g.seo["title"] = "Contact - Ruth Selorme Acolatse"
             g.seo["description"] = "Get in touch with Ruth Selorme Acolatse."
 
-
-#Hi, I'm Ruth Selorme Acolatse — a budding computational journalist, award-winning world-traveling debate judge, and public speaking enthusiast. Based in Istanbul, I explore storytelling, culture, and the power of language through journalism, debate, and now, coding. Follow my adventures in communication, food, travel, and computational journalism!",
+#"Hi, I'm Ruth Selorme Acolatse — a budding computational journalist, award-winning world-traveling debate judge, and public speaking enthusiast. Based in Istanbul, I explore storytelling, culture, and the power of language through journalism, debate, and now, coding. Follow my adventures in communication, food, travel, and computational journalism!"
