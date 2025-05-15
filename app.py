@@ -983,8 +983,9 @@ def show_post(category, post_id, slug=None):
 
     # Fetch all posts in the same category, excluding the current post
     top_level_comments = db.session.query(Comment).filter_by(post_id=post_id, parent_id=None).all()
-    all_posts = db.session.query(Post).filter(Post.category == requested_post.category,
+    all_posts_raw = db.session.query(Post).filter(Post.category == requested_post.category,
                                               Post.id != requested_post.id).all()
+    all_posts = sorted(all_posts_raw, key=lambda p: p.date, reverse=True)
     categories = [cat[0] for cat in db.session.query(Post.category).distinct().all()]
 
     return render_template(
