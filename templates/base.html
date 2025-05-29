@@ -89,7 +89,7 @@
       "@context": "https://schema.org",
       "@type": "BlogPosting",
       "headline": "{{ post.title }}",
-      "url": "{{ url_for('show_post', category=post.category.replace(' ', '-').lower(), slug=slugify(post.title), post_id=post.id) }}",
+      "url": "{{ get_post_url_global(post) }}",
       "description": "{{ post.summary }}",
       "author": {
         "@type": "Person",

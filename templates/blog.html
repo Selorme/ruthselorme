@@ -12,7 +12,7 @@
         {% for post in posts %}
             <div class="col-md-4 mb-4">
                 <div class="card">
-                    <a href="{{ url_for('show_post', category=post.category.replace(' ', '-').lower(), slug=slugify(post.title), post_id=post.id) }}">
+                    <a href="get_post_url_global(post)">
                         {% if post.img_url.endswith('.jpg') or post.img_url.endswith('.jpeg') or post.img_url.endswith('.png') %}
                             {% set webp_url = post.img_url.rsplit('.', 1)[0] + '.webp' %}
                             <picture>

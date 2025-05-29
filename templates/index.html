@@ -66,7 +66,7 @@
                                 <div class="card-body">
                                     <h5 class="card-title">{{ post.title }}</h5>
                                     <p class="card-text">{{ post.excerpt }}</p>
-                                    <a href="{{ url_for('show_post', category=post.category.replace(' ', '-').lower(), slug=slugify(post.title), post_id=post.id) }}" class="btn btn-primary">Read More</a>
+                                    <a href="get_post_url_global(post)" class="btn btn-primary">Read More</a>
                                 </div>
                             </div>
                         </div>

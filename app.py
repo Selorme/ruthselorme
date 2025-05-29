@@ -132,6 +132,11 @@ def get_post_url(post):
                   slug=slugify(post.title))
 
 
+@app.template_global()
+def get_post_url_global(post):
+    return get_post_url(post)
+
+
 @app.route('/sitemap.xml')
 def generate_sitemap():
     base_url = "https://www.ruthselormeacolatse.info"

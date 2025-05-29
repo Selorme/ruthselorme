@@ -18,7 +18,7 @@ class SEOMiddleware:
         # Default SEO metadata
         g.seo = {
             "title": "Ruth Selorme Acolatse",
-            "description": "Hi, I'm Ruth Selorme Acolatse— a journalist and web developer. I explore storytelling and the power of language through journalism, debate, and coding.",
+            "description": "Hi, I am Ruth Selorme Acolatse— a journalist and web developer. I explore storytelling and the power of language through journalism, debate, and coding.",
             "keywords": "blog, tech, writing, programming, python, data science, journalism, web development, content creation",
             "image": url_for('static', filename='img/ogmetaimage.png', _external=True),
             "url": request.base_url,

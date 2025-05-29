@@ -80,8 +80,7 @@
         {% for p in all_posts %}
             {% if p.id != post.id %}
                 <div class="col">
-                    {% set p_slug = slugify(p.title) %}
-                    <a href="{{ url_for('show_post', category=p.category.replace(' ', '-').lower(), slug=p_slug, post_id=p.id) }}">
+                    <a href="{{ get_post_url_global(p) }}">
                         <div class="card h-100 border-0">
                             <img src="{{ p.img_url }}" class="card-img-top" alt="{{ p.title }}">
                             <div class="card-body p-1">
