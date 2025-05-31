@@ -21,7 +21,6 @@ from middleware import SEOMiddleware
 from flask import send_from_directory
 from werkzeug.middleware.proxy_fix import ProxyFix
 from flask_assets import Environment, Bundle
-from flask_compress import Compress
 from extensions import db
 from utils import slugify, category_to_url, url_to_category
 from werkzeug.utils import secure_filename
@@ -67,8 +66,6 @@ css = Bundle('src/css/*.css', filters='cssmin', output='dist/css/styles.css')
 
 assets.register('js_all', js)
 assets.register('css_all', css)
-
-compress = Compress(app)
 
 
 # Trust Render’s proxy (1 proxy layer)
