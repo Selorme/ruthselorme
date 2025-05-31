@@ -27,6 +27,7 @@ from utils import slugify, category_to_url, url_to_category
 from werkzeug.utils import secure_filename
 from sqlalchemy import func
 import sqlalchemy
+from flask_compress import Compress
 
 # Load environment variables
 load_dotenv()
@@ -56,7 +57,7 @@ def gravatar_url(email, size=100, rating='g', default='retro', force_default=Fal
 
 
 app = Flask(__name__)
-
+Compress(app)
 
 assets = Environment(app)
 

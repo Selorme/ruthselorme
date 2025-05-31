@@ -1,37 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Google Tag Manager with Proper Consent Mode -->
-    <script>
-      // Initialize dataLayer and gtag function
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-
-      // Set default consent state BEFORE loading GTM
-      gtag('consent', 'default', {
-        'ad_storage': 'denied',
-        'ad_user_data': 'denied',
-        'ad_personalization': 'denied',
-        'analytics_storage': 'denied',
-        'functionality_storage': 'denied',
-        'personalization_storage': 'denied',
-        'security_storage': 'granted'
-      });
-
-      // Load GTM script
-      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-      })(window,document,'script','dataLayer','{{ g.gtm_id }}');
-    </script>
-
-    <!-- Lazy-load AdSense -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4005746165664491" crossorigin="anonymous"></script>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <!-- Critical Meta Tags -->
     <meta name="description" content="{{ g.seo.description }}">
     <meta name="keywords" content="{{ g.seo.keywords }}">
     <meta name="author" content="Ruth Selorme Acolatse">
@@ -42,6 +15,25 @@
 
     <title>{{ g.seo.title }}</title>
 
+    <!-- Canonical Tag -->
+    <link rel="canonical" href="{{ g.seo.canonical }}" />
+
+    <!-- Critical Resource Hints -->
+    <link rel="preconnect" href="https://jhjqpzuuhmmikrhhpkwn.supabase.co" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+
+    <!-- Preload Critical Images -->
+    <link rel="preload" as="image" href="{{ url_for('static', filename='img/prof-img.webp') }}" type="image/webp">
+
+    <!-- Critical CSS - Load Immediately -->
+    {% block styles %}
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+        <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/favicon.ico') }}">
+    {% endblock %}
+
+    <!-- Structured Data -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -106,10 +98,7 @@
     </script>
     {% endfor %}
 
-    <!-- Canonical Tag -->
-    <link rel="canonical" href="{{ g.seo.canonical }}" />
-
-    <!-- hcaptcha script -->
+    <!-- Conditional Scripts -->
     {% if 'contact' in request.path %}
         <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
     {% endif %}
@@ -118,17 +107,78 @@
         {{ ckeditor.load() }}
     {% endif %}
 
-    {% block styles %}
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-        <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/favicon.ico') }}">
-    {% endblock %}
+    <!-- OPTIMIZED: Delayed Google Tag Manager -->
+    <script>
+      // Initialize dataLayer and gtag function immediately
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
 
-    <!--    preload professional image-->
-    <link rel="preload" as="image" href="{{ url_for('static', filename='img/prof-img.png') }}" type="image/png">
+      // Set default consent state BEFORE loading GTM
+      gtag('consent', 'default', {
+        'ad_storage': 'denied',
+        'ad_user_data': 'denied',
+        'ad_personalization': 'denied',
+        'analytics_storage': 'denied',
+        'functionality_storage': 'denied',
+        'personalization_storage': 'denied',
+        'security_storage': 'granted'
+      });
 
-    <!--    connect supabase-->
-    <link rel="preconnect" href="https://jhjqpzuuhmmikrhhpkwn.supabase.co" crossorigin>
+      // OPTIMIZATION: Load GTM after page loads or on user interaction
+      function loadGTM() {
+        if (window.gtmLoaded) return; // Prevent double loading
+        window.gtmLoaded = true;
+
+        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','{{ g.gtm_id }}');
+      }
+
+      // Load GTM after page loads OR on first user interaction
+      if (document.readyState === 'complete') {
+        setTimeout(loadGTM, 1000); // 1 second delay if page already loaded
+      } else {
+        window.addEventListener('load', function() {
+          setTimeout(loadGTM, 1000); // 1 second delay after page loads
+        });
+      }
+
+      // Also load on first user interaction (scroll, click, touch)
+      ['scroll', 'click', 'touchstart'].forEach(function(event) {
+        document.addEventListener(event, loadGTM, { once: true, passive: true });
+      });
+    </script>
+
+    <!-- OPTIMIZED: Delayed AdSense -->
+    <script>
+      function loadAdSense() {
+        if (window.adSenseLoaded) return; // Prevent double loading
+        window.adSenseLoaded = true;
+
+        var ads = document.createElement('script');
+        ads.async = true;
+        ads.crossOrigin = 'anonymous';
+        ads.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4005746165664491';
+        document.head.appendChild(ads);
+      }
+
+      // Load AdSense after 2 seconds OR on user interaction
+      if (document.readyState === 'complete') {
+        setTimeout(loadAdSense, 2000);
+      } else {
+        window.addEventListener('load', function() {
+          setTimeout(loadAdSense, 2000);
+        });
+      }
+
+      // Also load on first user interaction
+      ['scroll', 'click', 'touchstart'].forEach(function(event) {
+        document.addEventListener(event, loadAdSense, { once: true, passive: true });
+      });
+    </script>
+
 </head>
 
 <body class="d-flex flex-column min-vh-100" data-user-authenticated="{{ 'true' if current_user.is_authenticated else 'false' }}">
