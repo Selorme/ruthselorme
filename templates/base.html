@@ -124,6 +124,8 @@
         <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/favicon.ico') }}">
     {% endblock %}
 
+    <!--    preload professional image-->
+    <link rel="preload" as="image" href="{{ url_for('static', filename='img/prof-img.webp') }}" type="image/webp">
 </head>
 
 <body class="d-flex flex-column min-vh-100" data-user-authenticated="{{ 'true' if current_user.is_authenticated else 'false' }}">

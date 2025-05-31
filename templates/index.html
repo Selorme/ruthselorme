@@ -15,7 +15,8 @@
                             src="{{ url_for('static', filename='img/prof-img.png') }}"
                             alt="Ruth Selorme Headshot"
                             width="200" height="200"
-                            loading="lazy" decoding="async">
+                            decoding="async"
+                            fetchpriority="high">
                         </picture>
                         <p>
                             Hey! I'm Ruth Selorme. I'm a web developer with a passion for back end development, database management, and data science. I recently graduated from <a class="btn btn-outline-success" href="https://www.marmara.edu.tr/" target="_blank"><em>Marmara University</em></a>
@@ -33,19 +34,19 @@
                             <div class="tldr-icon"><i class="fa fa-tree"></i>
                             <img src="/static/img/pencil-square.svg" width="30" height="30" alt="pencil and square">
                             </div>
-                            <h5>Content Creator</h5>
+                            <p>Content Creator</p>
                         </div>
                         <div class="tldr-proc">
                             <div class="tldr-icon"><i class="fa fa-pencil"></i>
                             <img src="/static/img/journal-album.svg" width="30" height="30" alt="journal">
                             </div>
-                            <h5>Journalist</h5>
+                            <p>Journalist</p>
                         </div>
                         <div class="tldr-proc">
                             <div class="tldr-icon" id="tldr-keyboard"><i class="fa fa-keyboard-o"></i>
                             <img src="/static/img/keyboard.svg" width="30" height="30" alt="keyboard">
                             </div>
-                            <h5>Web Developer</h5>
+                            <p>Web Developer</p>
                         </div>
                     </div>
                 </div>
@@ -62,9 +63,9 @@
                     {% for post in latest_posts %}
                         <div class="col">
                             <div class="card mb-4">
-                                <img src="{{ post.img_url }}" class="responsive-image-index card-img-top" alt="{{ post.title }}">
+                                <img src="{{ post.img_url }}" class="responsive-image-index card-img-top" alt="{{ post.title }}" width="410px" height="200px">
                                 <div class="card-body">
-                                    <h5 class="card-title">{{ post.title }}</h5>
+                                    <p class="card-title">{{ post.title }}</p>
                                     <p class="card-text">{{ post.excerpt }}</p>
                                     <a href="{{ get_post_url_global(post) }}" class="btn btn-primary">Read More</a>
                                 </div>
@@ -94,7 +95,9 @@
                   src="{{ url_for('static', filename='img/spotifylogo.png') }}"
                   class="responsive-image-index"
                   alt="spotifylogo"
-                  loading="lazy" decoding="async">
+                  loading="lazy" decoding="async"
+                  width="410px"
+                  height="200px">
               </picture>
               <h3 class="title">Spotify top-100 songs of the day playlist creator</h3>
               <p class="align-left">Sometimes all we want to do is to create a special playlist for that special day. This project uses Spotify's API, requests module, and web scraping capabilities to seamlessly create that special playlist based on the top 100 billboard songs from any given day of your choice...</p>
@@ -110,7 +113,9 @@
                   src="{{ url_for('static', filename='img/webbot.png') }}"
                   class="responsive-image-index"
                   alt="web bog image"
-                  loading="lazy" decoding="async">
+                  loading="lazy" decoding="async"
+                  width="410px"
+                  height="200px">
               </picture>
               <h3 class="title">Twitter bot (Automation)</h3>
               <p class="align-left">Bots! They are everywhere. Some even swear they are going to take our jobs but all you've got to do is learn how to make them do the work for you so they don't take your job, they provide you with a new job - watching them. Using Selenium, here's a bot I created to make your tweets for you while you enjoy your beverage...</p>
@@ -125,7 +130,9 @@
                   src="{{ url_for('static', filename='img/transcription.png') }}"
                   class="responsive-image-index"
                   alt="text to speech image"
-                  loading="lazy" decoding="async">
+                  loading="lazy" decoding="async"
+                  width="410px"
+                  height="200px">
               </picture>
               <h3 class="title">Speech to Text</h3>
               <p class="align-left">Sometimes you just can't catch the words people say or even if you do, you forget after blinking. Not to worry, this project uses pydub and Google Cloud's speech recognition to transcribe any audio you want to transcribe. Best of all, even though Google has an audio size limit of 10MB, you can transcribe any size audio using this code and here's why...</p>
@@ -140,7 +147,9 @@
                   src="{{ url_for('static', filename='img/snake.png') }}"
                   class="responsive-image-index"
                   alt="snake game screenshot"
-                  loading="lazy" decoding="async">
+                  loading="lazy" decoding="async"
+                  width="410px"
+                  height="200px">
               </picture>
               <h3 class="title">Snake Game using Turtle</h3>
               <p class="align-left">The classic snake game we played in our childhood can never be forgotten. In this project, I build the entire game with a couple of updates to enhance your experience using Turtle graphics! This project is a fun way to learn about game development, collision detection, and user interaction in Python. Play to find out how many levels you can survive...</p>
@@ -155,7 +164,9 @@
                   src="{{ url_for('static', filename='img/password.jpeg') }}"
                   class="responsive-image-index"
                   alt="password manager image"
-                  loading="lazy" decoding="async">
+                  loading="lazy" decoding="async"
+                  width="410px"
+                  height="200px">
               </picture>
               <h3 class="title">Password Manager</h3>
               <p class="align-left">In today's digital age, managing and securing your passwords is crucial. This Python Tkinter project is designed to help you keep track of your passwords efficiently and securely. Our Password Manager app allows you to generate strong passwords, save them along with your website and email, and retrieve them seamlessly whenever you want...</p>
@@ -170,7 +181,9 @@
                   src="{{ url_for('static', filename='img/quizapp.png') }}"
                   class="responsive-image-index"
                   alt="quiz interface"
-                  loading="lazy" decoding="async">
+                  loading="lazy" decoding="async"
+                  width="410px"
+                  height="200px">
               </picture>
               <h3 class="title">Quiz Game with Quiz_Brain</h3>
               <p class="align-left">So you think you are smart and can best any quiz at all? Can you face off Quiz_Brain in this tkinter designed game and come out victorious? Answer questions about general and weirdly specific knowledge to test the limits of your intellectual capacity while having fun. No! Do not ask GPT for the answers...</p>
@@ -209,7 +222,9 @@
                   src="{{ url_for('static', filename='img/python.png') }}"
                   class="responsive-image-index"
                   alt="python image"
-                  loading="lazy" decoding="async">
+                  loading="lazy" decoding="async"
+                  width="410px"
+                  height="200px">
               </picture>
               <h3 class="title">Yapping about Python</h3>
               <p class="align-left">When I started programming, I made a social media post about it and some of you reached out to ask me about my motivation, the difficulties I encounter and how I overcome them so here's a blog of me yapping about everything python. I hope you enjoy these projects!</p>
@@ -224,7 +239,9 @@
                   src="{{ url_for('static', filename='img/UG.png') }}"
                   class="responsive-image-index"
                   alt="university of Ghana campus"
-                  loading="lazy" decoding="async">
+                  loading="lazy" decoding="async"
+                  width="410px"
+                  height="200px">
               </picture>
               <h3 class="title">UG Escapades</h3>
               <p class="align-left">Living in Ghana is like living in a maze. Living in a university in Ghana is the Hunger Games. You just never know when your very own existence will become a weapon fashioned against you but the good news is I went through the experience so you can learn from mine. Unless...</p>
@@ -239,7 +256,9 @@
                   src="{{ url_for('static', filename='img/assessment.jpg') }}"
                   class="responsive-image-index"
                   alt="journal page"
-                  loading="lazy" decoding="async">
+                  loading="lazy" decoding="async"
+                  width="410px"
+                  height="200px">
               </picture>
               <h3 class="title">Yapping about everything</h3>
               <p class="align-left">If it is not obvious already, I have an overactive mind. One minute I'm debating, the next I'm coloring, and the very next I'm programming. I seem to somehow never run out of ideas so here's where I'm going to tell you about everything that goes on in my mind and outside it...</p>
@@ -254,7 +273,9 @@
                   src="{{ url_for('static', filename='img/tg3.jpg') }}"
                   class="responsive-image-index"
                   alt="header image"
-                  loading="lazy" decoding="async">
+                  loading="lazy" decoding="async"
+                  width="410px"
+                  height="200px">
               </picture>
               <h3 class="title">Why Türkiye?</h3>
               <p class="align-left">People are usually curious about why I chose Türkiye of all the places to study at for my undergraduate. I love to see it as a series of red string theory events falling miraculously into place as dreamt of by 15 year old me. So I give her grace and talk about the events that led me to Istanbul here...</p>
@@ -269,7 +290,9 @@
                   src="{{ url_for('static', filename='img/audacity.jpg') }}"
                   class="responsive-image-index"
                   alt="journal page"
-                  loading="lazy" decoding="async">
+                  loading="lazy" decoding="async"
+                  width="410px"
+                  height="200px">
               </picture>
               <h3 class="title">Where men exist...</h3>
               <p class="align-left">I like to think of myself as a reasonable young woman. However, all reason seems to find a way to fly through the window whenever the infinite well of audacity men draw from is brought into the picture. In this deeply intimate series of posts, I write about my various encounters in hopes of finding an escape...</p>
@@ -284,7 +307,9 @@
                   src="{{ url_for('static', filename='img/portfolio-banner.png') }}"
                   class="responsive-image-index"
                   alt="journal page"
-                  loading="lazy" decoding="async">
+                  loading="lazy" decoding="async"
+                  width="410px"
+                  height="200px">
               </picture>
               <h3 class="title">Portfolio</h3>
               <p class="align-left">Everyone thinks they are the best at something, I am not claiming I am but here is where I try to persuade you to hire me so I deliver the best of experiences for you through all the skills I have gathered and continue to gather in my life. You'll see some of my most highly thought of pieces of work here...</p>
@@ -299,9 +324,6 @@
       </div>
     </div>
   </section>
-
-
-
 
 
   <section>
