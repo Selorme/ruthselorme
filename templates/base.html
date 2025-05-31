@@ -126,6 +126,9 @@
 
     <!--    preload professional image-->
     <link rel="preload" as="image" href="{{ url_for('static', filename='img/prof-img.png') }}" type="image/png">
+
+    <!--    connect supabase-->
+    <link rel="preconnect" href="https://jhjqpzuuhmmikrhhpkwn.supabase.co" crossorigin>
 </head>
 
 <body class="d-flex flex-column min-vh-100" data-user-authenticated="{{ 'true' if current_user.is_authenticated else 'false' }}">
