@@ -462,7 +462,11 @@ def add_new_post():
 
             # Upload the file to Supabase bucket directly
             upload_response = bucket.upload(f'posts/{filename}',
-                                            file.stream.read())  # 'posts' is the folder in your bucket
+                                            file.stream.read(),
+                                            {
+                                                "cacheControl": "2592000"
+                                            }
+                                            )  # 'posts' is the folder in your bucket
             if upload_response:
                 # Get the public URL of the uploaded file
                 img_url = bucket.get_public_url(f'posts/{filename}')
