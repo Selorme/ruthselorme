@@ -10,7 +10,15 @@
                 <div>
                     <h1 class="post-heading justify-content-center my-4">{{ post.title }}</h1>
                     <div class="d-flex justify-content-center">
-                      <img alt="{{ post.title }}" class="img-fluid" src="{{ post.img_url }}" />
+                        <picture>
+                            {% if post.webp_url %}
+                                <source srcset="{{ post.webp_url }}" type="image/webp">
+                            {% endif %}
+                            <img
+                                src="{{ post.img_url}}"
+                                alt="{{ post.title }}"
+                                class="img-fluid">
+                        </picture>
                     </div>
                     {{ post.body|safe }}
                     {% if current_user.id == 1 %}
