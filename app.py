@@ -562,21 +562,57 @@ def edit_post(post_id):
         edit_form.publish_date.data = post.scheduled_datetime.date()
         edit_form.publish_time.data = post.scheduled_datetime.time()
 
-    if edit_form.validate_on_submit():
-        # Backup original status before changes
-        original_status = post.status
-        # Update post attributes
-        post.title = edit_form.title.data
-        post.category = edit_form.category.data
-        post.img_url = edit_form.img_url.data
-        post.body = edit_form.body.data
+    if request.method == "POST":
+        print("\n=== POST REQUEST DEBUG ===")
+        print(f"Form validation result: {edit_form.validate_on_submit()}")
 
+        # Print form errors if validation fails
+        if not edit_form.validate_on_submit():
+            print("Form validation errors:")
+            for field, errors in edit_form.errors.items():
+                print(f"  {field}: {errors}")
+
+        # Print button states
         print("\nButton states:")
         print(f"Publish: {edit_form.publish.data}")
         print(f"Draft: {edit_form.draft.data}")
         print(f"Schedule: {edit_form.schedule.data}")
+        print(f"Update: {edit_form.update_post.data}")
         print(f"Current post status: {post.status}")
 
+    if edit_form.validate_on_submit():
+        # Backup original status before changes
+        original_status = post.status
+
+        # Update post attributes
+        post.title = edit_form.title.data
+        post.category = edit_form.category.data
+        post.body = edit_form.body.data
+
+        # Handle the image/video upload if there is one (same as in add_new_post)
+        file = edit_form.img_url.data
+        if file and file.filename:  # Only process if a new file was uploaded
+            print(f"New file uploaded: {file.filename}")
+            # Secure the filename
+            filename = secure_filename(file.filename)
+
+            # Upload the file to Supabase bucket directly
+            upload_response = bucket.upload(f'posts/{filename}',
+                                            file.stream.read(),
+                                            {
+                                                "cacheControl": "2592000"
+                                            })
+            if upload_response:
+                # Get the public URL of the uploaded file
+                post.img_url = bucket.get_public_url(f'posts/{filename}')
+                print(f"File uploaded to Supabase: {post.img_url}")
+            else:
+                print("Failed to upload file to Supabase")
+                flash("Failed to upload image", "danger")
+        else:
+            print("No new file uploaded - keeping existing image")
+
+        # Determine which button was clicked and set status accordingly
         if edit_form.publish.data:
             print("Setting status to published")
             post.status = "published"
@@ -605,11 +641,18 @@ def edit_post(post_id):
                     post=post,
                     copyright_year=year
                 )
+        elif edit_form.update_post.data:
+            print("Update button clicked - keeping current status")
+            # Status remains the same, update the content
+            pass
 
         print(f"Post status before commit: {post.status}")
+        print("About to commit to database...")
 
         try:
             db.session.commit()
+            print(f"Post status after commit: {post.status}")
+
             # Check if the post's status was changed to 'published' and the previous status was draft or scheduled
             if original_status != "published" and post.status == "published":
                 # Send email notification to users about the new post
@@ -619,11 +662,12 @@ def edit_post(post_id):
                     flash("Post published, but there was an issue sending notifications.", "warning")
             else:
                 flash("Post updated successfully!", "success")
-            print(f"Post status after commit: {post.status}")
-            flash("Post updated successfully!", "success")
-            # Check if there’s a saved action to replay
+
+            print(f"Redirecting to: show_post, post_id={post.id}, category={post.category.replace(' ', '-')}")
             return redirect(url_for("show_post", post_id=post.id, category=post.category.replace(" ", "-")))
+
         except Exception as e:
+            print(f"Database commit failed: {str(e)}")
             db.session.rollback()
             flash(f"Error updating post: {str(e)}", "danger")
             return render_template(
@@ -633,6 +677,10 @@ def edit_post(post_id):
                 post=post,
                 copyright_year=year
             )
+
+    # If we reach here, either it's a GET request or form validation failed
+    if request.method == "POST":
+        print("Form validation failed - staying on edit page")
 
     return render_template(
         "make-post.html",
