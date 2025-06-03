@@ -112,6 +112,23 @@ with app.app_context():
     db.create_all()
 
 
+@app.route('/static/img/<path:filename>')
+def redirect_images(filename):
+    return redirect(f'https://cdn.ruthselormeacolatse.info/static/img/{filename}', code=301)
+
+@app.route('/static/css/<path:filename>')
+def redirect_css(filename):
+    return redirect(f'https://cdn.ruthselormeacolatse.info/static/css/{filename}', code=301)
+
+@app.route('/static/js/<path:filename>')
+def redirect_js(filename):
+    return redirect(f'https://cdn.ruthselormeacolatse.info/static/js/{filename}', code=301)
+
+@app.route('/static/img/<path:filename>')
+def redirect_static_images(filename):
+    return redirect(f'https://cdn.ruthselormeacolatse.info/static/img/{filename}', code=301)
+
+
 @app.errorhandler(404)
 def page_not_found(error):
     return render_template('404.html', copyright_year=year), 404

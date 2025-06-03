@@ -10,15 +10,15 @@
                     <div class="col-md-8 col-md-offset-2 wp1 hero-text">
                         <h1 id="aboutme">RUTH SELORME ACOLATSE - Web Developer, Content Creator, Journalist</h1>
                         <picture>
-                          <source srcset="{{ url_for('static', filename='img/prof-img.webp') }}" type="image/webp">
-                          <img
-                            src="{{ url_for('static', filename='img/prof-img.png') }}"
-                            alt="Ruth Selorme Headshot"
-                            width="200"
-                            height="200"
-                            decoding="async"
-                            loading="eager"
-                            fetchpriority="high">
+                            <source srcset="{{ url_for('static', filename='img/prof-img.webp') }}" type="image/webp">
+                            <img
+                                src="{{ url_for('static', filename='img/prof-img.png') }}"
+                                alt="Ruth Selorme Headshot"
+                                width="200"
+                                height="200"
+                                decoding="async"
+                                loading="eager"
+                                fetchpriority="high">
                         </picture>
                         <p>
                             Hey! I'm Ruth Selorme. I'm a web developer with a passion for back end development, database management, and data science. I recently graduated from <a class="btn btn-outline-success" href="https://www.marmara.edu.tr/" target="_blank"><em>Marmara University</em></a>
@@ -64,7 +64,19 @@
                     {% for post in latest_posts %}
                         <div class="col">
                             <div class="card mb-4">
-                                <img src="{{ post.img_url }}" class="responsive-image-index card-img-top" alt="{{ post.title }}" width="410px" height="200px">
+                                <picture>
+                                        {% if post.webp_url %}
+                                            <source srcset="{{ post.webp_url }}" type="image/webp">
+                                        {% endif %}
+                                    <img
+                                        src="{{ post.img_url}}"
+                                        alt="{{ post.title }}"
+                                        width="410px"
+                                        height="200px"
+                                        decoding="async"
+                                        loading="eager"
+                                        fetchpriority="high">
+                                </picture>
                                 <div class="card-body">
                                     <a href="{{ get_post_url_global(post) }}" class="card-title">{{ post.title }}</a>
                                 </div>
