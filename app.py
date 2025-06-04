@@ -129,6 +129,13 @@ with app.app_context():
 #     return redirect(f'https://cdn.ruthselormeacolatse.info/static/img/{filename}', code=301)
 
 
+@app.before_request
+def force_www():
+    if request.host == "ruthselormeacolatse.info":
+        return redirect(request.url.replace("//ruthselormeacolatse.info", "//www.ruthselormeacolatse.info"), code=301)
+    return None
+
+
 @app.errorhandler(404)
 def page_not_found(error):
     return render_template('404.html', copyright_year=year), 404
