@@ -57,7 +57,7 @@ class SEOMiddleware:
         # PRESERVED: All your category SEO information
         elif request.endpoint == "random_musings":
             g.seo["title"] = "Random Musings"
-            g.seo["description"] = f"Explore blog posts in the Random Musings category by Ruth Selorme Acolatse."
+            g.seo["description"] = f"Explore blog posts in the Random Musings category by Ruth Selorme Acolatse where I talk about every and anything going on in my head."
             g.seo["url"] = "https://www.ruthselormeacolatse.info/random-musings"
             g.seo["canonical"] = g.seo["url"]
             g.seo["image"] = url_for('static', filename='img/musingsdark.png', _external=True)
@@ -74,7 +74,7 @@ class SEOMiddleware:
         elif request.endpoint == "turkiyegecilmez":
             g.seo["title"] = "Türkiye Geçilmez"
             g.seo[
-                "description"] = f"In {g.seo['title']}, I talk about what led me to choosing to study in Türkiye. Enjoy!"
+                "description"] = f"In {g.seo['title']}, I talk about what led me to choosing to study in Türkiye and how my experience has been. Enjoy!"
             g.seo["url"] = "https://www.ruthselormeacolatse.info/türkiye-geçilmez"
             g.seo["canonical"] = g.seo["url"]
             g.seo["image"] = url_for('static', filename='img/header.jpg', _external=True)
@@ -92,7 +92,7 @@ class SEOMiddleware:
 
         elif request.endpoint == "projects":
             g.seo["title"] = "Python Projects"
-            g.seo["description"] = f"In {g.seo['title']}, I explain the various projects I have built with Python!"
+            g.seo["description"] = f"In {g.seo['title']}, I explain the various projects I have built with Python and show you how you can build them too!"
             g.seo["url"] = "https://www.ruthselormeacolatse.info/projects"
             g.seo["canonical"] = g.seo["url"]
             g.seo["image"] = url_for('static', filename='img/projects.jpeg', _external=True)
@@ -100,7 +100,7 @@ class SEOMiddleware:
 
         elif request.endpoint == "news":
             g.seo["title"] = "Breaking News"
-            g.seo["description"] = f"{g.seo['title']}: access to all the headlines across the globe on your finger tip!"
+            g.seo["description"] = f"{g.seo['title']}: access to all the breaking headlines across the globe on your finger tip!"
             g.seo["url"] = "https://www.ruthselormeacolatse.info/news"
             g.seo["canonical"] = g.seo["url"]
             g.seo["image"] = url_for('static', filename='img/breakingnews.png', _external=True)
@@ -109,7 +109,7 @@ class SEOMiddleware:
         elif request.endpoint == "natural_hair":
             g.seo["title"] = "Natural Hair"
             g.seo[
-                "description"] = f"In {g.seo['title']} I teach you to care for and embrace your natural curls and coils."
+                "description"] = f"Discover the beauty of {g.seo['title']} care, explore diverse hairstyles, and delve into the rich history of hair traditions. Embrace your unique hair journey today!"
             g.seo["url"] = "https://www.ruthselormeacolatse.info/natural-hair"
             g.seo["canonical"] = g.seo["url"]
             g.seo["image"] = url_for('static', filename='img/naturalhair.png', _external=True)
@@ -117,7 +117,7 @@ class SEOMiddleware:
 
         elif request.endpoint == "scholarships":
             g.seo["title"] = "Scholarship Updates"
-            g.seo["description"] = f"Get daily {g.seo['title']} at your finger tip."
+            g.seo["description"] = f"Stay informed with the latest {g.seo['title']} updates. Discover new opportunities, deadlines, and tips to secure funding for your education today."
             g.seo["url"] = "https://www.ruthselormeacolatse.info/scholarships"
             g.seo["canonical"] = g.seo["url"]
             g.seo["image"] = url_for('static', filename='img/scholarships.png', _external=True)
@@ -135,10 +135,10 @@ class SEOMiddleware:
 
         elif request.endpoint == "about":
             g.seo["title"] = "About - Ruth Selorme Acolatse"
-            g.seo["description"] = "Learn more about Ruth Selorme Acolatse."
+            g.seo["description"] = "Welcome to my about page, where you can learn about my experiences, values, and the motivations that inspire my personal and professional endeavors."
 
         elif request.endpoint == "contact":
             g.seo["title"] = "Contact - Ruth Selorme Acolatse"
-            g.seo["description"] = "Get in touch with Ruth Selorme Acolatse."
+            g.seo["description"] = "Do you have any ideas about a collaboration, project or you just want to have a discussion? Get in touch with Ruth Selorme Acolatse."
 
 #"Hi, I'm Ruth Selorme Acolatse — a budding computational journalist, award-winning world-traveling debate judge, and public speaking enthusiast. Based in Istanbul, I explore storytelling, culture, and the power of language through journalism, debate, and now, coding. Follow my adventures in communication, food, travel, and computational journalism!"
