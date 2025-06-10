@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, jsonify, session, Response
+from flask import Flask, render_template, request, redirect, url_for, flash, jsonify, session, Response, abort
 from datetime import datetime, date
 from flask_bootstrap5 import Bootstrap
 import smtplib
@@ -820,8 +820,20 @@ def blogs(category):
 @app.route("/<category>")
 def show_category(category):
     category = url_to_category(category)
+
+    # Check if this category exists in any published post
+    exists = db.session.query(Post).filter_by(category=category, status='published').first()
+    if not exists:
+        abort(404)
+
+    # If it exists, show all posts in that category
     posts = db.session.query(Post).filter_by(category=category, status='published').all()
-    return render_template("category.html", posts=posts, category=category, copyright_year=year)
+    return render_template(
+        "category.html",
+        posts=posts,
+        category=category,
+        copyright_year=year
+    )
 
 
 @app.route("/projects")
