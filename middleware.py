@@ -1,7 +1,7 @@
 from flask import request, g, url_for
 from extensions import db
 from models import Post
-from utils import slugify, strip_html
+from utils import slugify, strip_html, generate_meta_description
 
 
 class SEOMiddleware:
@@ -35,8 +35,7 @@ class SEOMiddleware:
 
             if requested_post:
                 g.seo["title"] = requested_post.title
-                g.seo["description"] = strip_html(
-                    requested_post.body[:160] + "...") if requested_post.body else "Check out this post."
+                g.seo["description"] = generate_meta_description(requested_post.body) if requested_post.body else "Check out this post."
                 g.seo["image"] = requested_post.img_url
 
                 # Generate consistent canonical URL with the actual post-category and title

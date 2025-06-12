@@ -4,7 +4,9 @@ Disallow:
 
 # Hint: Prevent indexing of the HTTP version (optional, mostly handled with 301 redirects)
 # User-agent: *
-# Disallow: http://ruthselormeacolatse.info/
+Disallow: /...
+Disallow: /get_post_url_global
+Disallow: /get_post_url_global*
 
 # Point search engines to your sitemap
 Sitemap: https://www.ruthselormeacolatse.info/sitemap.xml
