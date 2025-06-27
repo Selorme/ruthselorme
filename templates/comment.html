@@ -1,7 +1,7 @@
 {% macro render_comment(comment, post, form, category) %}
     <li>
         <div class="commenterImage">
-            <img src="{{ comment.comment_author.email|gravatar }}" />
+            <img src="{{ comment.comment_author.email|gravatar }}" alt="{{ comment.comment_author.name }}"/>
         </div>
         <div class="commentText">
             <p>{{ comment.text|safe }}</p>
