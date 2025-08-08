@@ -99,7 +99,7 @@
     {% endfor %}
 
     <!-- Conditional Scripts -->
-    {% if 'contact' in request.path %}
+    {% if 'contact' in request.path or '/' in request.path or 'register' in request.path %} %}
         <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
     {% endif %}
 
