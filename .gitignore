@@ -129,6 +129,7 @@ celerybeat.pid
 .tables
 .convert_to_webp
 .job_skills_database
+.fixes.py
 .venv
 env/
 venv/
