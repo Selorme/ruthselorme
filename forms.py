@@ -1,6 +1,9 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField, EmailField, DateField, TimeField
-from wtforms.validators import DataRequired, EqualTo, Email, Length, Regexp, Optional
+from wtforms import StringField, SubmitField, PasswordField, EmailField, DateField, TimeField, FieldList
+from wtforms.fields.choices import SelectField
+from wtforms.fields.form import FormField
+from wtforms.fields.numeric import IntegerField
+from wtforms.validators import DataRequired, EqualTo, Email, Length, Regexp, Optional, NumberRange
 from flask_ckeditor import CKEditorField
 from flask_wtf.file import FileField, FileAllowed, FileRequired
 
@@ -84,3 +87,28 @@ class ResetPasswordForm(FlaskForm):
 
     confirm_password = PasswordField("Confirm New Password", validators=[DataRequired(), EqualTo('new_password', message="Passwords must match")])
     submit = SubmitField("Reset Password")
+
+# The skill entry form
+class SkillEntryForm(FlaskForm):
+    class Meta:
+        csrf = False
+    skill_name = StringField("Type your skill here", validators=[DataRequired()])
+    enjoyment_level = IntegerField("Enjoyment Level", validators=[DataRequired(), NumberRange(min=1, max=10, message="Proficiency must be between 1 and 10")])
+    proficiency_level = IntegerField("Proficiency Level", validators=[DataRequired(), NumberRange(min=1, max=10, message="Enjoyment must be between 1 and 10")])
+
+
+class JobMatchForm(FlaskForm):
+    education_level = SelectField(
+        'Education Level',
+        choices=[('High School', 'High School'),
+                 ('Certificate', 'Certificate'),
+                 ('Associate', 'Associate'),
+                 ('Bachelor','Bachelor'),
+                 ('Master', 'Master'),
+                 ('Doctorate', 'Doctorate'),
+                 ('Other', 'Other')
+        ],
+        validators=[DataRequired()]
+    )
+    skills = FieldList(FormField(SkillEntryForm), min_entries=1)
+    submit = SubmitField("Find me a match!")

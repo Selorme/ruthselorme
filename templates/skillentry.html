@@ -1,0 +1,323 @@
+{% extends "base.html" %}
+{% block title %}Skill Entry{% endblock %}
+{% block content %}
+
+<style>
+    body {
+        font-family: Roboto Slab, serif;
+        background: #f7f9fc;
+        margin: 0;
+    }
+
+    #skills-container {
+        background: white;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    .skill-row {
+        display: grid;
+        grid-template-columns: 1.2fr 1fr 1fr auto;
+        gap: 10px;
+        align-items: center;
+        margin-bottom: 12px;
+        padding: 10px;
+        border: 1px solid #eee;
+        border-radius: 8px;
+        background: #fafafa;
+    }
+
+    .skill-row input[type="text"] {
+        padding: 8px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        font-size: 14px;
+    }
+
+    label {
+        font-size: 15px;
+        color: #555;
+        display: inline;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    input[type="range"] {
+        width: 100%;
+        appearance: none;
+        height: 6px;
+        border-radius: 4px;
+        background: #ddd;
+        outline: none;
+    }
+
+    /* Slider thumb */
+    input[type="range"]::-webkit-slider-thumb {
+        appearance: none;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: #555;
+        cursor: pointer;
+        transition: background 0.3s ease;
+    }
+
+    .remove-skill {
+        background: transparent;
+        border: none;
+        font-size: 18px;
+        cursor: pointer;
+        color: #d33;
+    }
+
+    #add-skill {
+        display: block;
+        margin: 20px auto 0;
+        background: #4a90e2;
+        color: white;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 8px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+
+    #submit-skills {
+        display: block;
+        margin: 20px auto 0;
+        background: #4a90e2;
+        color: white;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 8px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+
+    .slider-emoji {
+        margin: 20px;
+    }
+
+    .education-level {
+        text-align: left;
+        font-size: 20px;
+    }
+
+    .skills-type {
+        text-align: left;
+        font-size: 20px;
+    }
+
+    .education-select {
+        margin-bottom: 20px;
+        width: inherit;
+    }
+
+    #add-skill:hover {
+        background: #357abd;
+    }
+
+    #help-container {
+        margin-bottom: 20px;
+    }
+
+    @media (max-width: 600px) {
+        .skill-row {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+
+<body>
+<div class="container position-relative px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+        <div class="col-md-10 col-lg-8 col-xl-7">
+            <div class="page-heading mt-5">
+                <h1>Fill the Form to find your new career match!</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="container" id="skills-container">
+    <form method="POST" action="{{ url_for('career_match') }}">
+        {{ form.hidden_tag() }}
+        <h2 class="education-level">Select your education level</h2>
+        {{ form.education_level(class="education-select") }}
+        <h2 class="skills-type">Skills, Proficiency & Enjoyment (move the slider to choose your proficiency and enjoyment levels)</h2>
+        <div id="skills-list">
+            {% for skill_field in form.skills %}
+                <div class="skill-row">
+                    {{ skill_field.skill_name(placeholder="Skill name") }}
+                    <label>Proficiency level
+                        <span class="slider-emoji"></span>
+                        {{ skill_field.proficiency_level(type="range", min="1", max="10", value="1", class="proficiency") }}
+                    </label>
+                    <label>Enjoyment level
+                        <span class="slider-emoji"></span>
+                        {{ skill_field.enjoyment_level(type="range", min="1", max="10", value="1", class="enjoyment") }}
+                    </label>
+                    <button type="button" class="remove-skill">✖</button>
+                </div>
+            {% endfor %}
+        </div>
+        <button type="button" id="add-skill">+ Add Skill</button>
+        {{ form.submit(id="submit-skills") }}
+    </form>
+</div>
+
+<!-- Help section -->
+<div class="container mt-5" id = "help-container">
+    <div class="row justify-content-center">
+        <div class="col-md-10 col-lg-8">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Tips for Better Matches</h5>
+                    <ul class="list-unstyled">
+                        <li><strong>Be specific:</strong> Instead of "computers," try "Python programming" or "web design"</li>
+                        <li><strong>Include soft skills:</strong> Communication, leadership, problem-solving matter too!</li>
+                        <li><strong>Be honest:</strong> Accurate ratings lead to better job recommendations</li>
+                        <li><strong>Think broadly:</strong> Include skills from hobbies, volunteer work, and personal projects</li>
+                    </ul>
+
+                    <details class="mt-3">
+                        <summary class="fw-bold">Common skill categories to consider:</summary>
+                        <div class="row mt-2">
+                            <div class="col-md-3">
+                                <strong>Technical:</strong>
+                                <ul class="list-unstyled small">
+                                    <li>Programming languages</li>
+                                    <li>Software tools</li>
+                                    <li>Data analysis</li>
+                                    <li>Web development</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-3">
+                                <strong>Creative:</strong>
+                                <ul class="list-unstyled small">
+                                    <li>Graphic design</li>
+                                    <li>Writing</li>
+                                    <li>Photography</li>
+                                    <li>Video editing</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-3">
+                                <strong>Business:</strong>
+                                <ul class="list-unstyled small">
+                                    <li>Project management</li>
+                                    <li>Sales</li>
+                                    <li>Marketing</li>
+                                    <li>Financial analysis</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-3">
+                                <strong>Soft Skills:</strong>
+                                <ul class="list-unstyled small">
+                                    <li>Communication</li>
+                                    <li>Leadership</li>
+                                    <li>Problem solving</li>
+                                    <li>Teamwork</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    let skillIndex = {{ form.skills|length }};
+
+    function setSliderColor(slider) {
+        const value = parseInt(slider.value);
+        const percent = value * 10;
+
+        const color = `linear-gradient(90deg,
+            rgb(204,0,0) 0%,
+            rgb(255,102,0) 20%,
+            rgb(255,204,0) 40%,
+            rgb(153,255,51) 60%,
+            rgb(0,153,0) 80%)`;
+
+        // Fill up to value
+        slider.style.background = color;
+
+        // Show emoji feedback
+        let emoji = "😐"; // neutral default
+        if (value <= 2) emoji = "😡";       // angry/red zone
+        else if (value <= 4) emoji = "😕";  // orange zone
+        else if (value <= 6) emoji = "😐";  // yellow/neutral
+        else if (value <= 8) emoji = "🙂";  // light green
+        else emoji = "😄";                  // deep green
+
+        // Assuming each slider has a span next to it for emoji
+        const emojiDisplay = slider.parentElement.querySelector('.slider-emoji');
+        if (emojiDisplay) {
+            emojiDisplay.textContent = emoji;
+        }
+    }
+
+    function addRow() {
+        const skillsList = document.getElementById('skills-list');
+        const row = document.createElement('div');
+        row.classList.add('skill-row');
+        row.innerHTML = `
+            <input type="text" name="skills-${skillIndex}-skill_name" placeholder="Skill name" required>
+            <label>Proficiency level
+                <span class="slider-emoji"></span>
+                <input type="range" name="skills-${skillIndex}-proficiency_level" min="1" max="10" value="1" class="proficiency" required>
+            </label>
+            <label>Enjoyment level
+                <span class="slider-emoji"></span>
+                <input type="range" name="skills-${skillIndex}-enjoyment_level" min="1" max="10" value="1" class="enjoyment" required>
+            </label>
+            <button type="button" class="remove-skill">✖</button>
+        `;
+        skillsList.appendChild(row);
+        attachEvents(row);
+        skillIndex++;
+    }
+
+    function attachEvents(row) {
+        const proficiencySlider = row.querySelector('.proficiency');
+        const enjoymentSlider = row.querySelector('.enjoyment');
+        const removeBtn = row.querySelector('.remove-skill');
+
+        proficiencySlider.addEventListener('input', () => setSliderColor(proficiencySlider, 'proficiency'));
+        enjoymentSlider.addEventListener('input', () => setSliderColor(enjoymentSlider, 'enjoyment'));
+
+        removeBtn.addEventListener('click', () => {
+            row.remove();
+        });
+
+        setSliderColor(proficiencySlider, 'proficiency');
+        setSliderColor(enjoymentSlider, 'enjoyment');
+    }
+
+    // Attach events to first row
+    document.querySelectorAll('.skill-row').forEach(row => {
+        attachEvents(row);
+    });
+
+    document.getElementById('add-skill').addEventListener('click', addRow);
+</script>
+</body>
+
+
+{% endblock %}

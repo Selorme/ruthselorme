@@ -126,6 +126,9 @@ celerybeat.pid
 
 # Environments
 .env
+.tables
+.convert_to_webp
+.job_skills_database
 .venv
 env/
 venv/

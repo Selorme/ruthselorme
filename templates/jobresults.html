@@ -1,0 +1,217 @@
+{% extends "base.html" %}
+{% block title %}Career Match{% endblock %}
+{% block content %}
+
+<style>
+    body {
+        font-family: Roboto Slab, serif;
+        background: #f7f9fc;
+    }
+
+    .match-card {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        margin-bottom: 20px;
+        overflow: hidden;
+    }
+
+    .match-header {
+        background: linear-gradient(135deg, #4a90e2, #357abd);
+        color: white;
+        padding: 20px;
+    }
+
+    .score-badge {
+        background: rgba(255,255,255,0.2);
+        padding: 5px 15px;
+        border-radius: 20px;
+        font-weight: bold;
+    }
+
+    .skill-tag {
+        display: inline-block;
+        background: #e3f2fd;
+        color: #1565c0;
+        padding: 4px 12px;
+        border-radius: 15px;
+        font-size: 12px;
+        margin: 2px;
+    }
+
+    .missing-skill-tag {
+        display: inline-block;
+        background: #ffebee;
+        color: #c62828;
+        padding: 4px 12px;
+        border-radius: 15px;
+        font-size: 12px;
+        margin: 2px;
+    }
+
+    .education-requirement {
+        display: inline-block;
+        background: #fff3e0;
+        color: #f57c00;
+        padding: 4px 12px;
+        border-radius: 15px;
+        font-size: 12px;
+        margin: 2px;
+        font-weight: bold;
+    }
+
+    .score-breakdown {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 8px;
+        margin: 15px 0;
+    }
+
+    .progress {
+        height: 8px;
+        border-radius: 4px;
+    }
+
+    .card-text {
+        color: black;
+    }
+
+    .text-color {
+        color: black;
+    }
+
+    .education-info {
+        margin-top: 15px;
+        padding: 10px;
+        background: #f8f9fa;
+        border-left: 4px solid #f57c00;
+        border-radius: 4px;
+    }
+</style>
+
+<body>
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="text-center mb-4">Your Career Matches</h1>
+
+                {% if matches %}
+                    {% for match in matches %}
+                    <div class="match-card">
+                        <div class="match-header">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h2 class="mb-1">{{ match.job.job_name }}</h2>
+                                    <p class="mb-0">{{ match.job.industry }} industry</p>
+                                </div>
+                                <div class="score-badge">
+                                    {{ match.total_score }}% Match
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <h3 class="card-text">Job description: {{ match.job.description }}</h3>
+
+                            <div class="score-breakdown">
+                                <h4 class="text-color">Score Breakdown:</h4>
+                                <div class="row text-color">
+                                    <div class="col-md-3">
+                                        <small>Your Skill Match score</small>
+                                        <div class="progress mb-2">
+                                            <div class="progress-bar bg-primary" style="width: {{ match.skills_score }}%"></div>
+                                        </div>
+                                        <small>{{ match.skills_score }}%</small>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <small>Your Experience Score</small>
+                                        <div class="progress mb-2">
+                                            <div class="progress-bar bg-success" style="width: {{ match.experience_score }}%"></div>
+                                        </div>
+                                        <small>{{ match.experience_score }}%</small>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <small>Your Enjoyment Score</small>
+                                        <div class="progress mb-2">
+                                            <div class="progress-bar bg-warning" style="width: {{ match.enjoyment_score }}%"></div>
+                                        </div>
+                                        <small>{{ match.enjoyment_score }}%</small>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <small>Your Education Score</small>
+                                        <div class="progress mb-2">
+                                            <div class="progress-bar bg-info" style="width: {{ match.education_score }}%"></div>
+                                        </div>
+                                        <small>{{ match.education_score }}%</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Education Requirements Section -->
+                            {% if match.education_score < 100 %}
+                            <div class="education-info">
+                                <h5 class="text-color mb-2">📚 Education Requirement:</h5>
+                                <span class="education-requirement">
+                                    Minimum Required: {{ match.job.minimum_degree_required }}
+                                </span>
+                                <p class="text-color mt-2 mb-0">
+                                    <small>Consider pursuing additional education to become fully qualified for this position.</small>
+                                </p>
+                            </div>
+                            {% endif %}
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h5 class="text-color">Your Matching Skills:</h5>
+                                    {% for skill in match.matching_skills %}
+                                        <span class="skill-tag">
+                                            {{ skill.skill }} ({{ skill.user_proficiency }}/10)
+                                        </span>
+                                    {% endfor %}
+                                    {% if not match.matching_skills %}
+                                        <p class="text-muted">No matching skills found</p>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-6">
+                                    <h5 class="text-color">Skills to Develop and the necessary proficiency levels:</h5>
+                                    {% for skill in match.missing_skills %}
+                                        <span class="missing-skill-tag">
+                                            {{ skill.skill }} (Need: {{ skill.required_level }}/10)
+                                        </span>
+                                    {% endfor %}
+                                    {% if not match.missing_skills %}
+                                        <p class="text-success">You have all required skills!</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <div class="mt-3">
+                                <small class="text-muted">
+                                    Minimum Education: {{ match.job.minimum_degree_required }}
+                                    {% if match.education_score == 100 %}
+                                        <span class="text-success">✓ You meet the education requirement!</span>
+                                    {% endif %}
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                    <div class="text-center mt-4 mb-4">
+                        <a href="{{ url_for('career_match') }}" class="btn btn-primary">Try Again</a>
+                    </div>
+
+                {% else %}
+                    <div class="alert alert-warning text-center">
+                        <h4>No matches found</h4>
+                        <p>We couldn't find any suitable career matches based on your current skills and preferences.
+                           Try adding more skills or adjusting your proficiency levels.</p>
+                        <a href="{{ url_for('career_match') }}" class="btn btn-primary">Go Back</a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</body>
+
+{% endblock %}

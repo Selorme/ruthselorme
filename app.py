@@ -5,11 +5,11 @@ import smtplib
 import os
 from dotenv import load_dotenv
 from flask_ckeditor import CKEditor
-from models import Post, User, Comment, PasswordResetToken
+from models import Post, User, Comment, PasswordResetToken, Job, JobMatch, UserSkill
 from flask_login import login_user, LoginManager, current_user, logout_user, login_required
 from functools import wraps
 from werkzeug.security import generate_password_hash, check_password_hash
-from forms import CreatePostForm, RegisterForm, LogInForm, CommentForm, ForgotPasswordForm, ResetPasswordForm
+from forms import CreatePostForm, RegisterForm, LogInForm, CommentForm, ForgotPasswordForm, ResetPasswordForm, JobMatchForm
 from supabase import create_client, Client
 from flask_mail import Mail, Message
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired
@@ -27,6 +27,7 @@ from werkzeug.utils import secure_filename
 from sqlalchemy import func
 import sqlalchemy
 from flask_compress import Compress
+
 
 # Load environment variables
 load_dotenv()
@@ -1121,6 +1122,327 @@ def drafts():
 def scheduled_posts():
     post_scheduled = db.session.query(Post).filter_by(status="scheduled").all()  # Get all scheduled posts
     return render_template("scheduled.html", post_scheduled=post_scheduled, copyright_year=year)
+
+
+@app.route("/skill-entry")
+def skill_entry():
+    if not current_user.is_authenticated:
+        session['url'] = request.url
+        flash("You need to be logged in to access the skill entry page.", "warning")
+        return redirect(url_for("login"))
+
+    form = JobMatchForm()
+    return render_template("skillentry.html", form=form, copyright_year=year)
+
+
+@app.route('/career-match', methods=['GET', 'POST'])
+def career_match():
+    form = JobMatchForm()
+
+    # Store the current URL for potential redirect after login
+    if session.get('url') != request.url:
+        session['url'] = request.url
+
+    print(f"[DEBUG] Form submitted: {request.method}")
+    print(f"[DEBUG] Form validation: {form.validate_on_submit()}")
+
+    if request.method == 'POST':
+        print(f"[DEBUG] Form data: {request.form}")
+        print(f"[DEBUG] Form errors: {form.errors}")
+
+    if form.validate_on_submit():
+        print("[DEBUG] Form validation passed!")
+
+        # Get education level
+        education_level = form.education_level.data
+        print(f"[DEBUG] Education level: {education_level}")
+
+        # Get skills data
+        user_skills = {}
+        for skill_entry in form.skills.data:
+            if skill_entry['skill_name']:  # Only include non-empty skills
+                user_skills[skill_entry['skill_name']] = {
+                    'proficiency': skill_entry['proficiency_level'],
+                    'enjoyment': skill_entry['enjoyment_level']
+                }
+
+        print(f"[DEBUG] User skills: {user_skills}")
+
+        if not user_skills:
+            print("[DEBUG] No skills entered!")
+            flash("Please enter at least one skill.", "warning")
+            return render_template('skillentry.html', form=form)
+
+        try:
+            # Calculate job matches (this works for both logged in and anonymous users)
+            job_matches = calculate_job_matches(user_skills, education_level)
+            print(f"[DEBUG] Job matches calculated: {len(job_matches)} matches found")
+
+            # If the user is logged in, save their skills and job matches to the database
+            if current_user.is_authenticated:
+                save_user_skills(current_user.id, user_skills, education_level)
+                save_job_matches(current_user.id, job_matches)
+                flash("Your skills and job matches have been saved to your profile!", "success")
+            else:
+                # Flash message encouraging login for data saving
+                flash("Your job matches are ready! Log in to save your results and track your career journey.", "info")
+
+            print("[DEBUG] About to render jobresults.html")
+            # Show the result page (works for both logged in and anonymous users)
+            return render_template('jobresults.html', matches=job_matches, user_skills=user_skills)
+
+        except Exception as e:
+            print(f"[DEBUG] Error in job matching: {e}")
+            flash("An error occurred while calculating your job matches. Please try again.", "error")
+            return render_template('skillentry.html', form=form)
+
+    print("[DEBUG] Form validation failed, showing form")
+    # If GET request or form validation fails, show form
+    return render_template('skillentry.html', form=form)
+
+
+def calculate_job_matches(user_skills, user_education):
+    """
+    Calculate weighted job matches based on:
+    - Skills match: 40%
+    - Experience (proficiency): 30%
+    - Enjoyment: 20%
+    - Education: 10%
+    """
+
+    # Education level hierarchy for scoring
+    education_hierarchy = {
+        'High School': 1, 'Certificate': 2, 'Associate': 3, 'Bachelor': 4, 'Master': 5, 'Doctorate': 6, 'Other': 0.5
+    }
+
+    # Get all jobs from database using SQLAlchemy 2.0 style
+    jobs = db.session.execute(db.select(Job)).scalars().all()
+    job_scores = []
+
+    for job in jobs:
+        job_required_skills = job.required_skills  # This should be a dict
+
+        # Calculate skills match (40%)
+        skills_score = calculate_skills_match(user_skills, job_required_skills)
+
+        # Calculate experience score (30%) - based on proficiency levels
+        experience_score = calculate_experience_score(user_skills, job_required_skills)
+
+        # Calculate enjoyment score (20%) - based on enjoyment levels
+        enjoyment_score = calculate_enjoyment_score(user_skills, job_required_skills)
+
+        # Calculate education score (10%)
+        education_score = calculate_education_score(user_education, job.minimum_degree_required, education_hierarchy)
+
+        # Calculate weighted total score
+        total_score = (
+                skills_score * 0.40 +
+                experience_score * 0.30 +
+                enjoyment_score * 0.20 +
+                education_score * 0.10
+        )
+
+        job_scores.append({
+            'job': job,
+            'total_score': round(total_score, 2),
+            'skills_score': round(skills_score, 2),
+            'experience_score': round(experience_score, 2),
+            'enjoyment_score': round(enjoyment_score, 2),
+            'education_score': round(education_score, 2),
+            'matching_skills': get_matching_skills(user_skills, job_required_skills),
+            'missing_skills': get_missing_skills(user_skills, job_required_skills)
+        })
+
+    # Sort by total score (highest first)
+    job_scores.sort(key=lambda x: x['total_score'], reverse=True)
+
+    return job_scores[:15]  # Return top 10 matches
+
+
+def save_user_skills(user_id, user_skills, education_level):
+    """Save user skills to database"""
+    try:
+        # Delete existing skills for this user
+        db.session.execute(db.delete(UserSkill).where(UserSkill.user_id == user_id))
+
+        # Save new skills
+        for skill_name, skill_data in user_skills.items():
+            user_skill = UserSkill(
+                user_id=user_id,
+                skill_name=skill_name,
+                proficiency=skill_data['proficiency'],
+                enjoyment=skill_data['enjoyment']
+            )
+            db.session.add(user_skill)
+
+        # Update user's degree
+        user = db.session.get(User, user_id)
+        if user:
+            user.degree = education_level
+
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        print(f"Error saving user skills: {e}")
+
+
+def save_job_matches(user_id, job_matches):
+    """Save job matches to the database"""
+    try:
+        # Delete existing job matches for this user
+        db.session.execute(db.delete(JobMatch).where(JobMatch.user_id == user_id))
+
+        # Save new job matches
+        for match in job_matches:
+            job_match = JobMatch(
+                user_id=user_id,
+                job_id=match['job'].id,
+                match_score=match['total_score'],
+                skills_match_score=match['skills_score'],
+                proficiency_score=match['experience_score'],
+                enjoyment_score=match['enjoyment_score'],
+                degree_score=match['education_score']
+            )
+            db.session.add(job_match)
+
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        print(f"Error saving job matches: {e}")
+
+
+def calculate_skills_match(user_skills, job_required_skills):
+    """Calculate what percentage of required skills the user has"""
+    if not job_required_skills:
+        return 0
+
+    matching_skills = 0
+    total_required_skills = len(job_required_skills)
+
+    for required_skill in job_required_skills:
+        if required_skill.lower() in [skill.lower() for skill in user_skills.keys()]:
+            matching_skills += 1
+
+    return (matching_skills / total_required_skills) * 100
+
+
+def calculate_experience_score(user_skills, job_required_skills):
+    """Calculate experience score based on proficiency levels"""
+    if not job_required_skills:
+        return 0
+
+    total_score = 0
+    skill_count = 0
+
+    for required_skill, required_level in job_required_skills.items():
+        # Find matching user skill (case-insensitive)
+        user_skill = next((skill for skill in user_skills.keys()
+                           if skill.lower() == required_skill.lower()), None)
+
+        if user_skill:
+            user_proficiency = user_skills[user_skill]['proficiency']
+            # Score based on how close user's proficiency is to required level
+            skill_score = min(100, (user_proficiency / required_level) * 100)
+            total_score += skill_score
+            skill_count += 1
+        else:
+            # No experience with this skill
+            total_score += 0
+            skill_count += 1
+
+    return total_score / skill_count if skill_count > 0 else 0
+
+
+def calculate_enjoyment_score(user_skills, job_required_skills):
+    """Calculate enjoyment score for matching skills"""
+    if not job_required_skills:
+        return 0
+
+    total_enjoyment = 0
+    skill_count = 0
+
+    for required_skill in job_required_skills:
+        user_skill = next((skill for skill in user_skills.keys()
+                           if skill.lower() == required_skill.lower()), None)
+
+        if user_skill:
+            total_enjoyment += user_skills[user_skill]['enjoyment'] * 10  # Convert to percentage
+            skill_count += 1
+
+    return total_enjoyment / skill_count if skill_count > 0 else 0
+
+
+def calculate_education_score(user_education, job_min_education, education_hierarchy):
+    """Calculate education score"""
+    user_level = education_hierarchy.get(user_education, 1)
+
+    # Convert job requirement to our hierarchy
+    job_level_map = {
+        'High School': 1,
+        'Certificate': 2,
+        'Associate': 3,
+        'Bachelor\'s': 4,
+        'Master\'s': 5,
+        'Doctorate': 6
+    }
+
+    job_level = job_level_map.get(job_min_education, 1)
+
+    if user_level >= job_level:
+        return 100  # Meets or exceeds requirement
+    else:
+        # Partial score based on how close they are
+        return (user_level / job_level) * 100
+
+
+def get_matching_skills(user_skills, job_required_skills):
+    """Get the list of skills that match between user and job"""
+    matching = []
+    for required_skill in job_required_skills:
+        user_skill = next((skill for skill in user_skills.keys()
+                           if skill.lower() == required_skill.lower()), None)
+        if user_skill:
+            matching.append({
+                'skill': user_skill,
+                'user_proficiency': user_skills[user_skill]['proficiency'],
+                'required_level': job_required_skills[required_skill],
+                'enjoyment': user_skills[user_skill]['enjoyment']
+            })
+    return matching
+
+
+def get_missing_skills(user_skills, job_required_skills):
+    """Get the list of skills required by job but not possessed by user"""
+    missing = []
+    for required_skill, required_level in job_required_skills.items():
+        user_skill = next((skill for skill in user_skills.keys()
+                           if skill.lower() == required_skill.lower()), None)
+        if not user_skill:
+            missing.append({
+                'skill': required_skill,
+                'required_level': required_level
+            })
+    return missing
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 @app.route("/disclaimer")
