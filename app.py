@@ -21,7 +21,9 @@ from middleware import SEOMiddleware
 from flask import send_from_directory
 from werkzeug.middleware.proxy_fix import ProxyFix
 from flask_assets import Environment, Bundle
+# from extensions import db
 from extensions import db
+from models import Base
 from utils import slugify, category_to_url, url_to_category
 from werkzeug.utils import secure_filename
 from sqlalchemy import func
@@ -109,8 +111,10 @@ migrate = Migrate(app, db)
 
 year = datetime.today().year
 
+# with app.app_context():
+#         db.create_all()
 with app.app_context():
-    db.create_all()
+    Base.metadata.create_all(bind=db.engine)
 
 
 # @app.route('/static/img/<path:filename>')
@@ -302,8 +306,12 @@ def register():
 
 
 @login_manager.user_loader
+@login_manager.user_loader
 def load_user(user_id):
-    return db.get_or_404(User, user_id)
+    try:
+        return db.session.get(User, user_id)  # Returns None if not found instead of 404
+    except:
+        return None
 
 
 def is_safe_url(target):
