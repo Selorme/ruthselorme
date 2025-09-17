@@ -29,6 +29,8 @@ from werkzeug.utils import secure_filename
 from sqlalchemy import func
 import sqlalchemy
 from flask_compress import Compress
+import sib_api_v3_sdk
+from sib_api_v3_sdk.rest import ApiException
 
 
 # Load environment variables
@@ -77,14 +79,20 @@ app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
 # Add the filter for Jinja templates
 app.jinja_env.filters['gravatar'] = gravatar_url
 
-# Set up for email
-app.config['MAIL_SERVER'] = 'smtp.gmail.com'  # e.g., smtp.gmail.com for Gmail
-app.config['MAIL_PORT'] = 587  # Use 465 for SSL, 587 for TLS
-app.config['MAIL_USE_TLS'] = True  # or False if using SSL
-app.config['MAIL_USE_SSL'] = False  # or True if using SSL
-app.config['MAIL_USERNAME'] = os.getenv('MY_WEBSITE_EMAIL')
-app.config['MAIL_PASSWORD'] = os.getenv('MY_WEBSITE_PASSWORD')
-app.config['MAIL_DEFAULT_SENDER'] = os.getenv('MY_WEBSITE_EMAIL')
+# brevo email sending setup
+configuration = sib_api_v3_sdk.Configuration()
+configuration.api_key['api-key'] = os.environ.get("BREVO_API_KEY")
+api_client = sib_api_v3_sdk.ApiClient(configuration)
+email_api = sib_api_v3_sdk.TransactionalEmailsApi(api_client)
+
+# # Set up for email
+# app.config['MAIL_SERVER'] = 'smtp.gmail.com'  # e.g., smtp.gmail.com for Gmail
+# app.config['MAIL_PORT'] = 587  # Use 465 for SSL, 587 for TLS
+# app.config['MAIL_USE_TLS'] = True  # or False if using SSL
+# app.config['MAIL_USE_SSL'] = False  # or True if using SSL
+# app.config['MAIL_USERNAME'] = os.getenv('MY_WEBSITE_EMAIL')
+# app.config['MAIL_PASSWORD'] = os.getenv('MY_WEBSITE_PASSWORD')
+# app.config['MAIL_DEFAULT_SENDER'] = os.getenv('MY_WEBSITE_EMAIL')
 
 # Config for SQLite database
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
@@ -449,16 +457,30 @@ def send_post_notification(post):
             </html>
             '''
 
-            msg = Message(
+            # msg = Message(
+            #     subject=subject,
+            #     recipients=[user.email],
+            #     html=html_content
+            # )
+            #
+            # mail.send(msg)
+
+            send_smtp_email = sib_api_v3_sdk.SendSmtpEmail(
+                sender={"email": "ruthselormeacolatse.website@gmail.com"},
+                to=[{"email": "noreply@ruthselormeacolatse.info"}],
+                bcc=[{"email": user.email} for user in users],
                 subject=subject,
-                recipients=[user.email],
-                html=html_content
+                html_content=html_content
             )
 
-            mail.send(msg)
+            email_api.send_transac_email(send_smtp_email)
+
         return True
+    except ApiException as e:
+        print(f"Brevo API error: {e}")
+        return False
     except Exception as e:
-        print(f"Error sending notification: {e}")
+        print(f"Notification send error: {e}")
         return False
 
 
