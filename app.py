@@ -419,6 +419,7 @@ def send_post_notification(post):
     try:
         # Get all registered users' emails
         users = db.session.query(User).all()
+        recipient_emails = [user.email for user in users if user.email]
         for user in users:
             if not user.email:
                 continue
@@ -468,7 +469,7 @@ def send_post_notification(post):
             send_smtp_email = sib_api_v3_sdk.SendSmtpEmail(
                 sender={"email": "ruthselormeacolatse.website@gmail.com"},
                 to=[{"email": "noreply@ruthselormeacolatse.info"}],
-                bcc=[{"email": user.email} for user in users],
+                bcc=[{"email": email} for email in recipient_emails],
                 subject=subject,
                 html_content=html_content
             )
