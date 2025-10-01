@@ -1490,5 +1490,11 @@ def terms_and_conditions():
     return render_template("terms_conditions.html", copyright_year=year)
 
 
+@app.route("/debug-users")
+def debug_users():
+    users = db.session.query(User).all()
+    return {"users": [u.email for u in users]}
+
+
 if __name__ == "__main__":
     app.run(debug=True, port=5005)
