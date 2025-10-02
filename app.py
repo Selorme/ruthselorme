@@ -420,61 +420,61 @@ def send_post_notification(post):
         # Get all registered users' emails
         users = db.session.query(User).all()
         recipient_emails = [user.email for user in users if user.email]
-        for user in users:
-            if not user.email:
-                continue
 
-            # Create the email
-            subject = f"New Blog Post: {post.title}"
+        if not recipient_emails:
+            return True
 
-            def truncate_text(text, word_limit=300):
-                words = text.split()
-                return " ".join(words[:word_limit]) + "..." if len(words) > word_limit else text
+        # Create the email
+        subject = f"New Blog Post: {post.title}"
 
-            preview_text = truncate_text(post.body)
+        def truncate_text(text, word_limit=300):
+            words = text.split()
+            return " ".join(words[:word_limit]) + "..." if len(words) > word_limit else text
 
-            # Create HTML email content
-            html_content = f'''
-            <html>
-                <body>
-                    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-                        <h2>{post.title}</h2>
-                        <p>{preview_text}</p>
-                        <div style="margin: 20px 0;">
-                            <p>Category: {post.category}</p>
-                        </div>
-                        <a href="{url_for('show_post', category=post.category, slug=slugify(post.title), post_id=post.id, _external=True)}" 
-                           style="background-color: #007bff; color: white; padding: 10px 20px; 
-                                  text-decoration: none; border-radius: 5px;">
-                            Read More
-                        </a>
-                        <hr style="margin-top: 30px;">
-                        <p style="font-size: 12px; color: #666;">
-                            You received this email because you're registered on our blog. 
-                            If you'd like to unsubscribe, please update your preferences in your account settings.
-                        </p>
+        preview_text = truncate_text(post.body)
+
+        # Create HTML email content
+        html_content = f'''
+        <html>
+            <body>
+                <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                    <h2>{post.title}</h2>
+                    <p>{preview_text}</p>
+                    <div style="margin: 20px 0;">
+                        <p>Category: {post.category}</p>
                     </div>
-                </body>
-            </html>
-            '''
+                    <a href="{url_for('show_post', category=post.category, slug=slugify(post.title), post_id=post.id, _external=True)}" 
+                       style="background-color: #007bff; color: white; padding: 10px 20px; 
+                              text-decoration: none; border-radius: 5px;">
+                        Read More
+                    </a>
+                    <hr style="margin-top: 30px;">
+                    <p style="font-size: 12px; color: #666;">
+                        You received this email because you're registered on our blog. 
+                        If you'd like to unsubscribe, please update your preferences in your account settings.
+                    </p>
+                </div>
+            </body>
+        </html>
+        '''
 
-            # msg = Message(
-            #     subject=subject,
-            #     recipients=[user.email],
-            #     html=html_content
-            # )
-            #
-            # mail.send(msg)
+        # msg = Message(
+        #     subject=subject,
+        #     recipients=[user.email],
+        #     html=html_content
+        # )
+        #
+        # mail.send(msg)
 
-            send_smtp_email = sib_api_v3_sdk.SendSmtpEmail(
-                sender={"email": "noreply@ruthselormeacolatse.info", "name": "Ruth Selorme Acolatse"},
-                to=[{"email": "noreply@ruthselormeacolatse.info"}],
-                bcc=[{"email": email} for email in recipient_emails],
-                subject=subject,
-                html_content=html_content
-            )
+        send_smtp_email = sib_api_v3_sdk.SendSmtpEmail(
+            sender={"email": "noreply@ruthselormeacolatse.info", "name": "Ruth Selorme Acolatse"},
+            to=[{"email": "noreply@ruthselormeacolatse.info"}],
+            bcc=[{"email": email} for email in recipient_emails],
+            subject=subject,
+            html_content=html_content
+        )
 
-            email_api.send_transac_email(send_smtp_email)
+        email_api.send_transac_email(send_smtp_email)
 
         return True
     except ApiException as e:
