@@ -467,7 +467,7 @@ def send_post_notification(post):
             # mail.send(msg)
 
             send_smtp_email = sib_api_v3_sdk.SendSmtpEmail(
-                sender={"email": "ruthselormeacolatse.website@gmail.com"},
+                sender={"email": "noreply@ruthselormeacolatse.info", "name": "Ruth Selorme Acolatse"},
                 to=[{"email": "noreply@ruthselormeacolatse.info"}],
                 bcc=[{"email": email} for email in recipient_emails],
                 subject=subject,
