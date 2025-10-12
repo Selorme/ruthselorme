@@ -1,0 +1,895 @@
+{% extends "base.html" %}
+{% block title %}Investment Calculator{% endblock %}
+{% block content %}
+    <style>
+        /* Scoped reset - only affects calculator wrapper */
+        .calculator-wrapper * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .calculator-wrapper {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .calculator-wrapper .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .calculator-wrapper h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 32px;
+        }
+
+        .calculator-wrapper .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 16px;
+        }
+
+        .calculator-wrapper .global-settings {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+
+        .calculator-wrapper .global-settings h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .calculator-wrapper .settings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .calculator-wrapper .input-group {
+            margin-bottom: 15px;
+        }
+
+        .calculator-wrapper label {
+            display: block;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+
+        .calculator-wrapper input[type="text"],
+        .calculator-wrapper input[type="number"],
+        .calculator-wrapper select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        .calculator-wrapper input[type="text"]:focus,
+        .calculator-wrapper input[type="number"]:focus,
+        .calculator-wrapper select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .calculator-wrapper .investments-section {
+            margin-bottom: 30px;
+        }
+
+        .calculator-wrapper .investment-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            position: relative;
+            border-left: 4px solid #667eea;
+        }
+
+        .calculator-wrapper .investment-card.disabled {
+            opacity: 0.5;
+            background: #e9ecef;
+        }
+
+        .calculator-wrapper .investment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .calculator-wrapper .investment-header h4 {
+            color: #333;
+            font-size: 16px;
+        }
+
+        .calculator-wrapper .remove-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 5px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: background 0.3s;
+        }
+
+        .calculator-wrapper .remove-btn:hover {
+            background: #c82333;
+        }
+
+        .calculator-wrapper .investment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .calculator-wrapper .add-investment-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .calculator-wrapper .add-investment-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .calculator-wrapper .add-investment-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .calculator-wrapper .calculate-btn {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            color: white;
+            border: none;
+            padding: 20px 40px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+            width: 100%;
+            margin: 20px 0;
+        }
+
+        .calculator-wrapper .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+        }
+
+        .calculator-wrapper .results-section {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .calculator-wrapper .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .calculator-wrapper .result-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 25px;
+            border-radius: 15px;
+            color: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .calculator-wrapper .result-card h3 {
+            font-size: 14px;
+            margin-bottom: 10px;
+            opacity: 0.9;
+        }
+
+        .calculator-wrapper .result-card .name {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .calculator-wrapper .result-card .amount {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .calculator-wrapper .result-card .details {
+            font-size: 12px;
+            opacity: 0.9;
+            margin-top: 10px;
+            line-height: 1.5;
+        }
+
+        .calculator-wrapper .chart-container {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+
+        .calculator-wrapper .chart-title {
+            color: #333;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .calculator-wrapper .summary-section {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 30px;
+            border-radius: 15px;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .calculator-wrapper .summary-section h3 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .calculator-wrapper .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .calculator-wrapper .summary-item {
+            background: rgba(255,255,255,0.2);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .calculator-wrapper .summary-item h4 {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 8px;
+        }
+
+        .calculator-wrapper .summary-item .value {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .calculator-wrapper .inflation-warning {
+            background: #fff3cd;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #ffc107;
+            margin-bottom: 20px;
+        }
+
+        .calculator-wrapper .inflation-warning h3 {
+            color: #856404;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .calculator-wrapper .inflation-warning p {
+            color: #856404;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .calculator-wrapper .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .calculator-wrapper .comparison-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        .calculator-wrapper .comparison-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+            font-size: 14px;
+        }
+
+        .calculator-wrapper .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .calculator-wrapper .comparison-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .calculator-wrapper .best-performer {
+            background: #d4edda !important;
+            font-weight: 600;
+            color: #155724;
+        }
+
+        .calculator-wrapper .worst-performer {
+            background: #f8d7da !important;
+            color: #721c24;
+        }
+
+        .calculator-wrapper .info-icon {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            background: #667eea;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 16px;
+            font-size: 12px;
+            cursor: help;
+            margin-left: 5px;
+        }
+
+        .calculator-wrapper .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+
+        .calculator-wrapper .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 10px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -100px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 12px;
+        }
+
+        .calculator-wrapper .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-wrapper .container {
+                padding: 20px;
+            }
+
+            .calculator-wrapper h1 {
+                font-size: 24px;
+            }
+
+            .calculator-wrapper .investment-grid,
+            .calculator-wrapper .settings-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .calculator-wrapper .result-card .amount {
+                font-size: 24px;
+            }
+        }
+    </style>
+
+<div class="calculator-wrapper">
+    <div class="container">
+        <h1>📊 Custom Investment Portfolio Calculator</h1>
+        <p class="subtitle">Compare up to 5 investments with inflation & fees factored in</p>
+
+        <div class="global-settings">
+            <h3>⚙️ Global Settings</h3>
+            <div class="settings-grid">
+                <div class="input-group">
+                    <label>Time Horizon (Years)</label>
+                    <input type="number" id="timeHorizon" value="10" min="1" max="50">
+                </div>
+                <div class="input-group">
+                    <label>Expected Inflation Rate (%/year)
+                        <span class="tooltip">
+                            <span class="info-icon">?</span>
+                            <span class="tooltiptext">Historical average: 2-3%. High inflation: 4-6%</span>
+                        </span>
+                    </label>
+                    <input type="number" id="inflationRate" value="2.5" step="0.1" min="0" max="20">
+                </div>
+                <div class="input-group">
+                    <label>Initial Investment (€)</label>
+                    <input type="number" id="initialInvestment" value="1000" min="0" step="100">
+                </div>
+                <div class="input-group">
+                    <label>Monthly Contribution (€)</label>
+                    <input type="number" id="monthlyContribution" value="200" min="0" step="50">
+                </div>
+            </div>
+        </div>
+
+        <div class="investments-section">
+            <h3 style="color: #333; margin-bottom: 15px;">💼 Your Investments (Add up to 5)</h3>
+            <button class="add-investment-btn" id="addInvestmentBtn" onclick="addInvestment()">
+                ➕ Add Investment
+            </button>
+            <div id="investmentsContainer"></div>
+        </div>
+
+        <button class="calculate-btn" onclick="calculateResults()">
+            🚀 Calculate My Portfolio Returns
+        </button>
+
+        <div class="results-section" id="resultsSection">
+            <div class="summary-section">
+                <h3>📈 Portfolio Summary</h3>
+                <div class="summary-grid">
+                    <div class="summary-item">
+                        <h4>Total Invested</h4>
+                        <div class="value" id="totalInvested">€0</div>
+                    </div>
+                    <div class="summary-item">
+                        <h4>Total Value (Nominal)</h4>
+                        <div class="value" id="totalValue">€0</div>
+                    </div>
+                    <div class="summary-item">
+                        <h4>Total Gain</h4>
+                        <div class="value" id="totalGain">€0</div>
+                    </div>
+                    <div class="summary-item">
+                        <h4>Real Value (After Inflation)</h4>
+                        <div class="value" id="realValue">€0</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="inflation-warning">
+                <h3>💡 Understanding Inflation Impact</h3>
+                <p id="inflationExplanation"></p>
+            </div>
+
+            <h3 style="color: #333; margin-bottom: 15px;">📊 Individual Investment Results</h3>
+            <div class="results-grid" id="resultsGrid"></div>
+
+            <div class="chart-container">
+                <h3 class="chart-title">📈 Growth Comparison Over Time</h3>
+                <canvas id="growthChart"></canvas>
+            </div>
+
+            <div class="chart-container">
+                <h3 class="chart-title">🥧 Final Portfolio Allocation</h3>
+                <canvas id="pieChart"></canvas>
+            </div>
+
+            <h3 style="color: #333; margin: 30px 0 15px;">📋 Detailed Year-by-Year Breakdown</h3>
+            <table class="comparison-table" id="yearTable">
+                <thead id="tableHead"></thead>
+                <tbody id="tableBody"></tbody>
+            </table>
+
+            <div style="background: #d1ecf1; padding: 20px; border-radius: 10px; margin-top: 30px; border-left: 4px solid #17a2b8;">
+                <h3 style="color: #0c5460; margin-bottom: 10px;">🎯 Key Insights</h3>
+                <div id="keyInsights" style="color: #0c5460; line-height: 1.8;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    let investmentCount = 0;
+    const maxInvestments = 5;
+    let growthChart, pieChart;
+
+    const colors = [
+        'rgba(102, 126, 234, 1)',
+        'rgba(237, 100, 166, 1)',
+        'rgba(255, 159, 64, 1)',
+        'rgba(75, 192, 192, 1)',
+        'rgba(153, 102, 255, 1)'
+    ];
+
+    const gradients = [
+        'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+        'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+        'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+        'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
+        'linear-gradient(135deg, #fa709a 0%, #fee140 100%)'
+    ];
+
+    function addInvestment() {
+        if (investmentCount >= maxInvestments) return;
+
+        investmentCount++;
+        const container = document.getElementById('investmentsContainer');
+        const card = document.createElement('div');
+        card.className = 'investment-card';
+        card.id = `investment-${investmentCount}`;
+        card.innerHTML = `
+            <div class="investment-header">
+                <h4>Investment ${investmentCount}</h4>
+                <button class="remove-btn" onclick="removeInvestment(${investmentCount})">Remove</button>
+            </div>
+            <div class="investment-grid">
+                <div class="input-group">
+                    <label>Name/Ticker</label>
+                    <input type="text" id="name-${investmentCount}" placeholder="e.g., VWCE, AAPL">
+                </div>
+                <div class="input-group">
+                    <label>Type</label>
+                    <select id="type-${investmentCount}">
+                        <option value="etf">ETF</option>
+                        <option value="stock">Stock</option>
+                        <option value="savings">Savings Account</option>
+                        <option value="bond">Bond</option>
+                        <option value="crypto">Crypto</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>Expected Return (%/year)
+                        <span class="tooltip">
+                            <span class="info-icon">?</span>
+                            <span class="tooltiptext">ETF: 7-10%, Stock: varies, Savings: 1-4%, Bonds: 3-5%</span>
+                        </span>
+                    </label>
+                    <input type="number" id="return-${investmentCount}" value="7" step="0.1" min="-50" max="100">
+                </div>
+                <div class="input-group">
+                    <label>Annual Fee (%)
+                        <span class="tooltip">
+                            <span class="info-icon">?</span>
+                            <span class="tooltiptext">ETF: 0.1-0.5%, Active funds: 1-2%, Savings: usually 0%</span>
+                        </span>
+                    </label>
+                    <input type="number" id="fee-${investmentCount}" value="0.2" step="0.01" min="0" max="10">
+                </div>
+                <div class="input-group">
+                    <label>Tax on Gains (%)
+                        <span class="tooltip">
+                            <span class="info-icon">?</span>
+                            <span class="tooltiptext">Varies by country. Estonia: 20%, EU average: 20-30%</span>
+                        </span>
+                    </label>
+                    <input type="number" id="tax-${investmentCount}" value="20" step="1" min="0" max="100">
+                </div>
+            </div>
+        `;
+        container.appendChild(card);
+
+        if (investmentCount >= maxInvestments) {
+            document.getElementById('addInvestmentBtn').disabled = true;
+            document.getElementById('addInvestmentBtn').textContent = 'Maximum 5 Investments Added';
+        }
+    }
+
+    function removeInvestment(id) {
+        const card = document.getElementById(`investment-${id}`);
+        card.remove();
+        investmentCount--;
+
+        if (investmentCount < maxInvestments) {
+            document.getElementById('addInvestmentBtn').disabled = false;
+            document.getElementById('addInvestmentBtn').textContent = '➕ Add Investment';
+        }
+    }
+
+    function calculateCompound(initial, monthly, returnRate, feeRate, years) {
+        const netReturn = (returnRate - feeRate) / 100;
+        const timeline = [initial];
+        let total = initial;
+        let totalContributed = initial;
+
+        for (let year = 1; year <= years; year++) {
+            for (let month = 1; month <= 12; month++) {
+                total = total * (1 + netReturn/12) + monthly;
+                totalContributed += monthly;
+            }
+            timeline.push(total);
+        }
+
+        return {
+            final: total,
+            contributed: totalContributed,
+            timeline: timeline
+        };
+    }
+
+    function calculateResults() {
+        const years = parseInt(document.getElementById('timeHorizon').value);
+        const inflationRate = parseFloat(document.getElementById('inflationRate').value);
+        const initial = parseFloat(document.getElementById('initialInvestment').value);
+        const monthly = parseFloat(document.getElementById('monthlyContribution').value);
+
+        const investments = [];
+        const cards = document.querySelectorAll('.investment-card:not(.disabled)');
+
+        if (cards.length === 0) {
+            alert('Please add at least one investment!');
+            return;
+        }
+
+        cards.forEach((card, index) => {
+            const id = card.id.split('-')[1];
+            const name = document.getElementById(`name-${id}`).value || `Investment ${index + 1}`;
+            const type = document.getElementById(`type-${id}`).value;
+            const returnRate = parseFloat(document.getElementById(`return-${id}`).value);
+            const feeRate = parseFloat(document.getElementById(`fee-${id}`).value);
+            const taxRate = parseFloat(document.getElementById(`tax-${id}`).value);
+
+            const result = calculateCompound(initial, monthly, returnRate, feeRate, years);
+            const gains = result.final - result.contributed;
+            const taxOnGains = gains * (taxRate / 100);
+            const afterTax = result.final - taxOnGains;
+            const realValue = afterTax / Math.pow(1 + inflationRate/100, years);
+
+            investments.push({
+                name,
+                type,
+                returnRate,
+                feeRate,
+                taxRate,
+                result,
+                afterTax,
+                realValue,
+                taxOnGains,
+                color: colors[index],
+                gradient: gradients[index]
+            });
+        });
+
+        displayResults(investments, years, inflationRate, initial, monthly);
+    }
+
+    function displayResults(investments, years, inflationRate, initial, monthly) {
+        document.getElementById('resultsSection').style.display = 'block';
+
+        const totalContributed = investments[0].result.contributed;
+        const totalValue = investments.reduce((sum, inv) => sum + inv.afterTax, 0);
+        const totalGain = totalValue - (totalContributed * investments.length);
+        const totalReal = investments.reduce((sum, inv) => sum + inv.realValue, 0);
+
+        document.getElementById('totalInvested').textContent = '€' + (totalContributed * investments.length).toLocaleString('en-US', {maximumFractionDigits: 0});
+        document.getElementById('totalValue').textContent = '€' + totalValue.toLocaleString('en-US', {maximumFractionDigits: 0});
+        document.getElementById('totalGain').textContent = '€' + totalGain.toLocaleString('en-US', {maximumFractionDigits: 0});
+        document.getElementById('realValue').textContent = '€' + totalReal.toLocaleString('en-US', {maximumFractionDigits: 0});
+
+        const inflationLoss = totalValue - totalReal;
+        const inflationPercent = ((inflationLoss / totalValue) * 100).toFixed(1);
+        document.getElementById('inflationExplanation').innerHTML =
+            `At ${inflationRate}% annual inflation over ${years} years, money loses <strong>${inflationPercent}% of its purchasing power</strong>. ` +
+            `Your nominal €${totalValue.toLocaleString('en-US', {maximumFractionDigits: 0})} will have the purchasing power of €${totalReal.toLocaleString('en-US', {maximumFractionDigits: 0})} in today's money. ` +
+            `That's a €${inflationLoss.toLocaleString('en-US', {maximumFractionDigits: 0})} reduction in real value!`;
+
+        const resultsGrid = document.getElementById('resultsGrid');
+        resultsGrid.innerHTML = '';
+
+        investments.forEach((inv, index) => {
+            const card = document.createElement('div');
+            card.className = 'result-card';
+            card.style.background = inv.gradient;
+
+            const realGain = inv.realValue - inv.result.contributed;
+            const roi = ((realGain / inv.result.contributed) * 100).toFixed(1);
+
+            card.innerHTML = `
+                <h3>${inv.type.toUpperCase()}</h3>
+                <div class="name">${inv.name}</div>
+                <div class="amount">€${Math.round(inv.afterTax).toLocaleString()}</div>
+                <div class="details">
+                    <strong>After-tax value</strong><br>
+                    Real value (inflation-adj): €${Math.round(inv.realValue).toLocaleString()}<br>
+                    Net gain: €${Math.round(inv.afterTax - inv.result.contributed).toLocaleString()}<br>
+                    Fees paid: €${Math.round((inv.result.contributed * (inv.returnRate - (inv.returnRate - inv.feeRate)) / 100) * years).toLocaleString()}<br>
+                    Tax paid: €${Math.round(inv.taxOnGains).toLocaleString()}<br>
+                    Real ROI: ${roi}%
+                </div>
+            `;
+            resultsGrid.appendChild(card);
+        });
+
+        updateGrowthChart(investments, years);
+        updatePieChart(investments);
+        updateTable(investments, years);
+        updateInsights(investments, years, inflationRate);
+    }
+
+    function updateGrowthChart(investments, years) {
+        const labels = Array.from({length: years + 1}, (_, i) => i);
+
+        if (growthChart) growthChart.destroy();
+
+        const ctx = document.getElementById('growthChart').getContext('2d');
+        growthChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels.map(y => `Year ${y}`),
+                datasets: investments.map((inv, index) => ({
+                    label: inv.name,
+                    data: inv.result.timeline,
+                    borderColor: inv.color,
+                    backgroundColor: inv.color.replace('1)', '0.1)'),
+                    tension: 0.4,
+                    fill: true
+                }))
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: { padding: 15, font: { size: 12 } }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.dataset.label + ': €' + context.parsed.y.toLocaleString('en-US', {maximumFractionDigits: 0});
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return '€' + value.toLocaleString('en-US', {maximumFractionDigits: 0});
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    function updatePieChart(investments) {
+        if (pieChart) pieChart.destroy();
+
+        const ctx = document.getElementById('pieChart').getContext('2d');
+        pieChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: investments.map(inv => inv.name),
+                datasets: [{
+                    data: investments.map(inv => inv.afterTax),
+                    backgroundColor: investments.map(inv => inv.color),
+                    borderWidth: 2,
+                    borderColor: '#fff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: { padding: 15, font: { size: 12 } }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                const percentage = ((context.parsed / total) * 100).toFixed(1);
+                                return context.label + ': €' + context.parsed.toLocaleString('en-US', {maximumFractionDigits: 0}) +
+                                       ' (' + percentage + '%)';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    function updateTable(investments, years) {
+        const tableHead = document.getElementById('tableHead');
+        const tableBody = document.getElementById('tableBody');
+
+        tableHead.innerHTML = '<tr><th>Year</th>' +
+            investments.map(inv => `<th>${inv.name}</th>`).join('') + '</tr>';
+
+        tableBody.innerHTML = '';
+
+        for (let year = 0; year <= years; year++) {
+            const row = document.createElement('tr');
+            const yearCell = document.createElement('td');
+            yearCell.textContent = year === 0 ? 'Start' : `Year ${year}`;
+            row.appendChild(yearCell);
+
+            investments.forEach(inv => {
+                const cell = document.createElement('td');
+                cell.textContent = '€' + Math.round(inv.result.timeline[year]).toLocaleString();
+                row.appendChild(cell);
+            });
+
+            tableBody.appendChild(row);
+        }
+
+        const finalRow = tableBody.lastChild;
+        const cells = Array.from(finalRow.children).slice(1);
+        const values = cells.map(cell => parseFloat(cell.textContent.replace(/[€,]/g, '')));
+        const maxValue = Math.max(...values);
+        const minValue = Math.min(...values);
+
+        cells.forEach((cell, index) => {
+            const value = values[index];
+            if (value === maxValue) cell.classList.add('best-performer');
+            if (value === minValue && investments.length > 1) cell.classList.add('worst-performer');
+        });
+    }
+
+    function updateInsights(investments, years, inflationRate) {
+        const insightsDiv = document.getElementById('keyInsights');
+        const sorted = [...investments].sort((a, b) => b.realValue - a.realValue);
+        const best = sorted[0];
+        const worst = sorted[sorted.length - 1];
+
+        const bestRealGain = best.realValue - best.result.contributed;
+        const worstRealGain = worst.realValue - worst.result.contributed;
+        const difference = best.realValue - worst.realValue;
+
+        let insights = `<strong>🏆 Best Performer:</strong> ${best.name} (${best.type})<br>`;
+        insights += `Real value after ${years} years: €${Math.round(best.realValue).toLocaleString()}<br>`;
+        insights += `Real gain: €${Math.round(bestRealGain).toLocaleString()} (${((bestRealGain/best.result.contributed)*100).toFixed(1)}% ROI)<br><br>`;
+
+        if (investments.length > 1) {
+            insights += `<strong>📉 Worst Performer:</strong> ${worst.name} (${worst.type})<br>`;
+            insights += `Real value: €${Math.round(worst.realValue).toLocaleString()}<br>`;
+            insights += `Real gain: €${Math.round(worstRealGain).toLocaleString()} (${((worstRealGain/worst.result.contributed)*100).toFixed(1)}% ROI)<br><br>`;
+            insights += `<strong>💡 Opportunity Cost:</strong> Choosing ${best.name} over ${worst.name} results in €${Math.round(difference).toLocaleString()} more wealth (inflation-adjusted)!<br><br>`;
+        }
+
+        const totalFeesExample = investments[0].result.contributed * (investments[0].feeRate / 100) * years;
+        insights += `<strong>💸 Fee Impact:</strong> Over ${years} years, even a ${investments[0].feeRate}% annual fee on your first investment compounds to approximately €${Math.round(totalFeesExample).toLocaleString()} in lost growth. Always minimize fees!<br><br>`;
+
+        const nominalTotal = investments.reduce((sum, inv) => sum + inv.afterTax, 0);
+        const realTotal = investments.reduce((sum, inv) => sum + inv.realValue, 0);
+        const inflationErosion = nominalTotal - realTotal;
+        insights += `<strong>🔥 Inflation Reality Check:</strong> At ${inflationRate}% inflation, your portfolio loses €${Math.round(inflationErosion).toLocaleString()} in purchasing power over ${years} years. This is why beating inflation is critical!`;
+
+        insightsDiv.innerHTML = insights;
+    }
+
+    window.onload = function() {
+        addInvestment();
+        setTimeout(() => {
+            document.getElementById('name-1').value = 'VWCE';
+            document.getElementById('type-1').value = 'etf';
+            document.getElementById('return-1').value = '8';
+            document.getElementById('fee-1').value = '0.22';
+        }, 100);
+    };
+</script>
+{% endblock %}

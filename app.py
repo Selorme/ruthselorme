@@ -912,6 +912,7 @@ def random_musings():
 
     return render_template("randommusings.html", posts=posts, copyright_year=year)
 
+
 @app.route("/türkiye-geçilmez")
 def turkiyegecilmez():
     raw_posts = db.session.query(Post).filter_by(category='türkiye geçilmez', status='published').all()
@@ -923,6 +924,24 @@ def turkiyegecilmez():
     posts = sorted(raw_posts, key=parse_date, reverse=True)
 
     return render_template("turkiyegecilmez.html", posts=posts, copyright_year=year)
+
+
+@app.route("/finance")
+def finance():
+    raw_posts = db.session.query(Post).filter_by(category='finance', status='published').all()
+
+    def parse_date(post):
+        # Assuming date is stored in 'Month Day, Year' format
+        return datetime.strptime(post.date, "%B %d, %Y")
+    # Fetch all posts ordered by the date (assuming 'created_at' is the column storing the post-creation date)
+    posts = sorted(raw_posts, key=parse_date, reverse=True)
+
+    return render_template("finance.html", posts=posts, copyright_year=year)
+
+
+@app.route("/custom_investment_portfolio_calculator")
+def custom_investment_portfolio_calculator():
+    return render_template("financecalculator.html", copyright_year=year)
 
 
 @app.route("/contact", methods=["GET", "POST"])
