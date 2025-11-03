@@ -29,8 +29,8 @@ from werkzeug.utils import secure_filename
 from sqlalchemy import func
 import sqlalchemy
 from flask_compress import Compress
-import sib_api_v3_sdk
-from sib_api_v3_sdk.rest import ApiException
+# import sib_api_v3_sdk
+# from sib_api_v3_sdk.rest import ApiException
 
 
 # Load environment variables
@@ -757,6 +757,7 @@ If you did not request this, ignore this email.
     mail.send(msg)
 
 
+# Passwowrd reset routes
 @app.route("/forgot-password", methods=["GET", "POST"])
 def forgot_password():
     form = ForgotPasswordForm()
@@ -1473,26 +1474,6 @@ def get_missing_skills(user_skills, job_required_skills):
                 'required_level': required_level
             })
     return missing
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 @app.route("/disclaimer")
