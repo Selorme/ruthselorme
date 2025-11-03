@@ -29,8 +29,8 @@ from werkzeug.utils import secure_filename
 from sqlalchemy import func
 import sqlalchemy
 from flask_compress import Compress
-# import sib_api_v3_sdk
-# from sib_api_v3_sdk.rest import ApiException
+import sib_api_v3_sdk
+from sib_api_v3_sdk.rest import ApiException
 
 
 # Load environment variables
