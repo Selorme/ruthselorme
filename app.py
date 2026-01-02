@@ -1060,9 +1060,9 @@ def technology():
     return render_template("tech.html", posts=posts, copyright_year=year)
 
 
-@app.route("/my-portfolio")
-def portfolio():
-    raw_posts = db.session.query(Post).filter_by(category='my portfolio', status='published').all()
+@app.route("/my-undergraduate-portfolio")
+def undergraduate_portfolio():
+    raw_posts = db.session.query(Post).filter_by(category='undergraduate portfolio', status='published').all()
 
     def parse_date(post):
         # Assuming date is stored in 'Month Day, Year' format
@@ -1070,7 +1070,20 @@ def portfolio():
     # Fetch all posts ordered by the date (assuming 'created_at' is the column storing the post-creation date)
     posts = sorted(raw_posts, key=parse_date, reverse=True)
 
-    return render_template("portfolio.html", posts=posts, copyright_year=year)
+    return render_template("undergraduateportfolio.html", posts=posts, copyright_year=year)
+
+
+@app.route("/my-masters-portfolio")
+def masters_portfolio():
+    raw_posts = db.session.query(Post).filter_by(category='masters portfolio', status='published').all()
+
+    def parse_date(post):
+        # Assuming date is stored in 'Month Day, Year' format
+        return datetime.strptime(post.date, "%B %d, %Y")
+    # Fetch all posts ordered by the date (assuming 'created_at' is the column storing the post-creation date)
+    posts = sorted(raw_posts, key=parse_date, reverse=True)
+
+    return render_template("mastersportfolio.html", posts=posts, copyright_year=year)
 
 
 @app.route("/<string:category>/post/<int:post_id>/<string:slug>", methods=["GET", "POST"])
