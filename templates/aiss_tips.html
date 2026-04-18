@@ -1,0 +1,950 @@
+{% extends "base.html" %}
+{% block title %}AISS Survival Kit{% endblock %}
+{% block content %}
+
+<link href="https://fonts.googleapis.com/css2?family=Righteous&family=Fredoka:wght@400;600&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+
+<div class="survival-kit-page">
+
+    <div class="bg-shape"></div>
+    <div class="bg-shape"></div>
+    <div class="bg-shape"></div>
+
+    <style>
+        /* ── ROOT VARIABLES & BASE ─────────────────────────────────── */
+        .survival-kit-page {
+            --primary: #FF6B9D;
+            --secondary: #4ECDC4;
+            --accent: #FFE66D;
+            --dark: #2D3142;
+            --purple: #A78BFA;
+            --orange: #FB923C;
+            --green: #34D399;
+
+            font-family: 'DM Sans', sans-serif;
+            background: linear-gradient(135deg, #FFF1F2 0%, #E0F2FE 50%, #FAF5FF 100%);
+            color: #2D3142 !important;
+            line-height: 1.7;
+            padding: 20px;
+        }
+
+        .survival-kit-page h2,
+        .survival-kit-page p {
+            color: #2D3142;
+        }
+
+        /* ── FLOATING BG SHAPES ────────────────────────────────────── */
+        .survival-kit-page .bg-shape {
+            position: fixed;
+            border-radius: 50%;
+            opacity: 0.1;
+            z-index: -1;
+            animation: sk-float 20s infinite ease-in-out;
+        }
+
+        .survival-kit-page .bg-shape:nth-child(1) {
+            width: 400px; height: 400px;
+            background: var(--primary);
+            top: -100px; left: -100px;
+            animation-delay: 0s;
+        }
+
+        .survival-kit-page .bg-shape:nth-child(2) {
+            width: 300px; height: 300px;
+            background: var(--secondary);
+            bottom: -50px; right: -50px;
+            animation-delay: 5s;
+        }
+
+        .survival-kit-page .bg-shape:nth-child(3) {
+            width: 250px; height: 250px;
+            background: var(--accent);
+            top: 50%; right: 10%;
+            animation-delay: 10s;
+        }
+
+        @keyframes sk-float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25%       { transform: translate(50px, 50px) rotate(90deg); }
+            50%       { transform: translate(0, 100px) rotate(180deg); }
+            75%       { transform: translate(-50px, 50px) rotate(270deg); }
+        }
+
+        /* ── CONTAINER ─────────────────────────────────────────────── */
+        .survival-kit-page .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+        }
+
+        /* ── HERO HEADER ───────────────────────────────────────────── */
+        .survival-kit-page .hero-header {
+            background-image: url("static/img/aiss/AISSlogo.png");
+            background-size: 100% auto;
+            background-position: top;
+            background-repeat: no-repeat;
+            text-align: center;
+            padding: 80px 20px;
+            margin-bottom: 40px;
+            position: relative;
+            z-index: 10;
+            border-radius: 25px;
+            overflow: hidden;
+            animation: sk-slideDown 0.8s ease-out;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+        }
+
+        .survival-kit-page .hero-header::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255, 255, 255, 0.3);
+            z-index: 1;
+        }
+
+        .survival-kit-page .hero-header > * {
+            position: relative;
+            z-index: 2;
+        }
+
+        @keyframes sk-slideDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .survival-kit-page .header-emoji {
+            font-size: 80px;
+            margin-top: 300px;
+            margin-bottom: 20px;
+        }
+
+        /* ── HEADINGS ──────────────────────────────────────────────── */
+        .survival-kit-page h1 {
+            font-family: 'Righteous', cursive;
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            background: linear-gradient(135deg, var(--primary), var(--purple), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .survival-kit-page .subtitle {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.3rem;
+            color: var(--dark);
+            opacity: 0.8;
+        }
+
+        /* ── WELCOME BOX ───────────────────────────────────────────── */
+        .survival-kit-page .welcome-box {
+            background: white;
+            border-radius: 30px;
+            padding: 40px;
+            margin-bottom: 50px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            border: 3px solid var(--accent);
+            position: relative;
+            overflow: hidden;
+            animation: sk-fadeIn 1s ease-out 0.3s both;
+        }
+
+        @keyframes sk-fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to   { opacity: 1; transform: scale(1); }
+        }
+
+        .survival-kit-page .welcome-box h2 {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        /* ── SECTION CARDS ─────────────────────────────────────────── */
+        .survival-kit-page .section {
+            background: white;
+            border-radius: 25px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: sk-fadeIn 1s ease-out both;
+        }
+
+        .survival-kit-page .section:nth-child(1) { animation-delay: 0.4s; }
+        .survival-kit-page .section:nth-child(2) { animation-delay: 0.5s; }
+        .survival-kit-page .section:nth-child(3) { animation-delay: 0.6s; }
+        .survival-kit-page .section:nth-child(4) { animation-delay: 0.7s; }
+        .survival-kit-page .section:nth-child(5) { animation-delay: 0.8s; }
+        .survival-kit-page .section:nth-child(6) { animation-delay: 0.9s; }
+
+        .survival-kit-page .section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.12);
+        }
+
+        .survival-kit-page .section-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px dashed var(--accent);
+        }
+
+        .survival-kit-page .section-icon {
+            font-size: 60px;
+            animation: sk-wiggle 3s infinite;
+        }
+
+        @keyframes sk-wiggle {
+            0%, 100% { transform: rotate(0deg); }
+            25%       { transform: rotate(-5deg); }
+            75%       { transform: rotate(5deg); }
+        }
+
+        .survival-kit-page .section h2 {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 2rem;
+            color: var(--dark);
+            flex: 1;
+        }
+
+        .survival-kit-page .section h3 {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-top: 30px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .survival-kit-page .section h3::before {
+            content: '→';
+            font-size: 1.8rem;
+            color: var(--secondary);
+        }
+
+        /* ── TIMELINE ──────────────────────────────────────────────── */
+        .survival-kit-page .timeline {
+            position: relative;
+            padding-left: 40px;
+            margin: 30px 0;
+        }
+
+        .survival-kit-page .timeline::before {
+            content: '';
+            position: absolute;
+            left: 10px; top: 0; bottom: 0;
+            width: 4px;
+            background: linear-gradient(180deg, var(--primary), var(--secondary), var(--accent));
+            border-radius: 4px;
+        }
+
+        .survival-kit-page .timeline-item {
+            position: relative;
+            margin-bottom: 25px;
+            padding: 20px;
+            background: linear-gradient(135deg, #FFF7FB 0%, #F0FDFA 100%);
+            border-radius: 15px;
+            border-left: 4px solid var(--secondary);
+        }
+
+        .survival-kit-page .timeline-item::before {
+            content: '●';
+            position: absolute;
+            left: -34px; top: 20px;
+            font-size: 24px;
+            color: var(--primary);
+            animation: sk-pulse 2s infinite;
+        }
+
+        @keyframes sk-pulse {
+            0%, 100% { transform: scale(1);   opacity: 1; }
+            50%       { transform: scale(1.2); opacity: 0.8; }
+        }
+
+        /* ── CALLOUT BOXES ─────────────────────────────────────────── */
+        .survival-kit-page .highlight {
+            background: linear-gradient(135deg, #FEF3C7 0%, #FED7AA 100%);
+            border-left: 6px solid var(--orange);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 12px;
+            font-weight: 500;
+        }
+
+        .survival-kit-page .important {
+            background: linear-gradient(135deg, #FECACA 0%, #FED7D7 100%);
+            border-left: 6px solid var(--primary);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+
+        .survival-kit-page .important::before {
+            content: '⚠️ IMPORTANT: ';
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.1rem;
+        }
+
+        .survival-kit-page .protip {
+            background: linear-gradient(135deg, #D1FAE5 0%, #A7F3D0 100%);
+            border-left: 6px solid var(--green);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 12px;
+        }
+
+        .survival-kit-page .protip::before {
+            content: '💡 Pro Tip: ';
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.1rem;
+            color: #059669;
+        }
+
+        /* ── LISTS ─────────────────────────────────────────────────── */
+        .survival-kit-page ul {
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        .survival-kit-page ul li {
+            position: relative;
+            padding: 12px 0 12px 35px;
+            transition: transform 0.2s ease;
+        }
+
+        .survival-kit-page ul li:hover {
+            transform: translateX(5px);
+        }
+
+        .survival-kit-page ul li::before {
+            content: '✨';
+            position: absolute;
+            left: 0;
+            font-size: 18px;
+        }
+
+        .survival-kit-page ol {
+            margin: 20px 0;
+            padding-left: 25px;
+        }
+
+        .survival-kit-page ol li {
+            padding: 10px 0;
+            font-weight: 500;
+        }
+
+        /* ── LINKS ─────────────────────────────────────────────────── */
+        .survival-kit-page a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .survival-kit-page a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px; left: 0;
+            width: 100%; height: 2px;
+            background: var(--secondary);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .survival-kit-page a:hover {
+            color: var(--secondary);
+        }
+
+        .survival-kit-page a:hover::after {
+            transform: scaleX(1);
+        }
+
+        /* ── COUNTRY BADGES ────────────────────────────────────────── */
+        .survival-kit-page .country-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            background: linear-gradient(135deg, var(--purple), var(--primary));
+            color: white;
+            border-radius: 20px;
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 600;
+            margin: 5px;
+            box-shadow: 0 4px 15px rgba(167, 139, 250, 0.3);
+        }
+
+        /* ── COMPARISON GRID ───────────────────────────────────────── */
+        .survival-kit-page .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .survival-kit-page .comparison-card {
+            background: white;
+            border: 3px solid var(--secondary);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(78, 205, 196, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .survival-kit-page .comparison-card:hover {
+            transform: scale(1.05);
+        }
+
+        .survival-kit-page .comparison-card h4 {
+            font-family: 'Fredoka', sans-serif;
+            color: var(--secondary);
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+        }
+
+        /* ── FOOTER ────────────────────────────────────────────────── */
+        .survival-kit-page footer {
+            text-align: center;
+            padding: 60px 20px;
+            margin-top: 60px;
+        }
+
+        .survival-kit-page .footer-content {
+            background: white;
+            border-radius: 25px;
+            padding: 40px;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.1);
+        }
+
+        .survival-kit-page .footer-emoji {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+
+        .survival-kit-page .footer-content h2 {
+            font-family: 'Fredoka', sans-serif;
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 2rem;
+        }
+
+        /* ── DECORATIVE ────────────────────────────────────────────── */
+        .survival-kit-page .doodle {
+            position: absolute;
+            opacity: 0.15;
+            pointer-events: none;
+        }
+
+        .survival-kit-page .star {
+            animation: sk-twinkle 3s infinite;
+        }
+
+        @keyframes sk-twinkle {
+            0%, 100% { opacity: 0.15; transform: scale(1); }
+            50%       { opacity: 0.3;  transform: scale(1.2); }
+        }
+
+        .survival-kit-page .emoji-decoration {
+            font-size: 40px;
+            display: inline-block;
+            margin: 0 10px;
+            animation: sk-spin 10s linear infinite;
+        }
+
+        @keyframes sk-spin {
+            from { transform: rotate(0deg); }
+            to   { transform: rotate(360deg); }
+        }
+
+        /* ── RESPONSIVE ────────────────────────────────────────────── */
+        @media (max-width: 768px) {
+            .survival-kit-page .section-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .survival-kit-page .timeline {
+                padding-left: 30px;
+            }
+
+            .survival-kit-page .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ── PRINT ─────────────────────────────────────────────────── */
+        @media print {
+            .survival-kit-page .section {
+                page-break-before: always;
+                page-break-after: auto;
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+
+            .survival-kit-page .section:first-of-type {
+                page-break-before: auto;
+            }
+
+            .survival-kit-page .welcome-box,
+            .survival-kit-page .info-card,
+            .survival-kit-page .comparison-card,
+            .survival-kit-page .timeline-item,
+            .survival-kit-page .tip-box,
+            .survival-kit-page .warning-box {
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+        }
+    </style>
+
+    <div class="container">
+        <div class="hero-header">
+            <h1 class="header-emoji">Your AISS Survival Kit</h1>
+            <p class="subtitle">Your Ultimate Handbook to Conquering This Amazing Journey!</p>
+        </div>
+
+        <div class="welcome-box">
+            <h2>Hey Future AISS Superstar! 👋</h2>
+            <p><strong>Congratulations on being accepted!</strong> 🎉 You've made it so far and were chosen for your outstanding achievements. We can't wait to meet you and get to know you!</p>
+            <p style="margin-top: 20px;">You're probably as excited as you are nervous - we totally get it! We've been in the same place before. When we started, we had SO many questions about visas, housing, what to pack, where to find things, and how life would be in general.</p>
+            <p style="margin-top: 20px;">When we heard about your arrival, we thought <em>"Why don't we give you the guidance and lifehacks we ourselves searched for?"</em> So here it is!</p>
+            <p style="margin-top: 20px; font-weight: 600; color: var(--primary);">This guide was made by students, for students. It's a collection of our personal experiences, tips, mistakes, and wins. Take what helps you, skip what doesn't, and don't hesitate to reach out!</p>
+        </div>
+
+        <!-- Acceptance Process -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon">📬</div>
+                <h2>Getting Started: The Acceptance Journey</h2>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <strong>Step 1: The Acceptance Letter</strong>
+                    <p>You'll get your conditional acceptance around April (fun fact: one of us got it on April 1st - the perfect April Fool's gift! 😄). You'll need to accept or reject within a week or two.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <strong>Step 2: Submit Your Diploma</strong>
+                    <p>Still in your final semester? You'll need to pressure your school for a quick diploma release since verification takes time.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <strong>Step 3: Follow Up!</strong>
+                    <p>No response after a month? Send that email! In some cases, you might need to attach your school's verification system if there are errors.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <strong>Step 4: Welcome to the Cool Kids' Club! 🎊</strong>
+                    <p>Once verified, you'll get your official acceptance from Tallinn University. You're IN!</p>
+                </div>
+            </div>
+
+            <div class="protip">
+                Emails will become your best friend throughout this process. Don't be shy about following up!
+            </div>
+        </div>
+
+        <!-- Visa Section -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon">🛂</div>
+                <h2>Visa & Residence Permits: The Real Deal</h2>
+            </div>
+
+            <div class="important">
+                If you can afford it, apply directly for a Finnish TRP and use that to study in all three countries! It'll save you money and hassle in the long run.
+            </div>
+
+            <h3>Different Paths, Same Destination</h3>
+
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <h4>🇧🇷 From Brazil or visa-free countries</h4>
+                    <p>No Estonian embassy in Latin America! You can enter as a tourist (up to 90 days), then schedule a residence permit appointment with the Estonian Police and Border Guard Board once you're in the country.</p>
+                    <p style="margin-top: 15px; font-weight: 600; color: var(--orange);">Pack ALL your documents when leaving the country!</p>
+                </div>
+
+                <div class="comparison-card">
+                    <h4>🇰🇿 From Central Asia</h4>
+                    <p>Apply at least a month in advance. There's only ONE Estonian embassy for all of Central Asia in Astana, Kazakhstan.</p>
+                    <p style="margin-top: 15px; font-weight: 600; color: var(--orange);">The building is hard to find (confusing maps!), and you'll need legal permission to stay in Kazakhstan during the process.</p>
+                </div>
+
+                <div class="comparison-card">
+                    <h4>🇳🇬 From Nigeria or other visa required countries</h4>
+                    <p>You might need to travel to another country (like Egypt) to get your visa. Plan this travel in advance!</p>
+                    <p>Same if you are from other countries without an Estonian embassy, start your research now.</p>
+                </div>
+            </div>
+
+            <h3>The Finnish TRP Advantage</h3>
+            <div class="highlight">
+                <strong>Why Finnish TRP?</strong>
+                <ul style="margin-top: 10px;">
+                    <li>Works for studying in Portugal too (just pay ~€30 at AIMA)</li>
+                    <li>2 years post-study to find a job (vs 270 days with Estonian)</li>
+                    <li>Family can join you on a Finnish TRP</li>
+                    <li>No available appointments for Estonian TRP until December!</li>
+                </ul>
+            </div>
+
+            <p><strong>The catch?</strong> You need an acceptance letter from Tampere University, which typically comes 3 weeks after you're already in Tallinn. If you get lucky and receive it earlier, apply for Finnish TRP right away!</p>
+
+            <div class="important">
+                Processing time is usually quick! One student had their appointment on July 8th in Ankara and got the visa on July 14th. But timelines vary - apply well ahead of time to be safe!
+            </div>
+
+            <h3>Visa Appointment Tips</h3>
+            <ol>
+                <li>Fill in the application completely and attach all required documents</li>
+                <li>Arrive at least 10 minutes early and calm your nerves</li>
+                <li>Speak calmly and clearly to the visa officer</li>
+                <li>Cross your fingers and hope everything goes well! 🤞</li>
+            </ol>
+
+            <div class="protip">
+                Start your application on <a href="https://enterfinland.fi" target="_blank">enterfinland.fi</a> if going for Finnish TRP. Always check updated embassy rules for your country!
+            </div>
+        </div>
+
+        <!-- Housing Section -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon">🏠</div>
+                <h2>Finding Your Home Sweet Home</h2>
+            </div>
+
+            <div style="position: relative; margin: 20px 0;">
+                <img src="static/img/aiss/Tallinn town.jpg"
+                    alt="Beautiful Tallinn cityscape"
+                    style="width: 100%; height: 800px; object-fit: cover; border-radius: 15px;">
+                <div style="position: absolute; bottom: 20px; left: 20px; background: rgba(255,255,255,0.9); padding: 10px 20px; border-radius: 10px; font-weight: 600;">
+                    📍 Tallinn, Estonia
+                </div>
+            </div>
+
+            <h3>Tallinn Accommodation</h3>
+
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <h4>🏢 University Dormitory (Karu 17)</h4>
+
+                    <div style="position: relative; margin: 20px 0;">
+                        <img src="static/img/aiss/karu17.jpg"
+                            alt="Karu 17 dorm"
+                            style="width: 100%; height: 500px; object-fit: cover; border-radius: 15px;">
+                        <div style="position: absolute; bottom: 20px; left: 20px; background: rgba(255,255,255,0.9); padding: 10px 20px; border-radius: 10px; font-weight: 600;">
+                            📍 Karu 17 dorm
+                        </div>
+                    </div>
+
+                    <p><strong>The Good:</strong></p>
+                    <ul>
+                        <li>Right next to campus!</li>
+                        <li>Weekly room cleaning + bed linen change</li>
+                        <li>Shared kitchen (8 people per kitchen)</li>
+                        <li>Laundry room available</li>
+                        <li>Affordable pricing</li>
+                        <li>Helpful and responsive staff</li>
+                    </ul>
+                    <p style="margin-top: 15px;"><strong>The Not-So-Good:</strong></p>
+                    <ul>
+                        <li>Shared rooms (2 people, no singles)</li>
+                        <li>Living with a stranger can be tough (noise, cleanliness, habits)</li>
+                    </ul>
+                </div>
+
+                <div class="comparison-card">
+                    <h4>🏘️ Private Apartment</h4>
+
+                    <div style="position: relative; margin: 20px 0;">
+                        <img src="static/img/aiss/private apartment.jpeg"
+                            alt="Private apartment"
+                            style="width: 100%; height: 500px; object-fit: cover; border-radius: 15px;">
+                        <div style="position: absolute; bottom: 20px; left: 20px; background: rgba(255,255,255,0.9); padding: 10px 20px; border-radius: 10px; font-weight: 600;">
+                            📍 Private apartment
+                        </div>
+                    </div>
+
+                    <p><strong>The Good:</strong></p>
+                    <ul>
+                        <li>More privacy!</li>
+                        <li>Your own space, your rules</li>
+                        <li>Can find places 5 mins from school</li>
+                    </ul>
+                    <p style="margin-top: 15px;"><strong>The Not-So-Good:</strong></p>
+                    <ul>
+                        <li>More expensive (~€450/month)</li>
+                        <li>Apartments fill up FAST</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="important">
+                DO NOT wait until July/August to start apartment hunting! Hundreds of students move to Tallinn each semester and apartments get snatched up quickly.
+            </div>
+
+            <h3>Finding Apartments on Facebook</h3>
+            <p>Facebook groups are your goldmine! Here are the best ones:</p>
+            <ul>
+                <li><a href="https://www.facebook.com/share/g/1B1jh6M5W6/" target="_blank">Erasmus in Tallinn/accommodation</a> (most affordable, direct landlord contact, no fees!)</li>
+                <li><a href="https://www.facebook.com/share/g/1S9uW3F9k7/" target="_blank">Expats in Tallinn/Estonia</a></li>
+                <li><a href="https://www.facebook.com/share/g/1MS4oYxaSm/" target="_blank">Study, work and live in Estonia</a></li>
+                <li><a href="https://www.facebook.com/share/g/19jyfyWWdM/" target="_blank">Free English events Tallinn</a></li>
+                <li><a href="https://www.facebook.com/share/g/19wvpZwkWK/" target="_blank">Flat sharing in Tallinn</a></li>
+            </ul>
+
+            <div class="highlight">
+                <strong>🚨 SCAM ALERT!</strong> Always check the Estonian business directory to verify landlords are legitimate. Check the Estonian Student Union website for safety tips!
+            </div>
+
+            <h3>Other Housing Websites</h3>
+            <ul>
+                <li>Kinnisvara 24</li>
+                <li>City 24</li>
+                <li>Rendin</li>
+                <li>Uusmaa</li>
+                <li>Larsen (ESN Tallinn has discounts!)</li>
+            </ul>
+
+            <div class="protip">
+                If you want off-campus housing but haven't secured it by visa application time, use the Karu 17 address instead of leaving it blank!
+            </div>
+
+            <h3>Porto Accommodation</h3>
+            <p>Okay, real talk - Porto is EXPENSIVE. 💸 Use the same Facebook group trick and check rental websites. Quick Google search will help you out!</p>
+            <div class="important">
+                Scams are MORE prevalent in Porto than Estonia. Stay vigilant and verify everything!
+            </div>
+        </div>
+
+        <!-- Money Section -->
+        <div class="section">
+            <div class="section-header">
+                <h2>Show Me The Money!</h2>
+            </div>
+            <div style="position: relative; margin: 20px 0;">
+                <img src="static/img/aiss/Buhari and Ruth at Wise.jpeg"
+                    alt="Wise headquarters Tallinn"
+                    style="width: 100%; height: 500px; object-fit: cover; border-radius: 15px;">
+                <div style="position: absolute; bottom: 20px; left: 20px; background: rgba(255,255,255,0.9); padding: 10px 20px; border-radius: 10px; font-weight: 600;">
+                    📍 Wise Headquarters, Tallinn
+                </div>
+            </div>
+
+            <div class="important">
+                Your first scholarship payment arrives about a MONTH after classes start. Plan accordingly!
+            </div>
+
+            <p>You'll need a bank account to receive your monthly scholarship. Popular options:</p>
+            <ul>
+                <li><strong>Wise</strong> - Works great and many students use it!</li>
+                <li><strong>Revolut</strong> - Another solid digital option</li>
+                <li><strong>LHV</strong> - Local Estonian bank</li>
+            </ul>
+
+            <div class="highlight">
+                <strong>Survival Tips:</strong> Make sure you have enough money for the first month to cover food, housing, transport, etc. Some students asked family for help, others organized fundraisers or split early costs with friends. Do what works for you!
+            </div>
+
+            <div class="protip">
+                Opening an Estonian bank account is easier with an Isikukood and Estonian TRP. With a D-visa, insist you're a student to avoid the €200 opening fee!
+            </div>
+        </div>
+
+        <!-- Getting Settled -->
+        <div class="section">
+            <div class="section-header">
+                <h2>Welcome to Tallinn! Getting Settled</h2>
+            </div>
+            <div style="position: relative; margin: 20px 0;">
+                <img src="static/img/aiss/AISS 2027 class.jpeg"
+                    alt="Tallinn University AISS 2027 class photo"
+                    style="width: 100%; height: 500px; object-fit: cover; border-radius: 15px;">
+                <div style="position: absolute; bottom: 20px; left: 20px; background: rgba(255,255,255,0.9); padding: 10px 20px; border-radius: 10px; font-weight: 600;">
+                    📍 Tallinn University
+                </div>
+            </div>
+
+            <h3>Orientation Programs</h3>
+            <p>You'll have TWO orientation programs:</p>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <strong>TU General Orientation (Optional but Recommended!)</strong>
+                    <p>Great chance to meet students outside your program, explore campus, meet clubs (sports club!), library tours, and enjoy student night! 🎉</p>
+                </div>
+
+                <div class="timeline-item">
+                    <strong>AISS Orientation (MANDATORY)</strong>
+                    <p>3 days of awesomeness:</p>
+                    <ul style="margin-top: 10px;">
+                        <li>Day 1: Tallinn University</li>
+                        <li>Day 2: Tampere University</li>
+                        <li>Day 3: Lusófona University</li>
+                    </ul>
+                    <p style="margin-top: 10px;">You'll create student accounts for all three universities and get familiar with the platforms!</p>
+                </div>
+            </div>
+
+            <h3>The Multi-University Setup</h3>
+            <p>Here's the wild part - you'll be taking courses from ALL THREE universities simultaneously! 🤯</p>
+
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <h4><span class="country-badge">🇪🇪 Tallinn</span></h4>
+                    <p><strong>System:</strong> OIS</p>
+                    <p><strong>Format:</strong> In-person classes</p>
+                </div>
+
+                <div class="comparison-card">
+                    <h4><span class="country-badge">🇫🇮 Tampere</span></h4>
+                    <p><strong>System:</strong> Tuni</p>
+                    <p><strong>Format:</strong> Online classes</p>
+                </div>
+
+                <div class="comparison-card">
+                    <h4><span class="country-badge">🇵🇹 Lusófona</span></h4>
+                    <p><strong>System:</strong> Ensino</p>
+                    <p><strong>Format:</strong> Online classes</p>
+                </div>
+            </div>
+
+            <p style="margin-top: 20px;">Plus, you'll use <strong>Moodle</strong> and <strong>Google Classroom</strong> for online lessons. That's:</p>
+            <ul>
+                <li>3 university emails 📧📧📧</li>
+                <li>3+ different platforms</li>
+                <li>Lots of juggling (but you'll get the hang of it!)</li>
+            </ul>
+
+            <div class="protip">
+                Keep your logins organized! Use a password manager to save yourself the headache.
+            </div>
+
+            <h3>Getting Your Estonian ID Code (Isikukood)</h3>
+            <p>Book an appointment at <a href="https://www.workinestonia.com" target="_blank">workinestonia.com</a> with the International House.</p>
+            <p>The process takes less than 15 minutes! You'll need this for:</p>
+            <ul>
+                <li>Bank account</li>
+                <li>Tallinn travel card (Ühiskaart)</li>
+                <li>Pretty much everything in Estonia</li>
+            </ul>
+
+            <h3>Insurance</h3>
+            <p>Good news! The program provides extensive coverage insurance through <strong>AON</strong> for all scholarship students.</p>
+            <div class="protip">
+                Reach out to your study program coordinator, Kristi Oikimus, about insurance via email if you haven't received it with your acceptance letter.
+            </div>
+        </div>
+
+        <!-- Life in Tallinn -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon">🎉</div>
+                <h2>Living Your Best Life in Tallinn</h2>
+            </div>
+
+            <h3>ESN Tallinn - Your Social Lifeline</h3>
+
+            <div style="position: relative; margin: 20px 0;">
+                <img src="static/img/aiss/ESN Tallinn.jpg"
+                    alt="ESN Tallinn"
+                    style="width: 100%; height: 500px; object-fit: cover; border-radius: 15px;">
+                <div style="position: absolute; bottom: 20px; left: 20px; background: rgba(255,255,255,0.9); padding: 10px 20px; border-radius: 10px; font-weight: 600;">
+                </div>
+            </div>
+
+            <p>ESN Tallinn works with ESN TalTech to organize tons of activities throughout the week!</p>
+
+            <div class="highlight">
+                <strong>Perfect for you if:</strong>
+                <ul style="margin-top: 10px;">
+                    <li>You love meeting new people</li>
+                    <li>You're social and outgoing</li>
+                    <li>You enjoy evening activities and events</li>
+                </ul>
+            </div>
+
+            <p><strong>Get these cards for amazing discounts:</strong></p>
+            <ul>
+                <li><strong>ESN Card</strong> - Discounts on flights, restaurants, hotels, activities across Europe!</li>
+                <li><strong>ISIC Card</strong> - International student discounts galore!</li>
+            </ul>
+
+            <div class="protip">
+                Follow ESN Tallinn on Instagram for all event updates and discount opportunities!
+            </div>
+
+            <h3>Building Your Community</h3>
+            <p>Before you even arrive, connect with fellow students:</p>
+            <ul>
+                <li>Join the "Erasmus Students Tallinn - accommodation" Facebook group</li>
+                <li>Check Reddit (yes, really!) - many accepted students post in EMJM subreddits</li>
+                <li>Ask the study coordinator to share your contact with other accepted students</li>
+            </ul>
+        </div>
+
+        <!-- Final Thoughts -->
+        <footer>
+            <div class="footer-content">
+                <div class="footer-emoji">🌟✨🎓</div>
+                <h2>You're About to Start Something BIG!</h2>
+                <p style="margin-top: 20px; font-size: 1.1rem;">AISS isn't just a master's program - it's an adventure that spans across continents, systems, and ideas. It will challenge you, expand your world, and connect you with people from everywhere.</p>
+                <p style="margin-top: 20px;">There will be moments of confusion, homesickness, and even frustration. But there will also be community, support, laughter, and growth.</p>
+                <p style="margin-top: 20px; font-weight: 600; color: var(--primary); font-size: 1.2rem;">And maybe one day you'll be the one writing a section in this guide for the next generation.</p>
+                <p style="margin-top: 30px; font-family: 'Fredoka', sans-serif; font-size: 1.5rem; color: var(--secondary);">Welcome to the journey! 🚀</p>
+                <p style="margin-top: 15px; opacity: 0.7;">This resource was compiled by:</p>
+                <div style="position: relative; margin: 20px 0;">
+                    <img src="static/img/aiss/AISS class 2026.jpeg"
+                        alt="AISS class of 2026"
+                        style="width: 100%; height: 500px; object-fit: cover; border-radius: 15px;">
+                    <div style="position: absolute; bottom: 20px; left: 20px; background: rgba(255,255,255,0.9); padding: 10px 20px; border-radius: 10px; font-weight: 600;">
+                    </div>
+                </div>
+                <p style="margin-top: 10px; font-size: 0.9rem; opacity: 0.7;">Class of '26</p>
+                <div style="position: relative; margin: 20px 0;">
+                    <img src="static/img/aiss/good headshot final.jpg"
+                        alt="Ruth Selorme Acolatse"
+                        style="width: 100%; height: 100%; object-fit: cover; border-radius: 15px;">
+                    <div style="position: absolute; bottom: 20px; left: 20px; background: rgba(255,255,255,0.9); padding: 10px 20px; border-radius: 10px; font-weight: 600;">
+                    </div>
+                </div>
+                <p style="margin-top: 10px; font-size: 0.9rem; opacity: 0.7;">Ruth Selorme Acolatse, class of '27</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        document.querySelectorAll('.survival-kit-page a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.survival-kit-page .section').forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+</div>
+{% endblock %}
