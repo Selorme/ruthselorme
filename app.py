@@ -1157,6 +1157,19 @@ def masters_portfolio():
     return render_template("mastersportfolio.html", posts=posts, copyright_year=year)
 
 
+@app.route('/r03-predictor')
+def r03_predictor():
+    raw_posts = db.session.query(Post).filter_by(category='r03 predictor', status='published').all()
+
+    def parse_date(post):
+        # Assuming date is stored in 'Month Day, Year' format
+        return datetime.strptime(post.date, "%B %d, %Y")
+        # Fetch all posts ordered by the date (assuming 'created_at' is the column storing the post-creation date)
+
+    posts = sorted(raw_posts, key=parse_date, reverse=True)
+    return render_template("r03predictor.html", posts=posts, copyright_year=year)
+
+
 @app.route("/aiss-tips")
 def aiss_tips():
     raw_posts = db.session.query(Post).filter_by(category='aiss tips', status='published').all()
