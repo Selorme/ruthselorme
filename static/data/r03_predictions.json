@@ -1,0 +1,6583 @@
+{
+  "model": "Linear Regression (log-scaled, 24 features)",
+  "test_period": "2018-01-01 to 2019-12-31",
+  "metrics": {
+    "mae": 4.76,
+    "rmse": 7.38,
+    "wape_pct": 65.78,
+    "coverage_90_pct": 90.7,
+    "coverage_50_pct": 54.2
+  },
+  "predictions": [
+    {
+      "date": "2018-01-01",
+      "actual": 1.0,
+      "predicted": 4.6,
+      "lower_90": 0.19,
+      "upper_90": 25.4,
+      "lower_50": 1.97,
+      "upper_50": 9.58
+    },
+    {
+      "date": "2018-01-02",
+      "actual": 2.0,
+      "predicted": 4.73,
+      "lower_90": 0.22,
+      "upper_90": 25.93,
+      "lower_50": 2.04,
+      "upper_50": 9.81
+    },
+    {
+      "date": "2018-01-03",
+      "actual": 10.0,
+      "predicted": 4.46,
+      "lower_90": 0.16,
+      "upper_90": 24.68,
+      "lower_50": 1.9,
+      "upper_50": 9.3
+    },
+    {
+      "date": "2018-01-04",
+      "actual": 1.0,
+      "predicted": 4.84,
+      "lower_90": 0.24,
+      "upper_90": 26.48,
+      "lower_50": 2.1,
+      "upper_50": 10.02
+    },
+    {
+      "date": "2018-01-05",
+      "actual": 21.0,
+      "predicted": 4.77,
+      "lower_90": 0.23,
+      "upper_90": 26.14,
+      "lower_50": 2.06,
+      "upper_50": 9.88
+    },
+    {
+      "date": "2018-01-06",
+      "actual": 5.0,
+      "predicted": 5.89,
+      "lower_90": 0.45,
+      "upper_90": 31.63,
+      "lower_50": 2.64,
+      "upper_50": 12.03
+    },
+    {
+      "date": "2018-01-07",
+      "actual": 2.5,
+      "predicted": 5.22,
+      "lower_90": 0.32,
+      "upper_90": 28.41,
+      "lower_50": 2.29,
+      "upper_50": 10.76
+    },
+    {
+      "date": "2018-01-08",
+      "actual": 0.0,
+      "predicted": 5.41,
+      "lower_90": 0.36,
+      "upper_90": 29.21,
+      "lower_50": 2.4,
+      "upper_50": 11.1
+    },
+    {
+      "date": "2018-01-09",
+      "actual": 10.0,
+      "predicted": 4.6,
+      "lower_90": 0.19,
+      "upper_90": 25.37,
+      "lower_50": 1.97,
+      "upper_50": 9.57
+    },
+    {
+      "date": "2018-01-10",
+      "actual": 6.0,
+      "predicted": 5.66,
+      "lower_90": 0.42,
+      "upper_90": 30.35,
+      "lower_50": 2.53,
+      "upper_50": 11.57
+    },
+    {
+      "date": "2018-01-11",
+      "actual": 5.0,
+      "predicted": 4.78,
+      "lower_90": 0.23,
+      "upper_90": 26.22,
+      "lower_50": 2.06,
+      "upper_50": 9.91
+    },
+    {
+      "date": "2018-01-12",
+      "actual": 10.0,
+      "predicted": 4.83,
+      "lower_90": 0.24,
+      "upper_90": 26.51,
+      "lower_50": 2.09,
+      "upper_50": 10.02
+    },
+    {
+      "date": "2018-01-13",
+      "actual": 8.0,
+      "predicted": 5.02,
+      "lower_90": 0.28,
+      "upper_90": 27.37,
+      "lower_50": 2.19,
+      "upper_50": 10.37
+    },
+    {
+      "date": "2018-01-14",
+      "actual": 5.0,
+      "predicted": 5.5,
+      "lower_90": 0.38,
+      "upper_90": 29.69,
+      "lower_50": 2.44,
+      "upper_50": 11.29
+    },
+    {
+      "date": "2018-01-15",
+      "actual": 15.0,
+      "predicted": 5.51,
+      "lower_90": 0.38,
+      "upper_90": 29.63,
+      "lower_50": 2.45,
+      "upper_50": 11.28
+    },
+    {
+      "date": "2018-01-16",
+      "actual": 8.0,
+      "predicted": 5.81,
+      "lower_90": 0.45,
+      "upper_90": 30.97,
+      "lower_50": 2.61,
+      "upper_50": 11.83
+    },
+    {
+      "date": "2018-01-17",
+      "actual": 41.0,
+      "predicted": 4.95,
+      "lower_90": 0.27,
+      "upper_90": 26.92,
+      "lower_50": 2.15,
+      "upper_50": 10.21
+    },
+    {
+      "date": "2018-01-18",
+      "actual": 2.0,
+      "predicted": 6.05,
+      "lower_90": 0.5,
+      "upper_90": 32.17,
+      "lower_50": 2.74,
+      "upper_50": 12.3
+    },
+    {
+      "date": "2018-01-19",
+      "actual": 3.0,
+      "predicted": 4.7,
+      "lower_90": 0.21,
+      "upper_90": 25.87,
+      "lower_50": 2.02,
+      "upper_50": 9.77
+    },
+    {
+      "date": "2018-01-20",
+      "actual": 5.0,
+      "predicted": 5.0,
+      "lower_90": 0.27,
+      "upper_90": 27.28,
+      "lower_50": 2.17,
+      "upper_50": 10.32
+    },
+    {
+      "date": "2018-01-21",
+      "actual": 1.0,
+      "predicted": 5.5,
+      "lower_90": 0.38,
+      "upper_90": 29.67,
+      "lower_50": 2.44,
+      "upper_50": 11.28
+    },
+    {
+      "date": "2018-01-22",
+      "actual": 6.0,
+      "predicted": 5.99,
+      "lower_90": 0.48,
+      "upper_90": 32.02,
+      "lower_50": 2.7,
+      "upper_50": 12.21
+    },
+    {
+      "date": "2018-01-23",
+      "actual": 5.0,
+      "predicted": 5.81,
+      "lower_90": 0.44,
+      "upper_90": 31.12,
+      "lower_50": 2.61,
+      "upper_50": 11.86
+    },
+    {
+      "date": "2018-01-24",
+      "actual": 4.0,
+      "predicted": 5.77,
+      "lower_90": 0.43,
+      "upper_90": 30.97,
+      "lower_50": 2.58,
+      "upper_50": 11.79
+    },
+    {
+      "date": "2018-01-25",
+      "actual": 7.0,
+      "predicted": 5.46,
+      "lower_90": 0.37,
+      "upper_90": 29.42,
+      "lower_50": 2.42,
+      "upper_50": 11.19
+    },
+    {
+      "date": "2018-01-26",
+      "actual": 12.0,
+      "predicted": 5.42,
+      "lower_90": 0.36,
+      "upper_90": 29.22,
+      "lower_50": 2.4,
+      "upper_50": 11.11
+    },
+    {
+      "date": "2018-01-27",
+      "actual": 3.0,
+      "predicted": 5.55,
+      "lower_90": 0.39,
+      "upper_90": 29.85,
+      "lower_50": 2.47,
+      "upper_50": 11.37
+    },
+    {
+      "date": "2018-01-28",
+      "actual": 10.0,
+      "predicted": 5.7,
+      "lower_90": 0.42,
+      "upper_90": 30.61,
+      "lower_50": 2.55,
+      "upper_50": 11.66
+    },
+    {
+      "date": "2018-01-29",
+      "actual": 4.0,
+      "predicted": 6.27,
+      "lower_90": 0.55,
+      "upper_90": 33.19,
+      "lower_50": 2.86,
+      "upper_50": 12.72
+    },
+    {
+      "date": "2018-01-30",
+      "actual": 4.0,
+      "predicted": 5.77,
+      "lower_90": 0.44,
+      "upper_90": 30.72,
+      "lower_50": 2.59,
+      "upper_50": 11.75
+    },
+    {
+      "date": "2018-01-31",
+      "actual": 6.0,
+      "predicted": 4.84,
+      "lower_90": 0.24,
+      "upper_90": 26.44,
+      "lower_50": 2.1,
+      "upper_50": 10.01
+    },
+    {
+      "date": "2018-02-01",
+      "actual": 6.0,
+      "predicted": 5.76,
+      "lower_90": 0.44,
+      "upper_90": 30.75,
+      "lower_50": 2.58,
+      "upper_50": 11.74
+    },
+    {
+      "date": "2018-02-02",
+      "actual": 6.0,
+      "predicted": 5.57,
+      "lower_90": 0.4,
+      "upper_90": 29.86,
+      "lower_50": 2.48,
+      "upper_50": 11.38
+    },
+    {
+      "date": "2018-02-03",
+      "actual": 5.0,
+      "predicted": 5.56,
+      "lower_90": 0.39,
+      "upper_90": 29.96,
+      "lower_50": 2.48,
+      "upper_50": 11.39
+    },
+    {
+      "date": "2018-02-04",
+      "actual": 3.0,
+      "predicted": 6.29,
+      "lower_90": 0.54,
+      "upper_90": 33.48,
+      "lower_50": 2.86,
+      "upper_50": 12.79
+    },
+    {
+      "date": "2018-02-05",
+      "actual": 6.0,
+      "predicted": 6.54,
+      "lower_90": 0.59,
+      "upper_90": 34.76,
+      "lower_50": 2.98,
+      "upper_50": 13.27
+    },
+    {
+      "date": "2018-02-06",
+      "actual": 5.0,
+      "predicted": 6.26,
+      "lower_90": 0.54,
+      "upper_90": 33.21,
+      "lower_50": 2.84,
+      "upper_50": 12.7
+    },
+    {
+      "date": "2018-02-07",
+      "actual": 23.0,
+      "predicted": 5.88,
+      "lower_90": 0.46,
+      "upper_90": 31.43,
+      "lower_50": 2.64,
+      "upper_50": 11.98
+    },
+    {
+      "date": "2018-02-08",
+      "actual": 1.25,
+      "predicted": 6.41,
+      "lower_90": 0.58,
+      "upper_90": 33.76,
+      "lower_50": 2.93,
+      "upper_50": 12.96
+    },
+    {
+      "date": "2018-02-09",
+      "actual": 11.0,
+      "predicted": 5.25,
+      "lower_90": 0.33,
+      "upper_90": 28.35,
+      "lower_50": 2.31,
+      "upper_50": 10.78
+    },
+    {
+      "date": "2018-02-10",
+      "actual": 15.0,
+      "predicted": 6.12,
+      "lower_90": 0.51,
+      "upper_90": 32.5,
+      "lower_50": 2.77,
+      "upper_50": 12.43
+    },
+    {
+      "date": "2018-02-11",
+      "actual": 10.0,
+      "predicted": 6.4,
+      "lower_90": 0.57,
+      "upper_90": 33.8,
+      "lower_50": 2.92,
+      "upper_50": 12.96
+    },
+    {
+      "date": "2018-02-12",
+      "actual": 1.0,
+      "predicted": 6.81,
+      "lower_90": 0.66,
+      "upper_90": 35.69,
+      "lower_50": 3.15,
+      "upper_50": 13.73
+    },
+    {
+      "date": "2018-02-13",
+      "actual": 10.0,
+      "predicted": 5.91,
+      "lower_90": 0.47,
+      "upper_90": 31.44,
+      "lower_50": 2.67,
+      "upper_50": 12.03
+    },
+    {
+      "date": "2018-02-14",
+      "actual": 14.0,
+      "predicted": 6.11,
+      "lower_90": 0.51,
+      "upper_90": 32.44,
+      "lower_50": 2.77,
+      "upper_50": 12.41
+    },
+    {
+      "date": "2018-02-15",
+      "actual": 10.0,
+      "predicted": 6.1,
+      "lower_90": 0.51,
+      "upper_90": 32.29,
+      "lower_50": 2.77,
+      "upper_50": 12.37
+    },
+    {
+      "date": "2018-02-16",
+      "actual": 0.0,
+      "predicted": 6.05,
+      "lower_90": 0.5,
+      "upper_90": 32.08,
+      "lower_50": 2.74,
+      "upper_50": 12.28
+    },
+    {
+      "date": "2018-02-17",
+      "actual": 9.0,
+      "predicted": 5.24,
+      "lower_90": 0.32,
+      "upper_90": 28.39,
+      "lower_50": 2.3,
+      "upper_50": 10.78
+    },
+    {
+      "date": "2018-02-18",
+      "actual": 4.0,
+      "predicted": 7.02,
+      "lower_90": 0.7,
+      "upper_90": 36.74,
+      "lower_50": 3.25,
+      "upper_50": 14.13
+    },
+    {
+      "date": "2018-02-19",
+      "actual": 12.0,
+      "predicted": 6.84,
+      "lower_90": 0.67,
+      "upper_90": 35.83,
+      "lower_50": 3.16,
+      "upper_50": 13.78
+    },
+    {
+      "date": "2018-02-20",
+      "actual": 2.0,
+      "predicted": 7.24,
+      "lower_90": 0.76,
+      "upper_90": 37.6,
+      "lower_50": 3.38,
+      "upper_50": 14.52
+    },
+    {
+      "date": "2018-02-21",
+      "actual": 6.0,
+      "predicted": 5.97,
+      "lower_90": 0.48,
+      "upper_90": 31.82,
+      "lower_50": 2.7,
+      "upper_50": 12.16
+    },
+    {
+      "date": "2018-02-22",
+      "actual": 20.0,
+      "predicted": 6.57,
+      "lower_90": 0.61,
+      "upper_90": 34.51,
+      "lower_50": 3.02,
+      "upper_50": 13.26
+    },
+    {
+      "date": "2018-02-23",
+      "actual": 12.0,
+      "predicted": 6.42,
+      "lower_90": 0.58,
+      "upper_90": 33.94,
+      "lower_50": 2.93,
+      "upper_50": 13.0
+    },
+    {
+      "date": "2018-02-24",
+      "actual": 8.0,
+      "predicted": 6.28,
+      "lower_90": 0.55,
+      "upper_90": 33.21,
+      "lower_50": 2.86,
+      "upper_50": 12.72
+    },
+    {
+      "date": "2018-02-25",
+      "actual": 10.0,
+      "predicted": 6.35,
+      "lower_90": 0.56,
+      "upper_90": 33.57,
+      "lower_50": 2.9,
+      "upper_50": 12.87
+    },
+    {
+      "date": "2018-02-26",
+      "actual": 7.0,
+      "predicted": 7.66,
+      "lower_90": 0.84,
+      "upper_90": 39.64,
+      "lower_50": 3.59,
+      "upper_50": 15.32
+    },
+    {
+      "date": "2018-02-27",
+      "actual": 8.0,
+      "predicted": 6.75,
+      "lower_90": 0.66,
+      "upper_90": 35.33,
+      "lower_50": 3.12,
+      "upper_50": 13.6
+    },
+    {
+      "date": "2018-02-28",
+      "actual": 0.0,
+      "predicted": 6.22,
+      "lower_90": 0.54,
+      "upper_90": 32.85,
+      "lower_50": 2.83,
+      "upper_50": 12.6
+    },
+    {
+      "date": "2018-03-01",
+      "actual": 12.0,
+      "predicted": 3.93,
+      "lower_90": 0.05,
+      "upper_90": 22.2,
+      "lower_50": 1.61,
+      "upper_50": 8.3
+    },
+    {
+      "date": "2018-03-02",
+      "actual": 17.0,
+      "predicted": 5.43,
+      "lower_90": 0.37,
+      "upper_90": 29.24,
+      "lower_50": 2.41,
+      "upper_50": 11.13
+    },
+    {
+      "date": "2018-03-03",
+      "actual": 10.0,
+      "predicted": 5.0,
+      "lower_90": 0.28,
+      "upper_90": 27.24,
+      "lower_50": 2.18,
+      "upper_50": 10.32
+    },
+    {
+      "date": "2018-03-04",
+      "actual": 14.0,
+      "predicted": 5.4,
+      "lower_90": 0.36,
+      "upper_90": 29.09,
+      "lower_50": 2.39,
+      "upper_50": 11.07
+    },
+    {
+      "date": "2018-03-05",
+      "actual": 17.0,
+      "predicted": 5.9,
+      "lower_90": 0.47,
+      "upper_90": 31.39,
+      "lower_50": 2.66,
+      "upper_50": 12.01
+    },
+    {
+      "date": "2018-03-06",
+      "actual": 2.0,
+      "predicted": 6.21,
+      "lower_90": 0.54,
+      "upper_90": 32.8,
+      "lower_50": 2.82,
+      "upper_50": 12.58
+    },
+    {
+      "date": "2018-03-07",
+      "actual": 11.0,
+      "predicted": 4.64,
+      "lower_90": 0.2,
+      "upper_90": 25.58,
+      "lower_50": 1.99,
+      "upper_50": 9.65
+    },
+    {
+      "date": "2018-03-08",
+      "actual": 0.0,
+      "predicted": 4.97,
+      "lower_90": 0.27,
+      "upper_90": 27.06,
+      "lower_50": 2.16,
+      "upper_50": 10.25
+    },
+    {
+      "date": "2018-03-09",
+      "actual": 10.0,
+      "predicted": 4.12,
+      "lower_90": 0.09,
+      "upper_90": 23.08,
+      "lower_50": 1.71,
+      "upper_50": 8.65
+    },
+    {
+      "date": "2018-03-10",
+      "actual": 17.0,
+      "predicted": 4.82,
+      "lower_90": 0.23,
+      "upper_90": 26.43,
+      "lower_50": 2.08,
+      "upper_50": 9.99
+    },
+    {
+      "date": "2018-03-11",
+      "actual": 11.0,
+      "predicted": 5.4,
+      "lower_90": 0.36,
+      "upper_90": 29.11,
+      "lower_50": 2.39,
+      "upper_50": 11.07
+    },
+    {
+      "date": "2018-03-12",
+      "actual": 13.0,
+      "predicted": 6.29,
+      "lower_90": 0.55,
+      "upper_90": 33.22,
+      "lower_50": 2.87,
+      "upper_50": 12.74
+    },
+    {
+      "date": "2018-03-13",
+      "actual": 21.0,
+      "predicted": 5.86,
+      "lower_90": 0.46,
+      "upper_90": 31.16,
+      "lower_50": 2.64,
+      "upper_50": 11.92
+    },
+    {
+      "date": "2018-03-14",
+      "actual": 8.0,
+      "predicted": 6.32,
+      "lower_90": 0.55,
+      "upper_90": 33.47,
+      "lower_50": 2.88,
+      "upper_50": 12.81
+    },
+    {
+      "date": "2018-03-15",
+      "actual": 10.0,
+      "predicted": 4.88,
+      "lower_90": 0.25,
+      "upper_90": 26.66,
+      "lower_50": 2.11,
+      "upper_50": 10.09
+    },
+    {
+      "date": "2018-03-16",
+      "actual": 2.0,
+      "predicted": 5.22,
+      "lower_90": 0.32,
+      "upper_90": 28.39,
+      "lower_50": 2.29,
+      "upper_50": 10.76
+    },
+    {
+      "date": "2018-03-17",
+      "actual": 5.0,
+      "predicted": 4.52,
+      "lower_90": 0.17,
+      "upper_90": 25.0,
+      "lower_50": 1.92,
+      "upper_50": 9.42
+    },
+    {
+      "date": "2018-03-18",
+      "actual": 2.0,
+      "predicted": 5.15,
+      "lower_90": 0.31,
+      "upper_90": 27.91,
+      "lower_50": 2.26,
+      "upper_50": 10.6
+    },
+    {
+      "date": "2018-03-19",
+      "actual": 18.0,
+      "predicted": 5.36,
+      "lower_90": 0.36,
+      "upper_90": 28.87,
+      "lower_50": 2.38,
+      "upper_50": 10.99
+    },
+    {
+      "date": "2018-03-20",
+      "actual": 15.0,
+      "predicted": 6.72,
+      "lower_90": 0.64,
+      "upper_90": 35.22,
+      "lower_50": 3.09,
+      "upper_50": 13.54
+    },
+    {
+      "date": "2018-03-21",
+      "actual": 9.0,
+      "predicted": 5.9,
+      "lower_90": 0.47,
+      "upper_90": 31.33,
+      "lower_50": 2.66,
+      "upper_50": 11.99
+    },
+    {
+      "date": "2018-03-22",
+      "actual": 0.0,
+      "predicted": 5.96,
+      "lower_90": 0.48,
+      "upper_90": 31.7,
+      "lower_50": 2.69,
+      "upper_50": 12.12
+    },
+    {
+      "date": "2018-03-23",
+      "actual": 11.0,
+      "predicted": 4.57,
+      "lower_90": 0.18,
+      "upper_90": 25.18,
+      "lower_50": 1.95,
+      "upper_50": 9.5
+    },
+    {
+      "date": "2018-03-24",
+      "actual": 2.0,
+      "predicted": 5.12,
+      "lower_90": 0.3,
+      "upper_90": 27.79,
+      "lower_50": 2.25,
+      "upper_50": 10.55
+    },
+    {
+      "date": "2018-03-25",
+      "actual": 3.0,
+      "predicted": 4.83,
+      "lower_90": 0.24,
+      "upper_90": 26.43,
+      "lower_50": 2.09,
+      "upper_50": 10.0
+    },
+    {
+      "date": "2018-03-26",
+      "actual": 5.0,
+      "predicted": 5.58,
+      "lower_90": 0.4,
+      "upper_90": 29.89,
+      "lower_50": 2.49,
+      "upper_50": 11.41
+    },
+    {
+      "date": "2018-03-27",
+      "actual": 5.0,
+      "predicted": 5.55,
+      "lower_90": 0.4,
+      "upper_90": 29.69,
+      "lower_50": 2.48,
+      "upper_50": 11.33
+    },
+    {
+      "date": "2018-03-28",
+      "actual": 6.0,
+      "predicted": 5.64,
+      "lower_90": 0.41,
+      "upper_90": 30.21,
+      "lower_50": 2.52,
+      "upper_50": 11.52
+    },
+    {
+      "date": "2018-03-29",
+      "actual": 7.0,
+      "predicted": 4.89,
+      "lower_90": 0.25,
+      "upper_90": 26.67,
+      "lower_50": 2.13,
+      "upper_50": 10.11
+    },
+    {
+      "date": "2018-03-30",
+      "actual": 3.0,
+      "predicted": 5.21,
+      "lower_90": 0.32,
+      "upper_90": 28.19,
+      "lower_50": 2.29,
+      "upper_50": 10.71
+    },
+    {
+      "date": "2018-03-31",
+      "actual": 3.0,
+      "predicted": 4.64,
+      "lower_90": 0.2,
+      "upper_90": 25.65,
+      "lower_50": 1.99,
+      "upper_50": 9.66
+    },
+    {
+      "date": "2018-04-01",
+      "actual": 22.0,
+      "predicted": 4.29,
+      "lower_90": 0.12,
+      "upper_90": 23.97,
+      "lower_50": 1.8,
+      "upper_50": 9.0
+    },
+    {
+      "date": "2018-04-02",
+      "actual": 10.0,
+      "predicted": 5.11,
+      "lower_90": 0.3,
+      "upper_90": 27.67,
+      "lower_50": 2.24,
+      "upper_50": 10.52
+    },
+    {
+      "date": "2018-04-03",
+      "actual": 5.0,
+      "predicted": 4.72,
+      "lower_90": 0.22,
+      "upper_90": 25.76,
+      "lower_50": 2.04,
+      "upper_50": 9.76
+    },
+    {
+      "date": "2018-04-04",
+      "actual": 1.0,
+      "predicted": 4.08,
+      "lower_90": 0.09,
+      "upper_90": 22.79,
+      "lower_50": 1.7,
+      "upper_50": 8.57
+    },
+    {
+      "date": "2018-04-05",
+      "actual": 16.0,
+      "predicted": 4.24,
+      "lower_90": 0.11,
+      "upper_90": 23.64,
+      "lower_50": 1.77,
+      "upper_50": 8.88
+    },
+    {
+      "date": "2018-04-06",
+      "actual": 23.0,
+      "predicted": 4.24,
+      "lower_90": 0.12,
+      "upper_90": 23.56,
+      "lower_50": 1.78,
+      "upper_50": 8.87
+    },
+    {
+      "date": "2018-04-07",
+      "actual": 5.0,
+      "predicted": 4.39,
+      "lower_90": 0.14,
+      "upper_90": 24.35,
+      "lower_50": 1.85,
+      "upper_50": 9.16
+    },
+    {
+      "date": "2018-04-08",
+      "actual": 7.5,
+      "predicted": 4.32,
+      "lower_90": 0.13,
+      "upper_90": 24.01,
+      "lower_50": 1.82,
+      "upper_50": 9.04
+    },
+    {
+      "date": "2018-04-09",
+      "actual": 10.0,
+      "predicted": 5.02,
+      "lower_90": 0.28,
+      "upper_90": 27.25,
+      "lower_50": 2.2,
+      "upper_50": 10.35
+    },
+    {
+      "date": "2018-04-10",
+      "actual": 7.0,
+      "predicted": 4.87,
+      "lower_90": 0.26,
+      "upper_90": 26.49,
+      "lower_50": 2.12,
+      "upper_50": 10.06
+    },
+    {
+      "date": "2018-04-11",
+      "actual": 3.0,
+      "predicted": 4.36,
+      "lower_90": 0.14,
+      "upper_90": 24.09,
+      "lower_50": 1.84,
+      "upper_50": 9.09
+    },
+    {
+      "date": "2018-04-12",
+      "actual": 6.0,
+      "predicted": 3.98,
+      "lower_90": 0.06,
+      "upper_90": 22.31,
+      "lower_50": 1.65,
+      "upper_50": 8.38
+    },
+    {
+      "date": "2018-04-13",
+      "actual": 23.0,
+      "predicted": 4.61,
+      "lower_90": 0.2,
+      "upper_90": 25.31,
+      "lower_50": 1.98,
+      "upper_50": 9.57
+    },
+    {
+      "date": "2018-04-14",
+      "actual": 3.0,
+      "predicted": 4.97,
+      "lower_90": 0.27,
+      "upper_90": 27.04,
+      "lower_50": 2.17,
+      "upper_50": 10.25
+    },
+    {
+      "date": "2018-04-15",
+      "actual": 0.0,
+      "predicted": 4.4,
+      "lower_90": 0.15,
+      "upper_90": 24.37,
+      "lower_50": 1.86,
+      "upper_50": 9.18
+    },
+    {
+      "date": "2018-04-16",
+      "actual": 4.0,
+      "predicted": 4.37,
+      "lower_90": 0.14,
+      "upper_90": 24.2,
+      "lower_50": 1.85,
+      "upper_50": 9.12
+    },
+    {
+      "date": "2018-04-17",
+      "actual": 6.0,
+      "predicted": 4.89,
+      "lower_90": 0.26,
+      "upper_90": 26.57,
+      "lower_50": 2.13,
+      "upper_50": 10.09
+    },
+    {
+      "date": "2018-04-18",
+      "actual": 7.0,
+      "predicted": 4.93,
+      "lower_90": 0.26,
+      "upper_90": 26.78,
+      "lower_50": 2.15,
+      "upper_50": 10.17
+    },
+    {
+      "date": "2018-04-19",
+      "actual": 1.0,
+      "predicted": 4.55,
+      "lower_90": 0.18,
+      "upper_90": 25.0,
+      "lower_50": 1.94,
+      "upper_50": 9.45
+    },
+    {
+      "date": "2018-04-20",
+      "actual": 6.0,
+      "predicted": 3.86,
+      "lower_90": 0.03,
+      "upper_90": 21.84,
+      "lower_50": 1.58,
+      "upper_50": 8.16
+    },
+    {
+      "date": "2018-04-21",
+      "actual": 4.0,
+      "predicted": 4.41,
+      "lower_90": 0.15,
+      "upper_90": 24.49,
+      "lower_50": 1.87,
+      "upper_50": 9.22
+    },
+    {
+      "date": "2018-04-22",
+      "actual": 0.0,
+      "predicted": 4.31,
+      "lower_90": 0.13,
+      "upper_90": 23.99,
+      "lower_50": 1.82,
+      "upper_50": 9.02
+    },
+    {
+      "date": "2018-04-23",
+      "actual": 2.0,
+      "predicted": 4.23,
+      "lower_90": 0.11,
+      "upper_90": 23.54,
+      "lower_50": 1.77,
+      "upper_50": 8.85
+    },
+    {
+      "date": "2018-04-24",
+      "actual": 1.0,
+      "predicted": 4.48,
+      "lower_90": 0.17,
+      "upper_90": 24.65,
+      "lower_50": 1.91,
+      "upper_50": 9.32
+    },
+    {
+      "date": "2018-04-25",
+      "actual": 30.0,
+      "predicted": 4.25,
+      "lower_90": 0.12,
+      "upper_90": 23.63,
+      "lower_50": 1.79,
+      "upper_50": 8.9
+    },
+    {
+      "date": "2018-04-26",
+      "actual": 7.0,
+      "predicted": 4.8,
+      "lower_90": 0.23,
+      "upper_90": 26.33,
+      "lower_50": 2.07,
+      "upper_50": 9.95
+    },
+    {
+      "date": "2018-04-27",
+      "actual": 6.0,
+      "predicted": 4.2,
+      "lower_90": 0.1,
+      "upper_90": 23.44,
+      "lower_50": 1.75,
+      "upper_50": 8.8
+    },
+    {
+      "date": "2018-04-28",
+      "actual": 6.0,
+      "predicted": 4.14,
+      "lower_90": 0.09,
+      "upper_90": 23.21,
+      "lower_50": 1.72,
+      "upper_50": 8.7
+    },
+    {
+      "date": "2018-04-29",
+      "actual": 14.0,
+      "predicted": 4.42,
+      "lower_90": 0.14,
+      "upper_90": 24.67,
+      "lower_50": 1.86,
+      "upper_50": 9.25
+    },
+    {
+      "date": "2018-04-30",
+      "actual": 1.0,
+      "predicted": 4.96,
+      "lower_90": 0.27,
+      "upper_90": 26.97,
+      "lower_50": 2.16,
+      "upper_50": 10.23
+    },
+    {
+      "date": "2018-05-01",
+      "actual": 1.0,
+      "predicted": 3.05,
+      "lower_90": 0.0,
+      "upper_90": 18.08,
+      "lower_50": 1.15,
+      "upper_50": 6.65
+    },
+    {
+      "date": "2018-05-02",
+      "actual": 3.0,
+      "predicted": 3.03,
+      "lower_90": 0.0,
+      "upper_90": 18.0,
+      "lower_50": 1.14,
+      "upper_50": 6.61
+    },
+    {
+      "date": "2018-05-03",
+      "actual": 16.0,
+      "predicted": 3.23,
+      "lower_90": 0.0,
+      "upper_90": 18.84,
+      "lower_50": 1.24,
+      "upper_50": 6.97
+    },
+    {
+      "date": "2018-05-04",
+      "actual": 2.0,
+      "predicted": 3.42,
+      "lower_90": 0.0,
+      "upper_90": 19.79,
+      "lower_50": 1.34,
+      "upper_50": 7.34
+    },
+    {
+      "date": "2018-05-05",
+      "actual": 0.0,
+      "predicted": 2.99,
+      "lower_90": 0.0,
+      "upper_90": 17.73,
+      "lower_50": 1.11,
+      "upper_50": 6.52
+    },
+    {
+      "date": "2018-05-06",
+      "actual": 3.0,
+      "predicted": 3.27,
+      "lower_90": 0.0,
+      "upper_90": 19.18,
+      "lower_50": 1.26,
+      "upper_50": 7.07
+    },
+    {
+      "date": "2018-05-07",
+      "actual": 7.0,
+      "predicted": 3.97,
+      "lower_90": 0.06,
+      "upper_90": 22.39,
+      "lower_50": 1.63,
+      "upper_50": 8.38
+    },
+    {
+      "date": "2018-05-08",
+      "actual": 1.0,
+      "predicted": 4.04,
+      "lower_90": 0.07,
+      "upper_90": 22.68,
+      "lower_50": 1.67,
+      "upper_50": 8.5
+    },
+    {
+      "date": "2018-05-09",
+      "actual": 2.0,
+      "predicted": 3.02,
+      "lower_90": 0.0,
+      "upper_90": 17.88,
+      "lower_50": 1.13,
+      "upper_50": 6.57
+    },
+    {
+      "date": "2018-05-10",
+      "actual": 1.0,
+      "predicted": 2.94,
+      "lower_90": 0.0,
+      "upper_90": 17.5,
+      "lower_50": 1.09,
+      "upper_50": 6.43
+    },
+    {
+      "date": "2018-05-11",
+      "actual": 2.0,
+      "predicted": 2.86,
+      "lower_90": 0.0,
+      "upper_90": 17.13,
+      "lower_50": 1.04,
+      "upper_50": 6.27
+    },
+    {
+      "date": "2018-05-12",
+      "actual": 11.0,
+      "predicted": 2.77,
+      "lower_90": 0.0,
+      "upper_90": 16.76,
+      "lower_50": 1.0,
+      "upper_50": 6.12
+    },
+    {
+      "date": "2018-05-13",
+      "actual": 7.0,
+      "predicted": 3.28,
+      "lower_90": 0.0,
+      "upper_90": 19.25,
+      "lower_50": 1.27,
+      "upper_50": 7.1
+    },
+    {
+      "date": "2018-05-14",
+      "actual": 37.0,
+      "predicted": 3.69,
+      "lower_90": 0.0,
+      "upper_90": 21.04,
+      "lower_50": 1.49,
+      "upper_50": 7.85
+    },
+    {
+      "date": "2018-05-15",
+      "actual": 5.0,
+      "predicted": 4.21,
+      "lower_90": 0.1,
+      "upper_90": 23.58,
+      "lower_50": 1.76,
+      "upper_50": 8.84
+    },
+    {
+      "date": "2018-05-16",
+      "actual": 2.0,
+      "predicted": 3.29,
+      "lower_90": 0.0,
+      "upper_90": 19.18,
+      "lower_50": 1.28,
+      "upper_50": 7.1
+    },
+    {
+      "date": "2018-05-17",
+      "actual": 1.0,
+      "predicted": 2.78,
+      "lower_90": 0.0,
+      "upper_90": 16.81,
+      "lower_50": 1.0,
+      "upper_50": 6.14
+    },
+    {
+      "date": "2018-05-18",
+      "actual": 2.0,
+      "predicted": 2.76,
+      "lower_90": 0.0,
+      "upper_90": 16.7,
+      "lower_50": 0.99,
+      "upper_50": 6.09
+    },
+    {
+      "date": "2018-05-19",
+      "actual": 0.0,
+      "predicted": 3.02,
+      "lower_90": 0.0,
+      "upper_90": 17.99,
+      "lower_50": 1.13,
+      "upper_50": 6.6
+    },
+    {
+      "date": "2018-05-20",
+      "actual": 0.0,
+      "predicted": 2.97,
+      "lower_90": 0.0,
+      "upper_90": 17.79,
+      "lower_50": 1.1,
+      "upper_50": 6.51
+    },
+    {
+      "date": "2018-05-21",
+      "actual": 11.0,
+      "predicted": 3.34,
+      "lower_90": 0.0,
+      "upper_90": 19.55,
+      "lower_50": 1.29,
+      "upper_50": 7.21
+    },
+    {
+      "date": "2018-05-22",
+      "actual": 6.0,
+      "predicted": 4.66,
+      "lower_90": 0.2,
+      "upper_90": 25.67,
+      "lower_50": 2.0,
+      "upper_50": 9.68
+    },
+    {
+      "date": "2018-05-23",
+      "actual": 0.0,
+      "predicted": 3.82,
+      "lower_90": 0.02,
+      "upper_90": 21.73,
+      "lower_50": 1.55,
+      "upper_50": 8.1
+    },
+    {
+      "date": "2018-05-24",
+      "actual": 10.0,
+      "predicted": 3.18,
+      "lower_90": 0.0,
+      "upper_90": 18.69,
+      "lower_50": 1.22,
+      "upper_50": 6.89
+    },
+    {
+      "date": "2018-05-25",
+      "actual": 1.0,
+      "predicted": 3.71,
+      "lower_90": 0.0,
+      "upper_90": 21.16,
+      "lower_50": 1.5,
+      "upper_50": 7.89
+    },
+    {
+      "date": "2018-05-26",
+      "actual": 3.0,
+      "predicted": 2.83,
+      "lower_90": 0.0,
+      "upper_90": 17.1,
+      "lower_50": 1.03,
+      "upper_50": 6.24
+    },
+    {
+      "date": "2018-05-27",
+      "actual": 0.0,
+      "predicted": 3.05,
+      "lower_90": 0.0,
+      "upper_90": 18.1,
+      "lower_50": 1.14,
+      "upper_50": 6.65
+    },
+    {
+      "date": "2018-05-28",
+      "actual": 7.0,
+      "predicted": 3.03,
+      "lower_90": 0.0,
+      "upper_90": 18.03,
+      "lower_50": 1.14,
+      "upper_50": 6.62
+    },
+    {
+      "date": "2018-05-29",
+      "actual": 4.0,
+      "predicted": 3.42,
+      "lower_90": 0.0,
+      "upper_90": 19.75,
+      "lower_50": 1.34,
+      "upper_50": 7.33
+    },
+    {
+      "date": "2018-05-30",
+      "actual": 14.0,
+      "predicted": 3.03,
+      "lower_90": 0.0,
+      "upper_90": 17.93,
+      "lower_50": 1.14,
+      "upper_50": 6.6
+    },
+    {
+      "date": "2018-05-31",
+      "actual": 8.0,
+      "predicted": 3.24,
+      "lower_90": 0.0,
+      "upper_90": 18.93,
+      "lower_50": 1.25,
+      "upper_50": 7.0
+    },
+    {
+      "date": "2018-06-01",
+      "actual": 5.0,
+      "predicted": 3.27,
+      "lower_90": 0.0,
+      "upper_90": 19.0,
+      "lower_50": 1.26,
+      "upper_50": 7.04
+    },
+    {
+      "date": "2018-06-02",
+      "actual": 7.0,
+      "predicted": 3.63,
+      "lower_90": 0.0,
+      "upper_90": 20.81,
+      "lower_50": 1.45,
+      "upper_50": 7.74
+    },
+    {
+      "date": "2018-06-03",
+      "actual": 0.0,
+      "predicted": 3.78,
+      "lower_90": 0.01,
+      "upper_90": 21.54,
+      "lower_50": 1.53,
+      "upper_50": 8.02
+    },
+    {
+      "date": "2018-06-04",
+      "actual": 6.0,
+      "predicted": 3.01,
+      "lower_90": 0.0,
+      "upper_90": 17.87,
+      "lower_50": 1.12,
+      "upper_50": 6.56
+    },
+    {
+      "date": "2018-06-05",
+      "actual": 0.0,
+      "predicted": 3.54,
+      "lower_90": 0.0,
+      "upper_90": 20.28,
+      "lower_50": 1.41,
+      "upper_50": 7.55
+    },
+    {
+      "date": "2018-06-06",
+      "actual": 0.0,
+      "predicted": 3.18,
+      "lower_90": 0.0,
+      "upper_90": 18.69,
+      "lower_50": 1.22,
+      "upper_50": 6.89
+    },
+    {
+      "date": "2018-06-07",
+      "actual": 10.0,
+      "predicted": 2.86,
+      "lower_90": 0.0,
+      "upper_90": 17.09,
+      "lower_50": 1.05,
+      "upper_50": 6.27
+    },
+    {
+      "date": "2018-06-08",
+      "actual": 2.0,
+      "predicted": 3.74,
+      "lower_90": 0.01,
+      "upper_90": 21.24,
+      "lower_50": 1.51,
+      "upper_50": 7.93
+    },
+    {
+      "date": "2018-06-09",
+      "actual": 5.0,
+      "predicted": 3.4,
+      "lower_90": 0.0,
+      "upper_90": 19.69,
+      "lower_50": 1.33,
+      "upper_50": 7.3
+    },
+    {
+      "date": "2018-06-10",
+      "actual": 0.0,
+      "predicted": 4.04,
+      "lower_90": 0.07,
+      "upper_90": 22.79,
+      "lower_50": 1.67,
+      "upper_50": 8.52
+    },
+    {
+      "date": "2018-06-11",
+      "actual": 0.0,
+      "predicted": 3.27,
+      "lower_90": 0.0,
+      "upper_90": 19.1,
+      "lower_50": 1.26,
+      "upper_50": 7.06
+    },
+    {
+      "date": "2018-06-12",
+      "actual": 1.0,
+      "predicted": 3.14,
+      "lower_90": 0.0,
+      "upper_90": 18.48,
+      "lower_50": 1.2,
+      "upper_50": 6.81
+    },
+    {
+      "date": "2018-06-13",
+      "actual": 0.0,
+      "predicted": 2.88,
+      "lower_90": 0.0,
+      "upper_90": 17.3,
+      "lower_50": 1.06,
+      "upper_50": 6.33
+    },
+    {
+      "date": "2018-06-14",
+      "actual": 0.0,
+      "predicted": 2.61,
+      "lower_90": 0.0,
+      "upper_90": 16.0,
+      "lower_50": 0.92,
+      "upper_50": 5.82
+    },
+    {
+      "date": "2018-06-15",
+      "actual": 8.0,
+      "predicted": 2.73,
+      "lower_90": 0.0,
+      "upper_90": 16.59,
+      "lower_50": 0.98,
+      "upper_50": 6.05
+    },
+    {
+      "date": "2018-06-16",
+      "actual": 2.0,
+      "predicted": 3.39,
+      "lower_90": 0.0,
+      "upper_90": 19.81,
+      "lower_50": 1.32,
+      "upper_50": 7.3
+    },
+    {
+      "date": "2018-06-17",
+      "actual": 5.0,
+      "predicted": 3.6,
+      "lower_90": 0.0,
+      "upper_90": 20.76,
+      "lower_50": 1.43,
+      "upper_50": 7.69
+    },
+    {
+      "date": "2018-06-18",
+      "actual": 1.0,
+      "predicted": 3.31,
+      "lower_90": 0.0,
+      "upper_90": 19.28,
+      "lower_50": 1.28,
+      "upper_50": 7.13
+    },
+    {
+      "date": "2018-06-19",
+      "actual": 5.0,
+      "predicted": 3.13,
+      "lower_90": 0.0,
+      "upper_90": 18.41,
+      "lower_50": 1.19,
+      "upper_50": 6.79
+    },
+    {
+      "date": "2018-06-20",
+      "actual": 11.0,
+      "predicted": 3.28,
+      "lower_90": 0.0,
+      "upper_90": 19.13,
+      "lower_50": 1.27,
+      "upper_50": 7.07
+    },
+    {
+      "date": "2018-06-21",
+      "actual": 5.0,
+      "predicted": 2.75,
+      "lower_90": 0.0,
+      "upper_90": 16.64,
+      "lower_50": 0.98,
+      "upper_50": 6.07
+    },
+    {
+      "date": "2018-06-22",
+      "actual": 6.0,
+      "predicted": 2.86,
+      "lower_90": 0.0,
+      "upper_90": 17.17,
+      "lower_50": 1.05,
+      "upper_50": 6.28
+    },
+    {
+      "date": "2018-06-23",
+      "actual": 1.0,
+      "predicted": 2.92,
+      "lower_90": 0.0,
+      "upper_90": 17.46,
+      "lower_50": 1.07,
+      "upper_50": 6.39
+    },
+    {
+      "date": "2018-06-24",
+      "actual": 0.0,
+      "predicted": 3.22,
+      "lower_90": 0.0,
+      "upper_90": 18.93,
+      "lower_50": 1.23,
+      "upper_50": 6.97
+    },
+    {
+      "date": "2018-06-25",
+      "actual": 5.0,
+      "predicted": 3.06,
+      "lower_90": 0.0,
+      "upper_90": 18.12,
+      "lower_50": 1.15,
+      "upper_50": 6.66
+    },
+    {
+      "date": "2018-06-26",
+      "actual": 9.0,
+      "predicted": 3.4,
+      "lower_90": 0.0,
+      "upper_90": 19.67,
+      "lower_50": 1.33,
+      "upper_50": 7.3
+    },
+    {
+      "date": "2018-06-27",
+      "actual": 2.0,
+      "predicted": 3.47,
+      "lower_90": 0.0,
+      "upper_90": 20.0,
+      "lower_50": 1.37,
+      "upper_50": 7.42
+    },
+    {
+      "date": "2018-06-28",
+      "actual": 5.0,
+      "predicted": 3.09,
+      "lower_90": 0.0,
+      "upper_90": 18.2,
+      "lower_50": 1.17,
+      "upper_50": 6.7
+    },
+    {
+      "date": "2018-06-29",
+      "actual": 0.0,
+      "predicted": 3.02,
+      "lower_90": 0.0,
+      "upper_90": 17.91,
+      "lower_50": 1.13,
+      "upper_50": 6.58
+    },
+    {
+      "date": "2018-06-30",
+      "actual": 0.0,
+      "predicted": 2.8,
+      "lower_90": 0.0,
+      "upper_90": 16.95,
+      "lower_50": 1.01,
+      "upper_50": 6.18
+    },
+    {
+      "date": "2018-07-01",
+      "actual": 10.0,
+      "predicted": 2.24,
+      "lower_90": 0.0,
+      "upper_90": 14.25,
+      "lower_50": 0.72,
+      "upper_50": 5.11
+    },
+    {
+      "date": "2018-07-02",
+      "actual": 3.0,
+      "predicted": 2.93,
+      "lower_90": 0.0,
+      "upper_90": 17.44,
+      "lower_50": 1.09,
+      "upper_50": 6.41
+    },
+    {
+      "date": "2018-07-03",
+      "actual": 8.0,
+      "predicted": 2.66,
+      "lower_90": 0.0,
+      "upper_90": 16.14,
+      "lower_50": 0.94,
+      "upper_50": 5.89
+    },
+    {
+      "date": "2018-07-04",
+      "actual": 22.0,
+      "predicted": 2.57,
+      "lower_90": 0.0,
+      "upper_90": 15.72,
+      "lower_50": 0.89,
+      "upper_50": 5.72
+    },
+    {
+      "date": "2018-07-05",
+      "actual": 3.0,
+      "predicted": 2.58,
+      "lower_90": 0.0,
+      "upper_90": 15.85,
+      "lower_50": 0.9,
+      "upper_50": 5.76
+    },
+    {
+      "date": "2018-07-06",
+      "actual": 0.0,
+      "predicted": 2.18,
+      "lower_90": 0.0,
+      "upper_90": 13.94,
+      "lower_50": 0.69,
+      "upper_50": 5.0
+    },
+    {
+      "date": "2018-07-07",
+      "actual": 0.0,
+      "predicted": 2.08,
+      "lower_90": 0.0,
+      "upper_90": 13.52,
+      "lower_50": 0.63,
+      "upper_50": 4.81
+    },
+    {
+      "date": "2018-07-08",
+      "actual": 5.0,
+      "predicted": 2.57,
+      "lower_90": 0.0,
+      "upper_90": 15.86,
+      "lower_50": 0.89,
+      "upper_50": 5.75
+    },
+    {
+      "date": "2018-07-09",
+      "actual": 0.0,
+      "predicted": 2.93,
+      "lower_90": 0.0,
+      "upper_90": 17.43,
+      "lower_50": 1.09,
+      "upper_50": 6.4
+    },
+    {
+      "date": "2018-07-10",
+      "actual": 2.0,
+      "predicted": 2.36,
+      "lower_90": 0.0,
+      "upper_90": 14.8,
+      "lower_50": 0.78,
+      "upper_50": 5.34
+    },
+    {
+      "date": "2018-07-11",
+      "actual": 6.0,
+      "predicted": 2.71,
+      "lower_90": 0.0,
+      "upper_90": 16.47,
+      "lower_50": 0.96,
+      "upper_50": 6.0
+    },
+    {
+      "date": "2018-07-12",
+      "actual": 0.0,
+      "predicted": 2.86,
+      "lower_90": 0.0,
+      "upper_90": 17.12,
+      "lower_50": 1.05,
+      "upper_50": 6.28
+    },
+    {
+      "date": "2018-07-13",
+      "actual": 2.0,
+      "predicted": 2.5,
+      "lower_90": 0.0,
+      "upper_90": 15.47,
+      "lower_50": 0.85,
+      "upper_50": 5.6
+    },
+    {
+      "date": "2018-07-14",
+      "actual": 0.0,
+      "predicted": 2.89,
+      "lower_90": 0.0,
+      "upper_90": 17.33,
+      "lower_50": 1.06,
+      "upper_50": 6.34
+    },
+    {
+      "date": "2018-07-15",
+      "actual": 1.0,
+      "predicted": 2.53,
+      "lower_90": 0.0,
+      "upper_90": 15.6,
+      "lower_50": 0.87,
+      "upper_50": 5.65
+    },
+    {
+      "date": "2018-07-16",
+      "actual": 0.0,
+      "predicted": 2.93,
+      "lower_90": 0.0,
+      "upper_90": 17.44,
+      "lower_50": 1.08,
+      "upper_50": 6.4
+    },
+    {
+      "date": "2018-07-17",
+      "actual": 0.0,
+      "predicted": 2.49,
+      "lower_90": 0.0,
+      "upper_90": 15.35,
+      "lower_50": 0.85,
+      "upper_50": 5.57
+    },
+    {
+      "date": "2018-07-18",
+      "actual": 12.0,
+      "predicted": 2.13,
+      "lower_90": 0.0,
+      "upper_90": 13.77,
+      "lower_50": 0.66,
+      "upper_50": 4.92
+    },
+    {
+      "date": "2018-07-19",
+      "actual": 0.0,
+      "predicted": 2.37,
+      "lower_90": 0.0,
+      "upper_90": 14.88,
+      "lower_50": 0.79,
+      "upper_50": 5.37
+    },
+    {
+      "date": "2018-07-20",
+      "actual": 2.0,
+      "predicted": 2.03,
+      "lower_90": 0.0,
+      "upper_90": 13.28,
+      "lower_50": 0.61,
+      "upper_50": 4.72
+    },
+    {
+      "date": "2018-07-21",
+      "actual": 5.0,
+      "predicted": 2.4,
+      "lower_90": 0.0,
+      "upper_90": 15.03,
+      "lower_50": 0.8,
+      "upper_50": 5.42
+    },
+    {
+      "date": "2018-07-22",
+      "actual": 5.0,
+      "predicted": 2.55,
+      "lower_90": 0.0,
+      "upper_90": 15.75,
+      "lower_50": 0.88,
+      "upper_50": 5.71
+    },
+    {
+      "date": "2018-07-23",
+      "actual": 0.0,
+      "predicted": 2.7,
+      "lower_90": 0.0,
+      "upper_90": 16.36,
+      "lower_50": 0.96,
+      "upper_50": 5.97
+    },
+    {
+      "date": "2018-07-24",
+      "actual": 2.0,
+      "predicted": 2.03,
+      "lower_90": 0.0,
+      "upper_90": 13.24,
+      "lower_50": 0.61,
+      "upper_50": 4.72
+    },
+    {
+      "date": "2018-07-25",
+      "actual": 0.0,
+      "predicted": 2.11,
+      "lower_90": 0.0,
+      "upper_90": 13.62,
+      "lower_50": 0.65,
+      "upper_50": 4.87
+    },
+    {
+      "date": "2018-07-26",
+      "actual": 1.0,
+      "predicted": 1.94,
+      "lower_90": 0.0,
+      "upper_90": 12.8,
+      "lower_50": 0.56,
+      "upper_50": 4.54
+    },
+    {
+      "date": "2018-07-27",
+      "actual": 1.0,
+      "predicted": 2.09,
+      "lower_90": 0.0,
+      "upper_90": 13.52,
+      "lower_50": 0.64,
+      "upper_50": 4.83
+    },
+    {
+      "date": "2018-07-28",
+      "actual": 0.0,
+      "predicted": 2.4,
+      "lower_90": 0.0,
+      "upper_90": 15.04,
+      "lower_50": 0.8,
+      "upper_50": 5.42
+    },
+    {
+      "date": "2018-07-29",
+      "actual": 0.0,
+      "predicted": 2.34,
+      "lower_90": 0.0,
+      "upper_90": 14.72,
+      "lower_50": 0.77,
+      "upper_50": 5.3
+    },
+    {
+      "date": "2018-07-30",
+      "actual": 0.0,
+      "predicted": 2.64,
+      "lower_90": 0.0,
+      "upper_90": 16.12,
+      "lower_50": 0.93,
+      "upper_50": 5.86
+    },
+    {
+      "date": "2018-07-31",
+      "actual": 0.0,
+      "predicted": 2.53,
+      "lower_90": 0.0,
+      "upper_90": 15.6,
+      "lower_50": 0.87,
+      "upper_50": 5.66
+    },
+    {
+      "date": "2018-08-01",
+      "actual": 1.0,
+      "predicted": 1.64,
+      "lower_90": 0.0,
+      "upper_90": 11.5,
+      "lower_50": 0.4,
+      "upper_50": 3.99
+    },
+    {
+      "date": "2018-08-02",
+      "actual": 2.0,
+      "predicted": 1.66,
+      "lower_90": 0.0,
+      "upper_90": 11.52,
+      "lower_50": 0.41,
+      "upper_50": 4.02
+    },
+    {
+      "date": "2018-08-03",
+      "actual": 0.0,
+      "predicted": 1.69,
+      "lower_90": 0.0,
+      "upper_90": 11.69,
+      "lower_50": 0.43,
+      "upper_50": 4.08
+    },
+    {
+      "date": "2018-08-04",
+      "actual": 0.0,
+      "predicted": 1.51,
+      "lower_90": 0.0,
+      "upper_90": 10.89,
+      "lower_50": 0.33,
+      "upper_50": 3.75
+    },
+    {
+      "date": "2018-08-05",
+      "actual": 6.0,
+      "predicted": 1.45,
+      "lower_90": 0.0,
+      "upper_90": 10.59,
+      "lower_50": 0.3,
+      "upper_50": 3.63
+    },
+    {
+      "date": "2018-08-06",
+      "actual": 6.0,
+      "predicted": 1.99,
+      "lower_90": 0.0,
+      "upper_90": 13.13,
+      "lower_50": 0.58,
+      "upper_50": 4.66
+    },
+    {
+      "date": "2018-08-07",
+      "actual": 1.0,
+      "predicted": 1.76,
+      "lower_90": 0.0,
+      "upper_90": 11.98,
+      "lower_50": 0.46,
+      "upper_50": 4.21
+    },
+    {
+      "date": "2018-08-08",
+      "actual": 0.0,
+      "predicted": 1.47,
+      "lower_90": 0.0,
+      "upper_90": 10.6,
+      "lower_50": 0.31,
+      "upper_50": 3.66
+    },
+    {
+      "date": "2018-08-09",
+      "actual": 0.0,
+      "predicted": 1.3,
+      "lower_90": 0.0,
+      "upper_90": 9.85,
+      "lower_50": 0.22,
+      "upper_50": 3.35
+    },
+    {
+      "date": "2018-08-10",
+      "actual": 0.0,
+      "predicted": 1.25,
+      "lower_90": 0.0,
+      "upper_90": 9.57,
+      "lower_50": 0.19,
+      "upper_50": 3.24
+    },
+    {
+      "date": "2018-08-11",
+      "actual": 5.0,
+      "predicted": 1.41,
+      "lower_90": 0.0,
+      "upper_90": 10.38,
+      "lower_50": 0.27,
+      "upper_50": 3.55
+    },
+    {
+      "date": "2018-08-12",
+      "actual": 1.0,
+      "predicted": 1.92,
+      "lower_90": 0.0,
+      "upper_90": 12.8,
+      "lower_50": 0.55,
+      "upper_50": 4.52
+    },
+    {
+      "date": "2018-08-13",
+      "actual": 3.0,
+      "predicted": 2.0,
+      "lower_90": 0.0,
+      "upper_90": 13.14,
+      "lower_50": 0.59,
+      "upper_50": 4.67
+    },
+    {
+      "date": "2018-08-14",
+      "actual": 4.0,
+      "predicted": 2.15,
+      "lower_90": 0.0,
+      "upper_90": 13.82,
+      "lower_50": 0.67,
+      "upper_50": 4.95
+    },
+    {
+      "date": "2018-08-15",
+      "actual": 0.0,
+      "predicted": 1.78,
+      "lower_90": 0.0,
+      "upper_90": 12.11,
+      "lower_50": 0.48,
+      "upper_50": 4.25
+    },
+    {
+      "date": "2018-08-16",
+      "actual": 5.0,
+      "predicted": 1.42,
+      "lower_90": 0.0,
+      "upper_90": 10.37,
+      "lower_50": 0.28,
+      "upper_50": 3.56
+    },
+    {
+      "date": "2018-08-17",
+      "actual": 5.0,
+      "predicted": 1.73,
+      "lower_90": 0.0,
+      "upper_90": 11.88,
+      "lower_50": 0.45,
+      "upper_50": 4.16
+    },
+    {
+      "date": "2018-08-18",
+      "actual": 6.0,
+      "predicted": 1.87,
+      "lower_90": 0.0,
+      "upper_90": 12.59,
+      "lower_50": 0.52,
+      "upper_50": 4.43
+    },
+    {
+      "date": "2018-08-19",
+      "actual": 5.0,
+      "predicted": 1.86,
+      "lower_90": 0.0,
+      "upper_90": 12.52,
+      "lower_50": 0.51,
+      "upper_50": 4.4
+    },
+    {
+      "date": "2018-08-20",
+      "actual": 20.0,
+      "predicted": 1.98,
+      "lower_90": 0.0,
+      "upper_90": 13.12,
+      "lower_50": 0.58,
+      "upper_50": 4.64
+    },
+    {
+      "date": "2018-08-21",
+      "actual": 1.0,
+      "predicted": 2.43,
+      "lower_90": 0.0,
+      "upper_90": 15.17,
+      "lower_50": 0.82,
+      "upper_50": 5.48
+    },
+    {
+      "date": "2018-08-22",
+      "actual": 0.0,
+      "predicted": 1.9,
+      "lower_90": 0.0,
+      "upper_90": 12.71,
+      "lower_50": 0.54,
+      "upper_50": 4.49
+    },
+    {
+      "date": "2018-08-23",
+      "actual": 23.0,
+      "predicted": 1.72,
+      "lower_90": 0.0,
+      "upper_90": 11.82,
+      "lower_50": 0.44,
+      "upper_50": 4.14
+    },
+    {
+      "date": "2018-08-24",
+      "actual": 21.0,
+      "predicted": 2.53,
+      "lower_90": 0.0,
+      "upper_90": 15.67,
+      "lower_50": 0.87,
+      "upper_50": 5.67
+    },
+    {
+      "date": "2018-08-25",
+      "actual": 6.0,
+      "predicted": 2.59,
+      "lower_90": 0.0,
+      "upper_90": 16.03,
+      "lower_50": 0.9,
+      "upper_50": 5.8
+    },
+    {
+      "date": "2018-08-26",
+      "actual": 8.0,
+      "predicted": 2.73,
+      "lower_90": 0.0,
+      "upper_90": 16.65,
+      "lower_50": 0.98,
+      "upper_50": 6.06
+    },
+    {
+      "date": "2018-08-27",
+      "actual": 1.0,
+      "predicted": 2.98,
+      "lower_90": 0.0,
+      "upper_90": 17.78,
+      "lower_50": 1.1,
+      "upper_50": 6.51
+    },
+    {
+      "date": "2018-08-28",
+      "actual": 0.0,
+      "predicted": 2.52,
+      "lower_90": 0.0,
+      "upper_90": 15.61,
+      "lower_50": 0.86,
+      "upper_50": 5.65
+    },
+    {
+      "date": "2018-08-29",
+      "actual": 5.0,
+      "predicted": 2.3,
+      "lower_90": 0.0,
+      "upper_90": 14.62,
+      "lower_50": 0.74,
+      "upper_50": 5.24
+    },
+    {
+      "date": "2018-08-30",
+      "actual": 4.0,
+      "predicted": 2.45,
+      "lower_90": 0.0,
+      "upper_90": 15.27,
+      "lower_50": 0.83,
+      "upper_50": 5.52
+    },
+    {
+      "date": "2018-08-31",
+      "actual": 20.0,
+      "predicted": 2.68,
+      "lower_90": 0.0,
+      "upper_90": 16.36,
+      "lower_50": 0.95,
+      "upper_50": 5.95
+    },
+    {
+      "date": "2018-09-01",
+      "actual": 1.0,
+      "predicted": 5.43,
+      "lower_90": 0.36,
+      "upper_90": 29.44,
+      "lower_50": 2.4,
+      "upper_50": 11.16
+    },
+    {
+      "date": "2018-09-02",
+      "actual": 5.0,
+      "predicted": 4.8,
+      "lower_90": 0.23,
+      "upper_90": 26.46,
+      "lower_50": 2.07,
+      "upper_50": 9.97
+    },
+    {
+      "date": "2018-09-03",
+      "actual": 0.0,
+      "predicted": 4.56,
+      "lower_90": 0.18,
+      "upper_90": 25.21,
+      "lower_50": 1.95,
+      "upper_50": 9.5
+    },
+    {
+      "date": "2018-09-04",
+      "actual": 3.0,
+      "predicted": 4.18,
+      "lower_90": 0.1,
+      "upper_90": 23.43,
+      "lower_50": 1.74,
+      "upper_50": 8.78
+    },
+    {
+      "date": "2018-09-05",
+      "actual": 3.0,
+      "predicted": 4.69,
+      "lower_90": 0.21,
+      "upper_90": 25.8,
+      "lower_50": 2.02,
+      "upper_50": 9.75
+    },
+    {
+      "date": "2018-09-06",
+      "actual": 5.0,
+      "predicted": 3.9,
+      "lower_90": 0.04,
+      "upper_90": 22.08,
+      "lower_50": 1.6,
+      "upper_50": 8.25
+    },
+    {
+      "date": "2018-09-07",
+      "actual": 22.0,
+      "predicted": 3.97,
+      "lower_90": 0.05,
+      "upper_90": 22.5,
+      "lower_50": 1.63,
+      "upper_50": 8.4
+    },
+    {
+      "date": "2018-09-08",
+      "actual": 10.0,
+      "predicted": 4.96,
+      "lower_90": 0.26,
+      "upper_90": 27.26,
+      "lower_50": 2.15,
+      "upper_50": 10.28
+    },
+    {
+      "date": "2018-09-09",
+      "actual": 0.0,
+      "predicted": 5.1,
+      "lower_90": 0.29,
+      "upper_90": 27.83,
+      "lower_50": 2.23,
+      "upper_50": 10.53
+    },
+    {
+      "date": "2018-09-10",
+      "actual": 1.0,
+      "predicted": 4.11,
+      "lower_90": 0.08,
+      "upper_90": 23.1,
+      "lower_50": 1.7,
+      "upper_50": 8.65
+    },
+    {
+      "date": "2018-09-11",
+      "actual": 6.0,
+      "predicted": 4.4,
+      "lower_90": 0.15,
+      "upper_90": 24.41,
+      "lower_50": 1.86,
+      "upper_50": 9.19
+    },
+    {
+      "date": "2018-09-12",
+      "actual": 5.0,
+      "predicted": 4.35,
+      "lower_90": 0.14,
+      "upper_90": 24.14,
+      "lower_50": 1.84,
+      "upper_50": 9.09
+    },
+    {
+      "date": "2018-09-13",
+      "actual": 12.0,
+      "predicted": 3.98,
+      "lower_90": 0.06,
+      "upper_90": 22.35,
+      "lower_50": 1.64,
+      "upper_50": 8.38
+    },
+    {
+      "date": "2018-09-14",
+      "actual": 1.0,
+      "predicted": 4.08,
+      "lower_90": 0.08,
+      "upper_90": 22.93,
+      "lower_50": 1.69,
+      "upper_50": 8.58
+    },
+    {
+      "date": "2018-09-15",
+      "actual": 10.0,
+      "predicted": 4.55,
+      "lower_90": 0.17,
+      "upper_90": 25.22,
+      "lower_50": 1.93,
+      "upper_50": 9.48
+    },
+    {
+      "date": "2018-09-16",
+      "actual": 7.0,
+      "predicted": 5.16,
+      "lower_90": 0.3,
+      "upper_90": 28.11,
+      "lower_50": 2.26,
+      "upper_50": 10.64
+    },
+    {
+      "date": "2018-09-17",
+      "actual": 5.0,
+      "predicted": 4.96,
+      "lower_90": 0.27,
+      "upper_90": 27.09,
+      "lower_50": 2.16,
+      "upper_50": 10.26
+    },
+    {
+      "date": "2018-09-18",
+      "actual": 1.0,
+      "predicted": 4.67,
+      "lower_90": 0.21,
+      "upper_90": 25.62,
+      "lower_50": 2.01,
+      "upper_50": 9.69
+    },
+    {
+      "date": "2018-09-19",
+      "actual": 9.0,
+      "predicted": 4.18,
+      "lower_90": 0.1,
+      "upper_90": 23.36,
+      "lower_50": 1.75,
+      "upper_50": 8.77
+    },
+    {
+      "date": "2018-09-20",
+      "actual": 0.0,
+      "predicted": 4.18,
+      "lower_90": 0.1,
+      "upper_90": 23.34,
+      "lower_50": 1.75,
+      "upper_50": 8.76
+    },
+    {
+      "date": "2018-09-21",
+      "actual": 1.0,
+      "predicted": 3.22,
+      "lower_90": 0.0,
+      "upper_90": 18.91,
+      "lower_50": 1.23,
+      "upper_50": 6.97
+    },
+    {
+      "date": "2018-09-22",
+      "actual": 23.0,
+      "predicted": 3.94,
+      "lower_90": 0.05,
+      "upper_90": 22.28,
+      "lower_50": 1.61,
+      "upper_50": 8.32
+    },
+    {
+      "date": "2018-09-23",
+      "actual": 8.0,
+      "predicted": 5.75,
+      "lower_90": 0.43,
+      "upper_90": 30.96,
+      "lower_50": 2.57,
+      "upper_50": 11.77
+    },
+    {
+      "date": "2018-09-24",
+      "actual": 9.0,
+      "predicted": 5.18,
+      "lower_90": 0.31,
+      "upper_90": 28.05,
+      "lower_50": 2.28,
+      "upper_50": 10.65
+    },
+    {
+      "date": "2018-09-25",
+      "actual": 22.0,
+      "predicted": 4.82,
+      "lower_90": 0.24,
+      "upper_90": 26.32,
+      "lower_50": 2.08,
+      "upper_50": 9.96
+    },
+    {
+      "date": "2018-09-26",
+      "actual": 0.0,
+      "predicted": 4.77,
+      "lower_90": 0.23,
+      "upper_90": 26.08,
+      "lower_50": 2.06,
+      "upper_50": 9.87
+    },
+    {
+      "date": "2018-09-27",
+      "actual": 7.0,
+      "predicted": 3.33,
+      "lower_90": 0.0,
+      "upper_90": 19.43,
+      "lower_50": 1.29,
+      "upper_50": 7.18
+    },
+    {
+      "date": "2018-09-28",
+      "actual": 5.0,
+      "predicted": 4.09,
+      "lower_90": 0.08,
+      "upper_90": 22.96,
+      "lower_50": 1.7,
+      "upper_50": 8.61
+    },
+    {
+      "date": "2018-09-29",
+      "actual": 21.0,
+      "predicted": 4.63,
+      "lower_90": 0.19,
+      "upper_90": 25.59,
+      "lower_50": 1.98,
+      "upper_50": 9.63
+    },
+    {
+      "date": "2018-09-30",
+      "actual": 3.0,
+      "predicted": 5.55,
+      "lower_90": 0.39,
+      "upper_90": 29.9,
+      "lower_50": 2.47,
+      "upper_50": 11.37
+    },
+    {
+      "date": "2018-10-01",
+      "actual": 21.0,
+      "predicted": 5.79,
+      "lower_90": 0.44,
+      "upper_90": 30.89,
+      "lower_50": 2.6,
+      "upper_50": 11.79
+    },
+    {
+      "date": "2018-10-02",
+      "actual": 6.0,
+      "predicted": 6.72,
+      "lower_90": 0.64,
+      "upper_90": 35.24,
+      "lower_50": 3.09,
+      "upper_50": 13.55
+    },
+    {
+      "date": "2018-10-03",
+      "actual": 5.0,
+      "predicted": 5.36,
+      "lower_90": 0.35,
+      "upper_90": 28.89,
+      "lower_50": 2.37,
+      "upper_50": 11.0
+    },
+    {
+      "date": "2018-10-04",
+      "actual": 5.0,
+      "predicted": 5.67,
+      "lower_90": 0.42,
+      "upper_90": 30.3,
+      "lower_50": 2.54,
+      "upper_50": 11.57
+    },
+    {
+      "date": "2018-10-05",
+      "actual": 14.0,
+      "predicted": 5.4,
+      "lower_90": 0.36,
+      "upper_90": 29.11,
+      "lower_50": 2.39,
+      "upper_50": 11.08
+    },
+    {
+      "date": "2018-10-06",
+      "actual": 3.0,
+      "predicted": 6.08,
+      "lower_90": 0.5,
+      "upper_90": 32.44,
+      "lower_50": 2.74,
+      "upper_50": 12.37
+    },
+    {
+      "date": "2018-10-07",
+      "actual": 9.0,
+      "predicted": 6.33,
+      "lower_90": 0.55,
+      "upper_90": 33.59,
+      "lower_50": 2.88,
+      "upper_50": 12.84
+    },
+    {
+      "date": "2018-10-08",
+      "actual": 0.0,
+      "predicted": 6.42,
+      "lower_90": 0.58,
+      "upper_90": 33.84,
+      "lower_50": 2.93,
+      "upper_50": 12.98
+    },
+    {
+      "date": "2018-10-09",
+      "actual": 29.0,
+      "predicted": 5.05,
+      "lower_90": 0.29,
+      "upper_90": 27.46,
+      "lower_50": 2.21,
+      "upper_50": 10.41
+    },
+    {
+      "date": "2018-10-10",
+      "actual": 20.0,
+      "predicted": 6.86,
+      "lower_90": 0.67,
+      "upper_90": 36.0,
+      "lower_50": 3.16,
+      "upper_50": 13.83
+    },
+    {
+      "date": "2018-10-11",
+      "actual": 0.0,
+      "predicted": 5.75,
+      "lower_90": 0.43,
+      "upper_90": 30.74,
+      "lower_50": 2.58,
+      "upper_50": 11.73
+    },
+    {
+      "date": "2018-10-12",
+      "actual": 1.0,
+      "predicted": 4.98,
+      "lower_90": 0.27,
+      "upper_90": 27.16,
+      "lower_50": 2.17,
+      "upper_50": 10.29
+    },
+    {
+      "date": "2018-10-13",
+      "actual": 6.0,
+      "predicted": 5.45,
+      "lower_90": 0.36,
+      "upper_90": 29.56,
+      "lower_50": 2.41,
+      "upper_50": 11.2
+    },
+    {
+      "date": "2018-10-14",
+      "actual": 0.0,
+      "predicted": 6.72,
+      "lower_90": 0.63,
+      "upper_90": 35.54,
+      "lower_50": 3.08,
+      "upper_50": 13.6
+    },
+    {
+      "date": "2018-10-15",
+      "actual": 5.0,
+      "predicted": 5.02,
+      "lower_90": 0.27,
+      "upper_90": 27.57,
+      "lower_50": 2.18,
+      "upper_50": 10.4
+    },
+    {
+      "date": "2018-10-16",
+      "actual": 6.0,
+      "predicted": 6.08,
+      "lower_90": 0.5,
+      "upper_90": 32.39,
+      "lower_50": 2.75,
+      "upper_50": 12.37
+    },
+    {
+      "date": "2018-10-17",
+      "actual": 1.0,
+      "predicted": 6.02,
+      "lower_90": 0.49,
+      "upper_90": 32.1,
+      "lower_50": 2.72,
+      "upper_50": 12.25
+    },
+    {
+      "date": "2018-10-18",
+      "actual": 10.0,
+      "predicted": 5.64,
+      "lower_90": 0.41,
+      "upper_90": 30.36,
+      "lower_50": 2.51,
+      "upper_50": 11.54
+    },
+    {
+      "date": "2018-10-19",
+      "actual": 6.0,
+      "predicted": 5.86,
+      "lower_90": 0.46,
+      "upper_90": 31.35,
+      "lower_50": 2.63,
+      "upper_50": 11.96
+    },
+    {
+      "date": "2018-10-20",
+      "actual": 34.0,
+      "predicted": 6.33,
+      "lower_90": 0.55,
+      "upper_90": 33.65,
+      "lower_50": 2.88,
+      "upper_50": 12.86
+    },
+    {
+      "date": "2018-10-21",
+      "actual": 5.0,
+      "predicted": 7.2,
+      "lower_90": 0.73,
+      "upper_90": 37.92,
+      "lower_50": 3.33,
+      "upper_50": 14.52
+    },
+    {
+      "date": "2018-10-22",
+      "actual": 28.0,
+      "predicted": 6.74,
+      "lower_90": 0.64,
+      "upper_90": 35.55,
+      "lower_50": 3.09,
+      "upper_50": 13.62
+    },
+    {
+      "date": "2018-10-23",
+      "actual": 11.0,
+      "predicted": 6.26,
+      "lower_90": 0.54,
+      "upper_90": 33.2,
+      "lower_50": 2.84,
+      "upper_50": 12.7
+    },
+    {
+      "date": "2018-10-24",
+      "actual": 10.0,
+      "predicted": 5.57,
+      "lower_90": 0.39,
+      "upper_90": 29.98,
+      "lower_50": 2.48,
+      "upper_50": 11.4
+    },
+    {
+      "date": "2018-10-25",
+      "actual": 33.0,
+      "predicted": 5.8,
+      "lower_90": 0.44,
+      "upper_90": 31.01,
+      "lower_50": 2.6,
+      "upper_50": 11.83
+    },
+    {
+      "date": "2018-10-26",
+      "actual": 14.0,
+      "predicted": 6.38,
+      "lower_90": 0.57,
+      "upper_90": 33.74,
+      "lower_50": 2.91,
+      "upper_50": 12.92
+    },
+    {
+      "date": "2018-10-27",
+      "actual": 7.0,
+      "predicted": 6.56,
+      "lower_90": 0.6,
+      "upper_90": 34.77,
+      "lower_50": 3.0,
+      "upper_50": 13.29
+    },
+    {
+      "date": "2018-10-28",
+      "actual": 13.0,
+      "predicted": 7.59,
+      "lower_90": 0.81,
+      "upper_90": 39.7,
+      "lower_50": 3.54,
+      "upper_50": 15.25
+    },
+    {
+      "date": "2018-10-29",
+      "actual": 10.0,
+      "predicted": 6.9,
+      "lower_90": 0.67,
+      "upper_90": 36.3,
+      "lower_50": 3.18,
+      "upper_50": 13.93
+    },
+    {
+      "date": "2018-10-30",
+      "actual": 13.0,
+      "predicted": 6.81,
+      "lower_90": 0.66,
+      "upper_90": 35.67,
+      "lower_50": 3.14,
+      "upper_50": 13.72
+    },
+    {
+      "date": "2018-10-31",
+      "actual": 2.0,
+      "predicted": 7.0,
+      "lower_90": 0.7,
+      "upper_90": 36.65,
+      "lower_50": 3.24,
+      "upper_50": 14.1
+    },
+    {
+      "date": "2018-11-01",
+      "actual": 7.0,
+      "predicted": 4.86,
+      "lower_90": 0.24,
+      "upper_90": 26.58,
+      "lower_50": 2.1,
+      "upper_50": 10.05
+    },
+    {
+      "date": "2018-11-02",
+      "actual": 1.0,
+      "predicted": 5.34,
+      "lower_90": 0.35,
+      "upper_90": 28.92,
+      "lower_50": 2.36,
+      "upper_50": 10.98
+    },
+    {
+      "date": "2018-11-03",
+      "actual": 0.0,
+      "predicted": 4.69,
+      "lower_90": 0.2,
+      "upper_90": 25.89,
+      "lower_50": 2.01,
+      "upper_50": 9.76
+    },
+    {
+      "date": "2018-11-04",
+      "actual": 13.0,
+      "predicted": 5.0,
+      "lower_90": 0.27,
+      "upper_90": 27.33,
+      "lower_50": 2.18,
+      "upper_50": 10.34
+    },
+    {
+      "date": "2018-11-05",
+      "actual": 13.0,
+      "predicted": 6.54,
+      "lower_90": 0.6,
+      "upper_90": 34.63,
+      "lower_50": 2.99,
+      "upper_50": 13.25
+    },
+    {
+      "date": "2018-11-06",
+      "actual": 13.0,
+      "predicted": 5.96,
+      "lower_90": 0.48,
+      "upper_90": 31.73,
+      "lower_50": 2.69,
+      "upper_50": 12.13
+    },
+    {
+      "date": "2018-11-07",
+      "actual": 8.0,
+      "predicted": 5.46,
+      "lower_90": 0.37,
+      "upper_90": 29.32,
+      "lower_50": 2.42,
+      "upper_50": 11.17
+    },
+    {
+      "date": "2018-11-08",
+      "actual": 16.0,
+      "predicted": 5.04,
+      "lower_90": 0.28,
+      "upper_90": 27.4,
+      "lower_50": 2.2,
+      "upper_50": 10.39
+    },
+    {
+      "date": "2018-11-09",
+      "actual": 22.0,
+      "predicted": 5.04,
+      "lower_90": 0.28,
+      "upper_90": 27.43,
+      "lower_50": 2.2,
+      "upper_50": 10.39
+    },
+    {
+      "date": "2018-11-10",
+      "actual": 11.0,
+      "predicted": 4.92,
+      "lower_90": 0.25,
+      "upper_90": 26.98,
+      "lower_50": 2.13,
+      "upper_50": 10.19
+    },
+    {
+      "date": "2018-11-11",
+      "actual": 10.0,
+      "predicted": 5.25,
+      "lower_90": 0.31,
+      "upper_90": 28.71,
+      "lower_50": 2.3,
+      "upper_50": 10.84
+    },
+    {
+      "date": "2018-11-12",
+      "actual": 24.0,
+      "predicted": 5.55,
+      "lower_90": 0.39,
+      "upper_90": 29.91,
+      "lower_50": 2.46,
+      "upper_50": 11.37
+    },
+    {
+      "date": "2018-11-13",
+      "actual": 18.0,
+      "predicted": 5.75,
+      "lower_90": 0.43,
+      "upper_90": 30.79,
+      "lower_50": 2.57,
+      "upper_50": 11.74
+    },
+    {
+      "date": "2018-11-14",
+      "actual": 0.0,
+      "predicted": 5.85,
+      "lower_90": 0.45,
+      "upper_90": 31.36,
+      "lower_50": 2.63,
+      "upper_50": 11.95
+    },
+    {
+      "date": "2018-11-15",
+      "actual": 29.0,
+      "predicted": 4.27,
+      "lower_90": 0.12,
+      "upper_90": 23.84,
+      "lower_50": 1.79,
+      "upper_50": 8.95
+    },
+    {
+      "date": "2018-11-16",
+      "actual": 6.0,
+      "predicted": 6.15,
+      "lower_90": 0.52,
+      "upper_90": 32.73,
+      "lower_50": 2.79,
+      "upper_50": 12.5
+    },
+    {
+      "date": "2018-11-17",
+      "actual": 13.0,
+      "predicted": 5.67,
+      "lower_90": 0.41,
+      "upper_90": 30.61,
+      "lower_50": 2.53,
+      "upper_50": 11.63
+    },
+    {
+      "date": "2018-11-18",
+      "actual": 10.0,
+      "predicted": 5.84,
+      "lower_90": 0.45,
+      "upper_90": 31.2,
+      "lower_50": 2.63,
+      "upper_50": 11.91
+    },
+    {
+      "date": "2018-11-19",
+      "actual": 3.0,
+      "predicted": 6.11,
+      "lower_90": 0.51,
+      "upper_90": 32.43,
+      "lower_50": 2.77,
+      "upper_50": 12.41
+    },
+    {
+      "date": "2018-11-20",
+      "actual": 10.0,
+      "predicted": 5.69,
+      "lower_90": 0.42,
+      "upper_90": 30.43,
+      "lower_50": 2.55,
+      "upper_50": 11.61
+    },
+    {
+      "date": "2018-11-21",
+      "actual": 5.0,
+      "predicted": 5.64,
+      "lower_90": 0.41,
+      "upper_90": 30.25,
+      "lower_50": 2.52,
+      "upper_50": 11.53
+    },
+    {
+      "date": "2018-11-22",
+      "actual": 15.0,
+      "predicted": 5.06,
+      "lower_90": 0.29,
+      "upper_90": 27.53,
+      "lower_50": 2.21,
+      "upper_50": 10.44
+    },
+    {
+      "date": "2018-11-23",
+      "actual": 24.0,
+      "predicted": 5.36,
+      "lower_90": 0.35,
+      "upper_90": 28.93,
+      "lower_50": 2.37,
+      "upper_50": 11.0
+    },
+    {
+      "date": "2018-11-24",
+      "actual": 7.0,
+      "predicted": 5.71,
+      "lower_90": 0.42,
+      "upper_90": 30.58,
+      "lower_50": 2.55,
+      "upper_50": 11.65
+    },
+    {
+      "date": "2018-11-25",
+      "actual": 3.0,
+      "predicted": 5.59,
+      "lower_90": 0.4,
+      "upper_90": 29.97,
+      "lower_50": 2.49,
+      "upper_50": 11.42
+    },
+    {
+      "date": "2018-11-26",
+      "actual": 16.0,
+      "predicted": 5.5,
+      "lower_90": 0.38,
+      "upper_90": 29.57,
+      "lower_50": 2.45,
+      "upper_50": 11.26
+    },
+    {
+      "date": "2018-11-27",
+      "actual": 5.0,
+      "predicted": 5.82,
+      "lower_90": 0.45,
+      "upper_90": 30.97,
+      "lower_50": 2.62,
+      "upper_50": 11.84
+    },
+    {
+      "date": "2018-11-28",
+      "actual": 8.0,
+      "predicted": 5.88,
+      "lower_90": 0.46,
+      "upper_90": 31.36,
+      "lower_50": 2.64,
+      "upper_50": 11.97
+    },
+    {
+      "date": "2018-11-29",
+      "actual": 1.0,
+      "predicted": 4.95,
+      "lower_90": 0.27,
+      "upper_90": 27.01,
+      "lower_50": 2.16,
+      "upper_50": 10.23
+    },
+    {
+      "date": "2018-11-30",
+      "actual": 0.0,
+      "predicted": 4.9,
+      "lower_90": 0.25,
+      "upper_90": 26.8,
+      "lower_50": 2.12,
+      "upper_50": 10.13
+    },
+    {
+      "date": "2018-12-01",
+      "actual": 13.0,
+      "predicted": 6.36,
+      "lower_90": 0.56,
+      "upper_90": 33.84,
+      "lower_50": 2.89,
+      "upper_50": 12.92
+    },
+    {
+      "date": "2018-12-02",
+      "actual": 27.0,
+      "predicted": 7.57,
+      "lower_90": 0.82,
+      "upper_90": 39.42,
+      "lower_50": 3.54,
+      "upper_50": 15.19
+    },
+    {
+      "date": "2018-12-03",
+      "actual": 13.0,
+      "predicted": 9.04,
+      "lower_90": 1.13,
+      "upper_90": 46.28,
+      "lower_50": 4.32,
+      "upper_50": 17.95
+    },
+    {
+      "date": "2018-12-04",
+      "actual": 5.0,
+      "predicted": 8.04,
+      "lower_90": 0.93,
+      "upper_90": 41.39,
+      "lower_50": 3.8,
+      "upper_50": 16.04
+    },
+    {
+      "date": "2018-12-05",
+      "actual": 15.0,
+      "predicted": 7.39,
+      "lower_90": 0.78,
+      "upper_90": 38.4,
+      "lower_50": 3.45,
+      "upper_50": 14.81
+    },
+    {
+      "date": "2018-12-06",
+      "actual": 13.5,
+      "predicted": 6.92,
+      "lower_90": 0.69,
+      "upper_90": 36.19,
+      "lower_50": 3.2,
+      "upper_50": 13.93
+    },
+    {
+      "date": "2018-12-07",
+      "actual": 12.0,
+      "predicted": 6.37,
+      "lower_90": 0.56,
+      "upper_90": 33.73,
+      "lower_50": 2.9,
+      "upper_50": 12.91
+    },
+    {
+      "date": "2018-12-08",
+      "actual": 11.5,
+      "predicted": 6.66,
+      "lower_90": 0.63,
+      "upper_90": 35.08,
+      "lower_50": 3.06,
+      "upper_50": 13.46
+    },
+    {
+      "date": "2018-12-09",
+      "actual": 11.0,
+      "predicted": 7.48,
+      "lower_90": 0.8,
+      "upper_90": 38.94,
+      "lower_50": 3.5,
+      "upper_50": 15.01
+    },
+    {
+      "date": "2018-12-10",
+      "actual": 7.0,
+      "predicted": 7.54,
+      "lower_90": 0.81,
+      "upper_90": 39.32,
+      "lower_50": 3.52,
+      "upper_50": 15.14
+    },
+    {
+      "date": "2018-12-11",
+      "actual": 2.0,
+      "predicted": 7.31,
+      "lower_90": 0.76,
+      "upper_90": 38.17,
+      "lower_50": 3.4,
+      "upper_50": 14.69
+    },
+    {
+      "date": "2018-12-12",
+      "actual": 21.0,
+      "predicted": 6.88,
+      "lower_90": 0.67,
+      "upper_90": 36.14,
+      "lower_50": 3.18,
+      "upper_50": 13.88
+    },
+    {
+      "date": "2018-12-13",
+      "actual": 6.0,
+      "predicted": 7.69,
+      "lower_90": 0.85,
+      "upper_90": 39.89,
+      "lower_50": 3.61,
+      "upper_50": 15.4
+    },
+    {
+      "date": "2018-12-14",
+      "actual": 29.0,
+      "predicted": 7.71,
+      "lower_90": 0.85,
+      "upper_90": 39.99,
+      "lower_50": 3.62,
+      "upper_50": 15.44
+    },
+    {
+      "date": "2018-12-15",
+      "actual": 26.0,
+      "predicted": 7.68,
+      "lower_90": 0.84,
+      "upper_90": 39.88,
+      "lower_50": 3.6,
+      "upper_50": 15.39
+    },
+    {
+      "date": "2018-12-16",
+      "actual": 7.0,
+      "predicted": 7.89,
+      "lower_90": 0.88,
+      "upper_90": 40.92,
+      "lower_50": 3.71,
+      "upper_50": 15.79
+    },
+    {
+      "date": "2018-12-17",
+      "actual": 22.0,
+      "predicted": 8.08,
+      "lower_90": 0.93,
+      "upper_90": 41.6,
+      "lower_50": 3.82,
+      "upper_50": 16.1
+    },
+    {
+      "date": "2018-12-18",
+      "actual": 9.0,
+      "predicted": 8.37,
+      "lower_90": 1.0,
+      "upper_90": 42.99,
+      "lower_50": 3.97,
+      "upper_50": 16.67
+    },
+    {
+      "date": "2018-12-19",
+      "actual": 5.0,
+      "predicted": 7.41,
+      "lower_90": 0.79,
+      "upper_90": 38.45,
+      "lower_50": 3.46,
+      "upper_50": 14.84
+    },
+    {
+      "date": "2018-12-20",
+      "actual": 1.0,
+      "predicted": 6.68,
+      "lower_90": 0.64,
+      "upper_90": 35.03,
+      "lower_50": 3.08,
+      "upper_50": 13.47
+    },
+    {
+      "date": "2018-12-21",
+      "actual": 13.0,
+      "predicted": 6.26,
+      "lower_90": 0.54,
+      "upper_90": 33.2,
+      "lower_50": 2.85,
+      "upper_50": 12.71
+    },
+    {
+      "date": "2018-12-22",
+      "actual": 0.0,
+      "predicted": 7.53,
+      "lower_90": 0.81,
+      "upper_90": 39.14,
+      "lower_50": 3.52,
+      "upper_50": 15.09
+    },
+    {
+      "date": "2018-12-23",
+      "actual": 13.0,
+      "predicted": 6.92,
+      "lower_90": 0.68,
+      "upper_90": 36.36,
+      "lower_50": 3.2,
+      "upper_50": 13.96
+    },
+    {
+      "date": "2018-12-24",
+      "actual": 8.0,
+      "predicted": 8.99,
+      "lower_90": 1.12,
+      "upper_90": 46.0,
+      "lower_50": 4.29,
+      "upper_50": 17.84
+    },
+    {
+      "date": "2018-12-25",
+      "actual": 21.0,
+      "predicted": 9.2,
+      "lower_90": 1.17,
+      "upper_90": 47.07,
+      "lower_50": 4.41,
+      "upper_50": 18.26
+    },
+    {
+      "date": "2018-12-26",
+      "actual": 13.0,
+      "predicted": 8.33,
+      "lower_90": 0.99,
+      "upper_90": 42.86,
+      "lower_50": 3.95,
+      "upper_50": 16.6
+    },
+    {
+      "date": "2018-12-27",
+      "actual": 7.0,
+      "predicted": 7.97,
+      "lower_90": 0.91,
+      "upper_90": 41.14,
+      "lower_50": 3.76,
+      "upper_50": 15.91
+    },
+    {
+      "date": "2018-12-28",
+      "actual": 9.0,
+      "predicted": 7.49,
+      "lower_90": 0.8,
+      "upper_90": 38.99,
+      "lower_50": 3.5,
+      "upper_50": 15.03
+    },
+    {
+      "date": "2018-12-29",
+      "actual": 7.0,
+      "predicted": 6.71,
+      "lower_90": 0.63,
+      "upper_90": 35.42,
+      "lower_50": 3.08,
+      "upper_50": 13.57
+    },
+    {
+      "date": "2018-12-30",
+      "actual": 31.0,
+      "predicted": 7.2,
+      "lower_90": 0.74,
+      "upper_90": 37.67,
+      "lower_50": 3.34,
+      "upper_50": 14.48
+    },
+    {
+      "date": "2018-12-31",
+      "actual": 6.0,
+      "predicted": 8.42,
+      "lower_90": 0.81,
+      "upper_90": 48.12,
+      "lower_50": 3.79,
+      "upper_50": 17.54
+    },
+    {
+      "date": "2019-01-01",
+      "actual": 7.5,
+      "predicted": 6.76,
+      "lower_90": 0.65,
+      "upper_90": 35.51,
+      "lower_50": 3.11,
+      "upper_50": 13.64
+    },
+    {
+      "date": "2019-01-02",
+      "actual": 9.0,
+      "predicted": 6.58,
+      "lower_90": 0.61,
+      "upper_90": 34.65,
+      "lower_50": 3.02,
+      "upper_50": 13.29
+    },
+    {
+      "date": "2019-01-03",
+      "actual": 9.0,
+      "predicted": 6.71,
+      "lower_90": 0.64,
+      "upper_90": 35.33,
+      "lower_50": 3.08,
+      "upper_50": 13.55
+    },
+    {
+      "date": "2019-01-04",
+      "actual": 0.0,
+      "predicted": 6.25,
+      "lower_90": 0.54,
+      "upper_90": 33.12,
+      "lower_50": 2.84,
+      "upper_50": 12.67
+    },
+    {
+      "date": "2019-01-05",
+      "actual": 30.0,
+      "predicted": 5.96,
+      "lower_90": 0.46,
+      "upper_90": 32.1,
+      "lower_50": 2.67,
+      "upper_50": 12.19
+    },
+    {
+      "date": "2019-01-06",
+      "actual": 0.0,
+      "predicted": 7.43,
+      "lower_90": 0.78,
+      "upper_90": 38.99,
+      "lower_50": 3.45,
+      "upper_50": 14.96
+    },
+    {
+      "date": "2019-01-07",
+      "actual": 5.0,
+      "predicted": 6.66,
+      "lower_90": 0.62,
+      "upper_90": 35.21,
+      "lower_50": 3.05,
+      "upper_50": 13.48
+    },
+    {
+      "date": "2019-01-08",
+      "actual": 10.0,
+      "predicted": 7.2,
+      "lower_90": 0.74,
+      "upper_90": 37.68,
+      "lower_50": 3.34,
+      "upper_50": 14.49
+    },
+    {
+      "date": "2019-01-09",
+      "actual": 10.0,
+      "predicted": 6.76,
+      "lower_90": 0.65,
+      "upper_90": 35.59,
+      "lower_50": 3.11,
+      "upper_50": 13.65
+    },
+    {
+      "date": "2019-01-10",
+      "actual": 13.0,
+      "predicted": 6.7,
+      "lower_90": 0.64,
+      "upper_90": 35.28,
+      "lower_50": 3.08,
+      "upper_50": 13.54
+    },
+    {
+      "date": "2019-01-11",
+      "actual": 6.0,
+      "predicted": 6.28,
+      "lower_90": 0.54,
+      "upper_90": 33.44,
+      "lower_50": 2.85,
+      "upper_50": 12.77
+    },
+    {
+      "date": "2019-01-12",
+      "actual": 10.0,
+      "predicted": 6.2,
+      "lower_90": 0.52,
+      "upper_90": 33.04,
+      "lower_50": 2.81,
+      "upper_50": 12.62
+    },
+    {
+      "date": "2019-01-13",
+      "actual": 1.0,
+      "predicted": 6.32,
+      "lower_90": 0.55,
+      "upper_90": 33.67,
+      "lower_50": 2.87,
+      "upper_50": 12.85
+    },
+    {
+      "date": "2019-01-14",
+      "actual": 18.0,
+      "predicted": 6.14,
+      "lower_90": 0.52,
+      "upper_90": 32.68,
+      "lower_50": 2.78,
+      "upper_50": 12.49
+    },
+    {
+      "date": "2019-01-15",
+      "actual": 19.0,
+      "predicted": 7.08,
+      "lower_90": 0.72,
+      "upper_90": 36.94,
+      "lower_50": 3.29,
+      "upper_50": 14.23
+    },
+    {
+      "date": "2019-01-16",
+      "actual": 17.0,
+      "predicted": 6.8,
+      "lower_90": 0.66,
+      "upper_90": 35.63,
+      "lower_50": 3.13,
+      "upper_50": 13.7
+    },
+    {
+      "date": "2019-01-17",
+      "actual": 8.0,
+      "predicted": 6.68,
+      "lower_90": 0.63,
+      "upper_90": 35.13,
+      "lower_50": 3.07,
+      "upper_50": 13.49
+    },
+    {
+      "date": "2019-01-18",
+      "actual": 24.0,
+      "predicted": 6.82,
+      "lower_90": 0.66,
+      "upper_90": 35.87,
+      "lower_50": 3.14,
+      "upper_50": 13.77
+    },
+    {
+      "date": "2019-01-19",
+      "actual": 1.0,
+      "predicted": 6.77,
+      "lower_90": 0.64,
+      "upper_90": 35.76,
+      "lower_50": 3.11,
+      "upper_50": 13.69
+    },
+    {
+      "date": "2019-01-20",
+      "actual": 34.0,
+      "predicted": 6.29,
+      "lower_90": 0.54,
+      "upper_90": 33.62,
+      "lower_50": 2.85,
+      "upper_50": 12.81
+    },
+    {
+      "date": "2019-01-21",
+      "actual": 31.0,
+      "predicted": 8.19,
+      "lower_90": 0.95,
+      "upper_90": 42.38,
+      "lower_50": 3.87,
+      "upper_50": 16.36
+    },
+    {
+      "date": "2019-01-22",
+      "actual": 7.0,
+      "predicted": 7.78,
+      "lower_90": 0.87,
+      "upper_90": 40.32,
+      "lower_50": 3.65,
+      "upper_50": 15.56
+    },
+    {
+      "date": "2019-01-23",
+      "actual": 23.0,
+      "predicted": 6.76,
+      "lower_90": 0.65,
+      "upper_90": 35.55,
+      "lower_50": 3.11,
+      "upper_50": 13.65
+    },
+    {
+      "date": "2019-01-24",
+      "actual": 2.0,
+      "predicted": 7.0,
+      "lower_90": 0.7,
+      "upper_90": 36.61,
+      "lower_50": 3.24,
+      "upper_50": 14.08
+    },
+    {
+      "date": "2019-01-25",
+      "actual": 11.0,
+      "predicted": 6.34,
+      "lower_90": 0.56,
+      "upper_90": 33.61,
+      "lower_50": 2.89,
+      "upper_50": 12.86
+    },
+    {
+      "date": "2019-01-26",
+      "actual": 13.0,
+      "predicted": 6.73,
+      "lower_90": 0.64,
+      "upper_90": 35.56,
+      "lower_50": 3.09,
+      "upper_50": 13.62
+    },
+    {
+      "date": "2019-01-27",
+      "actual": 6.0,
+      "predicted": 7.86,
+      "lower_90": 0.87,
+      "upper_90": 40.96,
+      "lower_50": 3.69,
+      "upper_50": 15.76
+    },
+    {
+      "date": "2019-01-28",
+      "actual": 28.0,
+      "predicted": 7.88,
+      "lower_90": 0.89,
+      "upper_90": 40.85,
+      "lower_50": 3.71,
+      "upper_50": 15.77
+    },
+    {
+      "date": "2019-01-29",
+      "actual": 15.0,
+      "predicted": 8.41,
+      "lower_90": 1.0,
+      "upper_90": 43.28,
+      "lower_50": 3.99,
+      "upper_50": 16.75
+    },
+    {
+      "date": "2019-01-30",
+      "actual": 11.0,
+      "predicted": 7.62,
+      "lower_90": 0.83,
+      "upper_90": 39.57,
+      "lower_50": 3.57,
+      "upper_50": 15.27
+    },
+    {
+      "date": "2019-01-31",
+      "actual": 20.0,
+      "predicted": 7.2,
+      "lower_90": 0.74,
+      "upper_90": 37.57,
+      "lower_50": 3.35,
+      "upper_50": 14.47
+    },
+    {
+      "date": "2019-02-01",
+      "actual": 7.0,
+      "predicted": 8.66,
+      "lower_90": 1.05,
+      "upper_90": 44.6,
+      "lower_50": 4.11,
+      "upper_50": 17.25
+    },
+    {
+      "date": "2019-02-02",
+      "actual": 45.0,
+      "predicted": 8.32,
+      "lower_90": 0.97,
+      "upper_90": 43.05,
+      "lower_50": 3.93,
+      "upper_50": 16.62
+    },
+    {
+      "date": "2019-02-03",
+      "actual": 5.0,
+      "predicted": 9.59,
+      "lower_90": 1.24,
+      "upper_90": 49.18,
+      "lower_50": 4.6,
+      "upper_50": 19.04
+    },
+    {
+      "date": "2019-02-04",
+      "actual": 12.0,
+      "predicted": 8.7,
+      "lower_90": 1.06,
+      "upper_90": 44.72,
+      "lower_50": 4.14,
+      "upper_50": 17.31
+    },
+    {
+      "date": "2019-02-05",
+      "actual": 1.0,
+      "predicted": 9.29,
+      "lower_90": 1.19,
+      "upper_90": 47.41,
+      "lower_50": 4.46,
+      "upper_50": 18.42
+    },
+    {
+      "date": "2019-02-06",
+      "actual": 4.0,
+      "predicted": 7.43,
+      "lower_90": 0.79,
+      "upper_90": 38.75,
+      "lower_50": 3.46,
+      "upper_50": 14.92
+    },
+    {
+      "date": "2019-02-07",
+      "actual": 22.0,
+      "predicted": 8.22,
+      "lower_90": 0.95,
+      "upper_90": 42.53,
+      "lower_50": 3.88,
+      "upper_50": 16.42
+    },
+    {
+      "date": "2019-02-08",
+      "actual": 12.0,
+      "predicted": 8.86,
+      "lower_90": 1.09,
+      "upper_90": 45.51,
+      "lower_50": 4.22,
+      "upper_50": 17.62
+    },
+    {
+      "date": "2019-02-09",
+      "actual": 11.0,
+      "predicted": 8.58,
+      "lower_90": 1.02,
+      "upper_90": 44.36,
+      "lower_50": 4.07,
+      "upper_50": 17.12
+    },
+    {
+      "date": "2019-02-10",
+      "actual": 0.0,
+      "predicted": 9.85,
+      "lower_90": 1.29,
+      "upper_90": 50.29,
+      "lower_50": 4.74,
+      "upper_50": 19.51
+    },
+    {
+      "date": "2019-02-11",
+      "actual": 5.0,
+      "predicted": 8.22,
+      "lower_90": 0.95,
+      "upper_90": 42.54,
+      "lower_50": 3.88,
+      "upper_50": 16.42
+    },
+    {
+      "date": "2019-02-12",
+      "actual": 6.0,
+      "predicted": 8.81,
+      "lower_90": 1.08,
+      "upper_90": 45.34,
+      "lower_50": 4.19,
+      "upper_50": 17.54
+    },
+    {
+      "date": "2019-02-13",
+      "actual": 8.0,
+      "predicted": 8.29,
+      "lower_90": 0.98,
+      "upper_90": 42.7,
+      "lower_50": 3.93,
+      "upper_50": 16.53
+    },
+    {
+      "date": "2019-02-14",
+      "actual": 7.0,
+      "predicted": 8.04,
+      "lower_90": 0.92,
+      "upper_90": 41.48,
+      "lower_50": 3.79,
+      "upper_50": 16.04
+    },
+    {
+      "date": "2019-02-15",
+      "actual": 3.0,
+      "predicted": 8.16,
+      "lower_90": 0.94,
+      "upper_90": 42.12,
+      "lower_50": 3.85,
+      "upper_50": 16.28
+    },
+    {
+      "date": "2019-02-16",
+      "actual": 6.0,
+      "predicted": 7.7,
+      "lower_90": 0.84,
+      "upper_90": 40.18,
+      "lower_50": 3.6,
+      "upper_50": 15.45
+    },
+    {
+      "date": "2019-02-17",
+      "actual": 0.0,
+      "predicted": 7.82,
+      "lower_90": 0.86,
+      "upper_90": 40.82,
+      "lower_50": 3.66,
+      "upper_50": 15.7
+    },
+    {
+      "date": "2019-02-18",
+      "actual": 10.0,
+      "predicted": 7.18,
+      "lower_90": 0.73,
+      "upper_90": 37.63,
+      "lower_50": 3.33,
+      "upper_50": 14.45
+    },
+    {
+      "date": "2019-02-19",
+      "actual": 6.0,
+      "predicted": 8.91,
+      "lower_90": 1.11,
+      "upper_90": 45.68,
+      "lower_50": 4.25,
+      "upper_50": 17.71
+    },
+    {
+      "date": "2019-02-20",
+      "actual": 7.0,
+      "predicted": 7.73,
+      "lower_90": 0.85,
+      "upper_90": 40.13,
+      "lower_50": 3.63,
+      "upper_50": 15.49
+    },
+    {
+      "date": "2019-02-21",
+      "actual": 5.0,
+      "predicted": 7.3,
+      "lower_90": 0.76,
+      "upper_90": 38.06,
+      "lower_50": 3.4,
+      "upper_50": 14.66
+    },
+    {
+      "date": "2019-02-22",
+      "actual": 1.0,
+      "predicted": 6.82,
+      "lower_90": 0.66,
+      "upper_90": 35.83,
+      "lower_50": 3.14,
+      "upper_50": 13.75
+    },
+    {
+      "date": "2019-02-23",
+      "actual": 0.0,
+      "predicted": 6.18,
+      "lower_90": 0.52,
+      "upper_90": 32.97,
+      "lower_50": 2.8,
+      "upper_50": 12.58
+    },
+    {
+      "date": "2019-02-24",
+      "actual": 2.0,
+      "predicted": 6.81,
+      "lower_90": 0.64,
+      "upper_90": 36.21,
+      "lower_50": 3.12,
+      "upper_50": 13.81
+    },
+    {
+      "date": "2019-02-25",
+      "actual": 2.0,
+      "predicted": 7.39,
+      "lower_90": 0.77,
+      "upper_90": 38.77,
+      "lower_50": 3.44,
+      "upper_50": 14.88
+    },
+    {
+      "date": "2019-02-26",
+      "actual": 3.0,
+      "predicted": 7.2,
+      "lower_90": 0.74,
+      "upper_90": 37.74,
+      "lower_50": 3.34,
+      "upper_50": 14.5
+    },
+    {
+      "date": "2019-02-27",
+      "actual": 1.0,
+      "predicted": 6.91,
+      "lower_90": 0.67,
+      "upper_90": 36.48,
+      "lower_50": 3.18,
+      "upper_50": 13.97
+    },
+    {
+      "date": "2019-02-28",
+      "actual": 35.0,
+      "predicted": 6.23,
+      "lower_90": 0.53,
+      "upper_90": 33.21,
+      "lower_50": 2.82,
+      "upper_50": 12.67
+    },
+    {
+      "date": "2019-03-01",
+      "actual": 6.0,
+      "predicted": 6.0,
+      "lower_90": 0.47,
+      "upper_90": 32.33,
+      "lower_50": 2.69,
+      "upper_50": 12.27
+    },
+    {
+      "date": "2019-03-02",
+      "actual": 0.0,
+      "predicted": 4.68,
+      "lower_90": 0.19,
+      "upper_90": 26.08,
+      "lower_50": 2.0,
+      "upper_50": 9.78
+    },
+    {
+      "date": "2019-03-03",
+      "actual": 10.0,
+      "predicted": 4.78,
+      "lower_90": 0.21,
+      "upper_90": 26.53,
+      "lower_50": 2.05,
+      "upper_50": 9.96
+    },
+    {
+      "date": "2019-03-04",
+      "actual": 5.0,
+      "predicted": 5.63,
+      "lower_90": 0.4,
+      "upper_90": 30.36,
+      "lower_50": 2.5,
+      "upper_50": 11.53
+    },
+    {
+      "date": "2019-03-05",
+      "actual": 6.0,
+      "predicted": 5.42,
+      "lower_90": 0.36,
+      "upper_90": 29.33,
+      "lower_50": 2.4,
+      "upper_50": 11.13
+    },
+    {
+      "date": "2019-03-06",
+      "actual": 5.0,
+      "predicted": 4.92,
+      "lower_90": 0.25,
+      "upper_90": 26.97,
+      "lower_50": 2.13,
+      "upper_50": 10.18
+    },
+    {
+      "date": "2019-03-07",
+      "actual": 0.0,
+      "predicted": 4.69,
+      "lower_90": 0.2,
+      "upper_90": 25.97,
+      "lower_50": 2.01,
+      "upper_50": 9.77
+    },
+    {
+      "date": "2019-03-08",
+      "actual": 0.0,
+      "predicted": 4.54,
+      "lower_90": 0.17,
+      "upper_90": 25.17,
+      "lower_50": 1.93,
+      "upper_50": 9.47
+    },
+    {
+      "date": "2019-03-09",
+      "actual": 7.0,
+      "predicted": 4.48,
+      "lower_90": 0.15,
+      "upper_90": 25.03,
+      "lower_50": 1.89,
+      "upper_50": 9.38
+    },
+    {
+      "date": "2019-03-10",
+      "actual": 3.0,
+      "predicted": 5.72,
+      "lower_90": 0.42,
+      "upper_90": 30.83,
+      "lower_50": 2.55,
+      "upper_50": 11.72
+    },
+    {
+      "date": "2019-03-11",
+      "actual": 11.0,
+      "predicted": 6.01,
+      "lower_90": 0.48,
+      "upper_90": 32.11,
+      "lower_50": 2.71,
+      "upper_50": 12.25
+    },
+    {
+      "date": "2019-03-12",
+      "actual": 7.0,
+      "predicted": 6.29,
+      "lower_90": 0.54,
+      "upper_90": 33.38,
+      "lower_50": 2.86,
+      "upper_50": 12.76
+    },
+    {
+      "date": "2019-03-13",
+      "actual": 8.0,
+      "predicted": 5.89,
+      "lower_90": 0.46,
+      "upper_90": 31.57,
+      "lower_50": 2.65,
+      "upper_50": 12.03
+    },
+    {
+      "date": "2019-03-14",
+      "actual": 27.0,
+      "predicted": 4.8,
+      "lower_90": 0.22,
+      "upper_90": 26.45,
+      "lower_50": 2.07,
+      "upper_50": 9.97
+    },
+    {
+      "date": "2019-03-15",
+      "actual": 20.0,
+      "predicted": 5.32,
+      "lower_90": 0.34,
+      "upper_90": 28.88,
+      "lower_50": 2.34,
+      "upper_50": 10.95
+    },
+    {
+      "date": "2019-03-16",
+      "actual": 5.0,
+      "predicted": 5.66,
+      "lower_90": 0.41,
+      "upper_90": 30.55,
+      "lower_50": 2.52,
+      "upper_50": 11.61
+    },
+    {
+      "date": "2019-03-17",
+      "actual": 10.0,
+      "predicted": 5.19,
+      "lower_90": 0.31,
+      "upper_90": 28.32,
+      "lower_50": 2.27,
+      "upper_50": 10.71
+    },
+    {
+      "date": "2019-03-18",
+      "actual": 1.0,
+      "predicted": 5.96,
+      "lower_90": 0.48,
+      "upper_90": 31.79,
+      "lower_50": 2.69,
+      "upper_50": 12.14
+    },
+    {
+      "date": "2019-03-19",
+      "actual": 2.0,
+      "predicted": 5.15,
+      "lower_90": 0.3,
+      "upper_90": 27.96,
+      "lower_50": 2.26,
+      "upper_50": 10.6
+    },
+    {
+      "date": "2019-03-20",
+      "actual": 19.0,
+      "predicted": 5.02,
+      "lower_90": 0.28,
+      "upper_90": 27.35,
+      "lower_50": 2.19,
+      "upper_50": 10.36
+    },
+    {
+      "date": "2019-03-21",
+      "actual": 6.0,
+      "predicted": 6.25,
+      "lower_90": 0.53,
+      "upper_90": 33.27,
+      "lower_50": 2.84,
+      "upper_50": 12.7
+    },
+    {
+      "date": "2019-03-22",
+      "actual": 29.0,
+      "predicted": 6.34,
+      "lower_90": 0.55,
+      "upper_90": 33.69,
+      "lower_50": 2.88,
+      "upper_50": 12.87
+    },
+    {
+      "date": "2019-03-23",
+      "actual": 1.0,
+      "predicted": 6.55,
+      "lower_90": 0.59,
+      "upper_90": 34.77,
+      "lower_50": 2.99,
+      "upper_50": 13.29
+    },
+    {
+      "date": "2019-03-24",
+      "actual": 16.0,
+      "predicted": 5.88,
+      "lower_90": 0.45,
+      "upper_90": 31.59,
+      "lower_50": 2.64,
+      "upper_50": 12.02
+    },
+    {
+      "date": "2019-03-25",
+      "actual": 6.0,
+      "predicted": 7.17,
+      "lower_90": 0.73,
+      "upper_90": 37.53,
+      "lower_50": 3.32,
+      "upper_50": 14.43
+    },
+    {
+      "date": "2019-03-26",
+      "actual": 19.0,
+      "predicted": 6.52,
+      "lower_90": 0.6,
+      "upper_90": 34.45,
+      "lower_50": 2.98,
+      "upper_50": 13.2
+    },
+    {
+      "date": "2019-03-27",
+      "actual": 0.0,
+      "predicted": 6.87,
+      "lower_90": 0.67,
+      "upper_90": 36.07,
+      "lower_50": 3.17,
+      "upper_50": 13.86
+    },
+    {
+      "date": "2019-03-28",
+      "actual": 7.0,
+      "predicted": 4.75,
+      "lower_90": 0.21,
+      "upper_90": 26.19,
+      "lower_50": 2.04,
+      "upper_50": 9.87
+    },
+    {
+      "date": "2019-03-29",
+      "actual": 16.0,
+      "predicted": 5.67,
+      "lower_90": 0.41,
+      "upper_90": 30.51,
+      "lower_50": 2.53,
+      "upper_50": 11.61
+    },
+    {
+      "date": "2019-03-30",
+      "actual": 0.0,
+      "predicted": 6.26,
+      "lower_90": 0.53,
+      "upper_90": 33.31,
+      "lower_50": 2.84,
+      "upper_50": 12.72
+    },
+    {
+      "date": "2019-03-31",
+      "actual": 5.0,
+      "predicted": 5.17,
+      "lower_90": 0.3,
+      "upper_90": 28.21,
+      "lower_50": 2.26,
+      "upper_50": 10.67
+    },
+    {
+      "date": "2019-04-01",
+      "actual": 5.0,
+      "predicted": 6.24,
+      "lower_90": 0.54,
+      "upper_90": 33.02,
+      "lower_50": 2.84,
+      "upper_50": 12.65
+    },
+    {
+      "date": "2019-04-02",
+      "actual": 10.0,
+      "predicted": 6.12,
+      "lower_90": 0.52,
+      "upper_90": 32.43,
+      "lower_50": 2.77,
+      "upper_50": 12.42
+    },
+    {
+      "date": "2019-04-03",
+      "actual": 4.0,
+      "predicted": 5.46,
+      "lower_90": 0.37,
+      "upper_90": 29.46,
+      "lower_50": 2.42,
+      "upper_50": 11.2
+    },
+    {
+      "date": "2019-04-04",
+      "actual": 13.0,
+      "predicted": 5.32,
+      "lower_90": 0.35,
+      "upper_90": 28.68,
+      "lower_50": 2.35,
+      "upper_50": 10.91
+    },
+    {
+      "date": "2019-04-05",
+      "actual": 3.0,
+      "predicted": 5.49,
+      "lower_90": 0.38,
+      "upper_90": 29.59,
+      "lower_50": 2.44,
+      "upper_50": 11.25
+    },
+    {
+      "date": "2019-04-06",
+      "actual": 16.0,
+      "predicted": 4.91,
+      "lower_90": 0.25,
+      "upper_90": 26.88,
+      "lower_50": 2.13,
+      "upper_50": 10.16
+    },
+    {
+      "date": "2019-04-07",
+      "actual": 0.0,
+      "predicted": 5.44,
+      "lower_90": 0.37,
+      "upper_90": 29.3,
+      "lower_50": 2.41,
+      "upper_50": 11.14
+    },
+    {
+      "date": "2019-04-08",
+      "actual": 4.0,
+      "predicted": 4.96,
+      "lower_90": 0.27,
+      "upper_90": 27.03,
+      "lower_50": 2.16,
+      "upper_50": 10.24
+    },
+    {
+      "date": "2019-04-09",
+      "actual": 3.0,
+      "predicted": 5.22,
+      "lower_90": 0.33,
+      "upper_90": 28.18,
+      "lower_50": 2.3,
+      "upper_50": 10.72
+    },
+    {
+      "date": "2019-04-10",
+      "actual": 9.0,
+      "predicted": 5.37,
+      "lower_90": 0.35,
+      "upper_90": 29.05,
+      "lower_50": 2.37,
+      "upper_50": 11.03
+    },
+    {
+      "date": "2019-04-11",
+      "actual": 7.0,
+      "predicted": 4.93,
+      "lower_90": 0.26,
+      "upper_90": 26.87,
+      "lower_50": 2.15,
+      "upper_50": 10.19
+    },
+    {
+      "date": "2019-04-12",
+      "actual": 6.0,
+      "predicted": 4.64,
+      "lower_90": 0.2,
+      "upper_90": 25.52,
+      "lower_50": 1.99,
+      "upper_50": 9.64
+    },
+    {
+      "date": "2019-04-13",
+      "actual": 6.0,
+      "predicted": 5.11,
+      "lower_90": 0.3,
+      "upper_90": 27.83,
+      "lower_50": 2.24,
+      "upper_50": 10.54
+    },
+    {
+      "date": "2019-04-14",
+      "actual": 7.0,
+      "predicted": 4.9,
+      "lower_90": 0.25,
+      "upper_90": 26.81,
+      "lower_50": 2.12,
+      "upper_50": 10.13
+    },
+    {
+      "date": "2019-04-15",
+      "actual": 3.0,
+      "predicted": 5.71,
+      "lower_90": 0.42,
+      "upper_90": 30.69,
+      "lower_50": 2.55,
+      "upper_50": 11.68
+    },
+    {
+      "date": "2019-04-16",
+      "actual": 1.0,
+      "predicted": 5.07,
+      "lower_90": 0.29,
+      "upper_90": 27.65,
+      "lower_50": 2.21,
+      "upper_50": 10.47
+    },
+    {
+      "date": "2019-04-17",
+      "actual": 24.0,
+      "predicted": 4.5,
+      "lower_90": 0.17,
+      "upper_90": 24.88,
+      "lower_50": 1.92,
+      "upper_50": 9.38
+    },
+    {
+      "date": "2019-04-18",
+      "actual": 15.0,
+      "predicted": 5.19,
+      "lower_90": 0.32,
+      "upper_90": 28.11,
+      "lower_50": 2.28,
+      "upper_50": 10.68
+    },
+    {
+      "date": "2019-04-19",
+      "actual": 6.0,
+      "predicted": 5.1,
+      "lower_90": 0.3,
+      "upper_90": 27.69,
+      "lower_50": 2.23,
+      "upper_50": 10.5
+    },
+    {
+      "date": "2019-04-20",
+      "actual": 0.0,
+      "predicted": 4.56,
+      "lower_90": 0.18,
+      "upper_90": 25.24,
+      "lower_50": 1.94,
+      "upper_50": 9.5
+    },
+    {
+      "date": "2019-04-21",
+      "actual": 2.0,
+      "predicted": 4.5,
+      "lower_90": 0.16,
+      "upper_90": 25.03,
+      "lower_50": 1.9,
+      "upper_50": 9.4
+    },
+    {
+      "date": "2019-04-22",
+      "actual": 31.0,
+      "predicted": 5.17,
+      "lower_90": 0.31,
+      "upper_90": 28.02,
+      "lower_50": 2.27,
+      "upper_50": 10.64
+    },
+    {
+      "date": "2019-04-23",
+      "actual": 4.0,
+      "predicted": 5.89,
+      "lower_90": 0.46,
+      "upper_90": 31.54,
+      "lower_50": 2.65,
+      "upper_50": 12.02
+    },
+    {
+      "date": "2019-04-24",
+      "actual": 12.0,
+      "predicted": 5.1,
+      "lower_90": 0.29,
+      "upper_90": 27.75,
+      "lower_50": 2.23,
+      "upper_50": 10.52
+    },
+    {
+      "date": "2019-04-25",
+      "actual": 7.0,
+      "predicted": 5.21,
+      "lower_90": 0.32,
+      "upper_90": 28.2,
+      "lower_50": 2.3,
+      "upper_50": 10.72
+    },
+    {
+      "date": "2019-04-26",
+      "actual": 1.0,
+      "predicted": 5.04,
+      "lower_90": 0.28,
+      "upper_90": 27.41,
+      "lower_50": 2.2,
+      "upper_50": 10.39
+    },
+    {
+      "date": "2019-04-27",
+      "actual": 7.0,
+      "predicted": 4.5,
+      "lower_90": 0.16,
+      "upper_90": 25.05,
+      "lower_50": 1.91,
+      "upper_50": 9.4
+    },
+    {
+      "date": "2019-04-28",
+      "actual": 3.5,
+      "predicted": 5.1,
+      "lower_90": 0.29,
+      "upper_90": 27.83,
+      "lower_50": 2.23,
+      "upper_50": 10.54
+    },
+    {
+      "date": "2019-04-29",
+      "actual": 0.0,
+      "predicted": 5.85,
+      "lower_90": 0.45,
+      "upper_90": 31.34,
+      "lower_50": 2.63,
+      "upper_50": 11.95
+    },
+    {
+      "date": "2019-04-30",
+      "actual": 28.0,
+      "predicted": 5.41,
+      "lower_90": 0.36,
+      "upper_90": 29.21,
+      "lower_50": 2.4,
+      "upper_50": 11.1
+    },
+    {
+      "date": "2019-05-01",
+      "actual": 1.0,
+      "predicted": 4.63,
+      "lower_90": 0.19,
+      "upper_90": 25.61,
+      "lower_50": 1.98,
+      "upper_50": 9.64
+    },
+    {
+      "date": "2019-05-02",
+      "actual": 3.0,
+      "predicted": 3.51,
+      "lower_90": 0.0,
+      "upper_90": 20.25,
+      "lower_50": 1.39,
+      "upper_50": 7.51
+    },
+    {
+      "date": "2019-05-03",
+      "actual": 16.0,
+      "predicted": 3.81,
+      "lower_90": 0.02,
+      "upper_90": 21.68,
+      "lower_50": 1.55,
+      "upper_50": 8.08
+    },
+    {
+      "date": "2019-05-04",
+      "actual": 16.0,
+      "predicted": 4.39,
+      "lower_90": 0.14,
+      "upper_90": 24.55,
+      "lower_50": 1.85,
+      "upper_50": 9.2
+    },
+    {
+      "date": "2019-05-05",
+      "actual": 0.0,
+      "predicted": 4.74,
+      "lower_90": 0.21,
+      "upper_90": 26.21,
+      "lower_50": 2.03,
+      "upper_50": 9.86
+    },
+    {
+      "date": "2019-05-06",
+      "actual": 9.0,
+      "predicted": 3.6,
+      "lower_90": 0.0,
+      "upper_90": 20.81,
+      "lower_50": 1.43,
+      "upper_50": 7.7
+    },
+    {
+      "date": "2019-05-07",
+      "actual": 6.0,
+      "predicted": 4.55,
+      "lower_90": 0.18,
+      "upper_90": 25.14,
+      "lower_50": 1.94,
+      "upper_50": 9.47
+    },
+    {
+      "date": "2019-05-08",
+      "actual": 20.0,
+      "predicted": 3.91,
+      "lower_90": 0.04,
+      "upper_90": 22.08,
+      "lower_50": 1.6,
+      "upper_50": 8.26
+    },
+    {
+      "date": "2019-05-09",
+      "actual": 31.0,
+      "predicted": 4.1,
+      "lower_90": 0.08,
+      "upper_90": 22.99,
+      "lower_50": 1.7,
+      "upper_50": 8.62
+    },
+    {
+      "date": "2019-05-10",
+      "actual": 26.0,
+      "predicted": 4.76,
+      "lower_90": 0.22,
+      "upper_90": 26.19,
+      "lower_50": 2.05,
+      "upper_50": 9.88
+    },
+    {
+      "date": "2019-05-11",
+      "actual": 12.0,
+      "predicted": 4.43,
+      "lower_90": 0.15,
+      "upper_90": 24.69,
+      "lower_50": 1.87,
+      "upper_50": 9.27
+    },
+    {
+      "date": "2019-05-12",
+      "actual": 19.0,
+      "predicted": 4.43,
+      "lower_90": 0.15,
+      "upper_90": 24.78,
+      "lower_50": 1.87,
+      "upper_50": 9.29
+    },
+    {
+      "date": "2019-05-13",
+      "actual": 11.0,
+      "predicted": 5.8,
+      "lower_90": 0.43,
+      "upper_90": 31.26,
+      "lower_50": 2.59,
+      "upper_50": 11.87
+    },
+    {
+      "date": "2019-05-14",
+      "actual": 11.0,
+      "predicted": 4.76,
+      "lower_90": 0.22,
+      "upper_90": 26.27,
+      "lower_50": 2.04,
+      "upper_50": 9.89
+    },
+    {
+      "date": "2019-05-15",
+      "actual": 5.0,
+      "predicted": 4.71,
+      "lower_90": 0.21,
+      "upper_90": 26.06,
+      "lower_50": 2.02,
+      "upper_50": 9.81
+    },
+    {
+      "date": "2019-05-16",
+      "actual": 16.29,
+      "predicted": 4.32,
+      "lower_90": 0.13,
+      "upper_90": 24.12,
+      "lower_50": 1.82,
+      "upper_50": 9.05
+    },
+    {
+      "date": "2019-05-17",
+      "actual": 4.0,
+      "predicted": 4.62,
+      "lower_90": 0.19,
+      "upper_90": 25.61,
+      "lower_50": 1.97,
+      "upper_50": 9.64
+    },
+    {
+      "date": "2019-05-18",
+      "actual": 5.0,
+      "predicted": 4.34,
+      "lower_90": 0.12,
+      "upper_90": 24.46,
+      "lower_50": 1.82,
+      "upper_50": 9.13
+    },
+    {
+      "date": "2019-05-19",
+      "actual": 9.0,
+      "predicted": 5.33,
+      "lower_90": 0.33,
+      "upper_90": 29.08,
+      "lower_50": 2.34,
+      "upper_50": 10.99
+    },
+    {
+      "date": "2019-05-20",
+      "actual": 13.0,
+      "predicted": 5.4,
+      "lower_90": 0.35,
+      "upper_90": 29.31,
+      "lower_50": 2.39,
+      "upper_50": 11.11
+    },
+    {
+      "date": "2019-05-21",
+      "actual": 1.0,
+      "predicted": 5.66,
+      "lower_90": 0.41,
+      "upper_90": 30.54,
+      "lower_50": 2.52,
+      "upper_50": 11.6
+    },
+    {
+      "date": "2019-05-22",
+      "actual": 9.0,
+      "predicted": 4.33,
+      "lower_90": 0.13,
+      "upper_90": 24.18,
+      "lower_50": 1.82,
+      "upper_50": 9.07
+    },
+    {
+      "date": "2019-05-23",
+      "actual": 10.0,
+      "predicted": 4.55,
+      "lower_90": 0.18,
+      "upper_90": 25.17,
+      "lower_50": 1.94,
+      "upper_50": 9.48
+    },
+    {
+      "date": "2019-05-24",
+      "actual": 5.0,
+      "predicted": 4.59,
+      "lower_90": 0.18,
+      "upper_90": 25.4,
+      "lower_50": 1.96,
+      "upper_50": 9.56
+    },
+    {
+      "date": "2019-05-25",
+      "actual": 16.0,
+      "predicted": 4.08,
+      "lower_90": 0.08,
+      "upper_90": 23.01,
+      "lower_50": 1.69,
+      "upper_50": 8.6
+    },
+    {
+      "date": "2019-05-26",
+      "actual": 11.0,
+      "predicted": 4.65,
+      "lower_90": 0.19,
+      "upper_90": 25.72,
+      "lower_50": 1.99,
+      "upper_50": 9.68
+    },
+    {
+      "date": "2019-05-27",
+      "actual": 0.0,
+      "predicted": 5.35,
+      "lower_90": 0.34,
+      "upper_90": 29.09,
+      "lower_50": 2.36,
+      "upper_50": 11.02
+    },
+    {
+      "date": "2019-05-28",
+      "actual": 5.0,
+      "predicted": 3.91,
+      "lower_90": 0.04,
+      "upper_90": 22.22,
+      "lower_50": 1.6,
+      "upper_50": 8.28
+    },
+    {
+      "date": "2019-05-29",
+      "actual": 0.0,
+      "predicted": 4.57,
+      "lower_90": 0.18,
+      "upper_90": 25.32,
+      "lower_50": 1.95,
+      "upper_50": 9.52
+    },
+    {
+      "date": "2019-05-30",
+      "actual": 6.0,
+      "predicted": 3.64,
+      "lower_90": 0.0,
+      "upper_90": 20.88,
+      "lower_50": 1.45,
+      "upper_50": 7.76
+    },
+    {
+      "date": "2019-05-31",
+      "actual": 2.0,
+      "predicted": 4.26,
+      "lower_90": 0.12,
+      "upper_90": 23.82,
+      "lower_50": 1.79,
+      "upper_50": 8.94
+    },
+    {
+      "date": "2019-06-01",
+      "actual": 8.0,
+      "predicted": 4.33,
+      "lower_90": 0.13,
+      "upper_90": 24.22,
+      "lower_50": 1.82,
+      "upper_50": 9.08
+    },
+    {
+      "date": "2019-06-02",
+      "actual": 6.0,
+      "predicted": 5.38,
+      "lower_90": 0.34,
+      "upper_90": 29.24,
+      "lower_50": 2.37,
+      "upper_50": 11.07
+    },
+    {
+      "date": "2019-06-03",
+      "actual": 5.0,
+      "predicted": 4.96,
+      "lower_90": 0.26,
+      "upper_90": 27.15,
+      "lower_50": 2.16,
+      "upper_50": 10.26
+    },
+    {
+      "date": "2019-06-04",
+      "actual": 12.0,
+      "predicted": 5.12,
+      "lower_90": 0.3,
+      "upper_90": 27.86,
+      "lower_50": 2.24,
+      "upper_50": 10.56
+    },
+    {
+      "date": "2019-06-05",
+      "actual": 1.0,
+      "predicted": 4.46,
+      "lower_90": 0.16,
+      "upper_90": 24.78,
+      "lower_50": 1.89,
+      "upper_50": 9.32
+    },
+    {
+      "date": "2019-06-06",
+      "actual": 11.0,
+      "predicted": 3.6,
+      "lower_90": 0.0,
+      "upper_90": 20.69,
+      "lower_50": 1.44,
+      "upper_50": 7.69
+    },
+    {
+      "date": "2019-06-07",
+      "actual": 16.0,
+      "predicted": 4.09,
+      "lower_90": 0.08,
+      "upper_90": 22.99,
+      "lower_50": 1.69,
+      "upper_50": 8.61
+    },
+    {
+      "date": "2019-06-08",
+      "actual": 0.0,
+      "predicted": 4.2,
+      "lower_90": 0.1,
+      "upper_90": 23.61,
+      "lower_50": 1.75,
+      "upper_50": 8.84
+    },
+    {
+      "date": "2019-06-09",
+      "actual": 0.0,
+      "predicted": 3.55,
+      "lower_90": 0.0,
+      "upper_90": 20.52,
+      "lower_50": 1.4,
+      "upper_50": 7.6
+    },
+    {
+      "date": "2019-06-10",
+      "actual": 6.0,
+      "predicted": 4.12,
+      "lower_90": 0.08,
+      "upper_90": 23.19,
+      "lower_50": 1.71,
+      "upper_50": 8.68
+    },
+    {
+      "date": "2019-06-11",
+      "actual": 7.0,
+      "predicted": 4.36,
+      "lower_90": 0.14,
+      "upper_90": 24.24,
+      "lower_50": 1.84,
+      "upper_50": 9.12
+    },
+    {
+      "date": "2019-06-12",
+      "actual": 1.0,
+      "predicted": 4.5,
+      "lower_90": 0.17,
+      "upper_90": 24.9,
+      "lower_50": 1.91,
+      "upper_50": 9.38
+    },
+    {
+      "date": "2019-06-13",
+      "actual": 2.0,
+      "predicted": 3.52,
+      "lower_90": 0.0,
+      "upper_90": 20.28,
+      "lower_50": 1.39,
+      "upper_50": 7.52
+    },
+    {
+      "date": "2019-06-14",
+      "actual": 0.0,
+      "predicted": 4.04,
+      "lower_90": 0.07,
+      "upper_90": 22.75,
+      "lower_50": 1.67,
+      "upper_50": 8.51
+    },
+    {
+      "date": "2019-06-15",
+      "actual": 7.0,
+      "predicted": 3.77,
+      "lower_90": 0.01,
+      "upper_90": 21.57,
+      "lower_50": 1.52,
+      "upper_50": 8.02
+    },
+    {
+      "date": "2019-06-16",
+      "actual": 0.0,
+      "predicted": 4.44,
+      "lower_90": 0.15,
+      "upper_90": 24.69,
+      "lower_50": 1.88,
+      "upper_50": 9.28
+    },
+    {
+      "date": "2019-06-17",
+      "actual": 2.0,
+      "predicted": 3.99,
+      "lower_90": 0.06,
+      "upper_90": 22.51,
+      "lower_50": 1.64,
+      "upper_50": 8.42
+    },
+    {
+      "date": "2019-06-18",
+      "actual": 2.0,
+      "predicted": 4.27,
+      "lower_90": 0.12,
+      "upper_90": 23.8,
+      "lower_50": 1.79,
+      "upper_50": 8.94
+    },
+    {
+      "date": "2019-06-19",
+      "actual": 2.0,
+      "predicted": 4.1,
+      "lower_90": 0.08,
+      "upper_90": 23.04,
+      "lower_50": 1.7,
+      "upper_50": 8.63
+    },
+    {
+      "date": "2019-06-20",
+      "actual": 0.0,
+      "predicted": 3.53,
+      "lower_90": 0.0,
+      "upper_90": 20.37,
+      "lower_50": 1.4,
+      "upper_50": 7.55
+    },
+    {
+      "date": "2019-06-21",
+      "actual": 4.0,
+      "predicted": 3.01,
+      "lower_90": 0.0,
+      "upper_90": 17.97,
+      "lower_50": 1.12,
+      "upper_50": 6.58
+    },
+    {
+      "date": "2019-06-22",
+      "actual": 12.0,
+      "predicted": 3.75,
+      "lower_90": 0.0,
+      "upper_90": 21.55,
+      "lower_50": 1.51,
+      "upper_50": 7.99
+    },
+    {
+      "date": "2019-06-23",
+      "actual": 10.0,
+      "predicted": 4.32,
+      "lower_90": 0.12,
+      "upper_90": 24.24,
+      "lower_50": 1.81,
+      "upper_50": 9.07
+    },
+    {
+      "date": "2019-06-24",
+      "actual": 3.0,
+      "predicted": 4.3,
+      "lower_90": 0.12,
+      "upper_90": 24.04,
+      "lower_50": 1.81,
+      "upper_50": 9.02
+    },
+    {
+      "date": "2019-06-25",
+      "actual": 0.0,
+      "predicted": 3.6,
+      "lower_90": 0.0,
+      "upper_90": 20.67,
+      "lower_50": 1.44,
+      "upper_50": 7.69
+    },
+    {
+      "date": "2019-06-26",
+      "actual": 0.0,
+      "predicted": 3.31,
+      "lower_90": 0.0,
+      "upper_90": 19.4,
+      "lower_50": 1.28,
+      "upper_50": 7.15
+    },
+    {
+      "date": "2019-06-27",
+      "actual": 7.0,
+      "predicted": 2.86,
+      "lower_90": 0.0,
+      "upper_90": 17.24,
+      "lower_50": 1.04,
+      "upper_50": 6.3
+    },
+    {
+      "date": "2019-06-28",
+      "actual": 2.0,
+      "predicted": 3.74,
+      "lower_90": 0.01,
+      "upper_90": 21.38,
+      "lower_50": 1.51,
+      "upper_50": 7.96
+    },
+    {
+      "date": "2019-06-29",
+      "actual": 5.0,
+      "predicted": 3.3,
+      "lower_90": 0.0,
+      "upper_90": 19.39,
+      "lower_50": 1.28,
+      "upper_50": 7.14
+    },
+    {
+      "date": "2019-06-30",
+      "actual": 11.0,
+      "predicted": 4.25,
+      "lower_90": 0.11,
+      "upper_90": 23.87,
+      "lower_50": 1.77,
+      "upper_50": 8.93
+    },
+    {
+      "date": "2019-07-01",
+      "actual": 8.0,
+      "predicted": 3.54,
+      "lower_90": 0.0,
+      "upper_90": 20.35,
+      "lower_50": 1.41,
+      "upper_50": 7.56
+    },
+    {
+      "date": "2019-07-02",
+      "actual": 1.0,
+      "predicted": 3.18,
+      "lower_90": 0.0,
+      "upper_90": 18.65,
+      "lower_50": 1.22,
+      "upper_50": 6.88
+    },
+    {
+      "date": "2019-07-03",
+      "actual": 1.0,
+      "predicted": 2.66,
+      "lower_90": 0.0,
+      "upper_90": 16.25,
+      "lower_50": 0.94,
+      "upper_50": 5.91
+    },
+    {
+      "date": "2019-07-04",
+      "actual": 3.0,
+      "predicted": 2.64,
+      "lower_90": 0.0,
+      "upper_90": 16.13,
+      "lower_50": 0.93,
+      "upper_50": 5.87
+    },
+    {
+      "date": "2019-07-05",
+      "actual": 0.0,
+      "predicted": 2.56,
+      "lower_90": 0.0,
+      "upper_90": 15.73,
+      "lower_50": 0.89,
+      "upper_50": 5.71
+    },
+    {
+      "date": "2019-07-06",
+      "actual": 1.0,
+      "predicted": 2.41,
+      "lower_90": 0.0,
+      "upper_90": 15.1,
+      "lower_50": 0.8,
+      "upper_50": 5.44
+    },
+    {
+      "date": "2019-07-07",
+      "actual": 3.0,
+      "predicted": 2.77,
+      "lower_90": 0.0,
+      "upper_90": 16.81,
+      "lower_50": 0.99,
+      "upper_50": 6.12
+    },
+    {
+      "date": "2019-07-08",
+      "actual": 4.0,
+      "predicted": 3.14,
+      "lower_90": 0.0,
+      "upper_90": 18.44,
+      "lower_50": 1.19,
+      "upper_50": 6.8
+    },
+    {
+      "date": "2019-07-09",
+      "actual": 3.0,
+      "predicted": 3.29,
+      "lower_90": 0.0,
+      "upper_90": 19.17,
+      "lower_50": 1.27,
+      "upper_50": 7.09
+    },
+    {
+      "date": "2019-07-10",
+      "actual": 1.0,
+      "predicted": 3.07,
+      "lower_90": 0.0,
+      "upper_90": 18.16,
+      "lower_50": 1.16,
+      "upper_50": 6.68
+    },
+    {
+      "date": "2019-07-11",
+      "actual": 0.0,
+      "predicted": 2.47,
+      "lower_90": 0.0,
+      "upper_90": 15.33,
+      "lower_50": 0.84,
+      "upper_50": 5.55
+    },
+    {
+      "date": "2019-07-12",
+      "actual": 2.0,
+      "predicted": 2.47,
+      "lower_90": 0.0,
+      "upper_90": 15.38,
+      "lower_50": 0.84,
+      "upper_50": 5.56
+    },
+    {
+      "date": "2019-07-13",
+      "actual": 0.0,
+      "predicted": 2.56,
+      "lower_90": 0.0,
+      "upper_90": 15.77,
+      "lower_50": 0.88,
+      "upper_50": 5.72
+    },
+    {
+      "date": "2019-07-14",
+      "actual": 5.0,
+      "predicted": 2.52,
+      "lower_90": 0.0,
+      "upper_90": 15.63,
+      "lower_50": 0.86,
+      "upper_50": 5.65
+    },
+    {
+      "date": "2019-07-15",
+      "actual": 0.0,
+      "predicted": 2.9,
+      "lower_90": 0.0,
+      "upper_90": 17.34,
+      "lower_50": 1.07,
+      "upper_50": 6.35
+    },
+    {
+      "date": "2019-07-16",
+      "actual": 2.0,
+      "predicted": 2.55,
+      "lower_90": 0.0,
+      "upper_90": 15.71,
+      "lower_50": 0.88,
+      "upper_50": 5.7
+    },
+    {
+      "date": "2019-07-17",
+      "actual": 0.0,
+      "predicted": 2.62,
+      "lower_90": 0.0,
+      "upper_90": 16.01,
+      "lower_50": 0.92,
+      "upper_50": 5.82
+    },
+    {
+      "date": "2019-07-18",
+      "actual": 3.0,
+      "predicted": 2.21,
+      "lower_90": 0.0,
+      "upper_90": 14.16,
+      "lower_50": 0.7,
+      "upper_50": 5.07
+    },
+    {
+      "date": "2019-07-19",
+      "actual": 3.0,
+      "predicted": 2.55,
+      "lower_90": 0.0,
+      "upper_90": 15.72,
+      "lower_50": 0.88,
+      "upper_50": 5.7
+    },
+    {
+      "date": "2019-07-20",
+      "actual": 6.0,
+      "predicted": 2.48,
+      "lower_90": 0.0,
+      "upper_90": 15.45,
+      "lower_50": 0.84,
+      "upper_50": 5.58
+    },
+    {
+      "date": "2019-07-21",
+      "actual": 1.0,
+      "predicted": 2.71,
+      "lower_90": 0.0,
+      "upper_90": 16.51,
+      "lower_50": 0.96,
+      "upper_50": 6.01
+    },
+    {
+      "date": "2019-07-22",
+      "actual": 0.0,
+      "predicted": 2.5,
+      "lower_90": 0.0,
+      "upper_90": 15.47,
+      "lower_50": 0.85,
+      "upper_50": 5.6
+    },
+    {
+      "date": "2019-07-23",
+      "actual": 7.0,
+      "predicted": 2.35,
+      "lower_90": 0.0,
+      "upper_90": 14.77,
+      "lower_50": 0.77,
+      "upper_50": 5.32
+    },
+    {
+      "date": "2019-07-24",
+      "actual": 2.0,
+      "predicted": 2.66,
+      "lower_90": 0.0,
+      "upper_90": 16.22,
+      "lower_50": 0.94,
+      "upper_50": 5.9
+    },
+    {
+      "date": "2019-07-25",
+      "actual": 11.0,
+      "predicted": 2.32,
+      "lower_90": 0.0,
+      "upper_90": 14.59,
+      "lower_50": 0.76,
+      "upper_50": 5.25
+    },
+    {
+      "date": "2019-07-26",
+      "actual": 8.0,
+      "predicted": 2.63,
+      "lower_90": 0.0,
+      "upper_90": 16.11,
+      "lower_50": 0.93,
+      "upper_50": 5.86
+    },
+    {
+      "date": "2019-07-27",
+      "actual": 2.0,
+      "predicted": 2.9,
+      "lower_90": 0.0,
+      "upper_90": 17.44,
+      "lower_50": 1.07,
+      "upper_50": 6.38
+    },
+    {
+      "date": "2019-07-28",
+      "actual": 0.0,
+      "predicted": 2.54,
+      "lower_90": 0.0,
+      "upper_90": 15.71,
+      "lower_50": 0.87,
+      "upper_50": 5.69
+    },
+    {
+      "date": "2019-07-29",
+      "actual": 1.0,
+      "predicted": 2.53,
+      "lower_90": 0.0,
+      "upper_90": 15.7,
+      "lower_50": 0.87,
+      "upper_50": 5.67
+    },
+    {
+      "date": "2019-07-30",
+      "actual": 33.0,
+      "predicted": 2.62,
+      "lower_90": 0.0,
+      "upper_90": 16.08,
+      "lower_50": 0.92,
+      "upper_50": 5.84
+    },
+    {
+      "date": "2019-07-31",
+      "actual": 4.0,
+      "predicted": 3.61,
+      "lower_90": 0.0,
+      "upper_90": 20.84,
+      "lower_50": 1.43,
+      "upper_50": 7.72
+    },
+    {
+      "date": "2019-08-01",
+      "actual": 1.0,
+      "predicted": 2.38,
+      "lower_90": 0.0,
+      "upper_90": 14.96,
+      "lower_50": 0.79,
+      "upper_50": 5.38
+    },
+    {
+      "date": "2019-08-02",
+      "actual": 6.0,
+      "predicted": 2.36,
+      "lower_90": 0.0,
+      "upper_90": 14.93,
+      "lower_50": 0.78,
+      "upper_50": 5.36
+    },
+    {
+      "date": "2019-08-03",
+      "actual": 1.0,
+      "predicted": 2.65,
+      "lower_90": 0.0,
+      "upper_90": 16.33,
+      "lower_50": 0.93,
+      "upper_50": 5.91
+    },
+    {
+      "date": "2019-08-04",
+      "actual": 2.0,
+      "predicted": 2.6,
+      "lower_90": 0.0,
+      "upper_90": 16.09,
+      "lower_50": 0.9,
+      "upper_50": 5.81
+    },
+    {
+      "date": "2019-08-05",
+      "actual": 5.0,
+      "predicted": 2.93,
+      "lower_90": 0.0,
+      "upper_90": 17.64,
+      "lower_50": 1.08,
+      "upper_50": 6.44
+    },
+    {
+      "date": "2019-08-06",
+      "actual": 6.0,
+      "predicted": 2.87,
+      "lower_90": 0.0,
+      "upper_90": 17.32,
+      "lower_50": 1.04,
+      "upper_50": 6.32
+    },
+    {
+      "date": "2019-08-07",
+      "actual": 21.0,
+      "predicted": 3.06,
+      "lower_90": 0.0,
+      "upper_90": 18.23,
+      "lower_50": 1.15,
+      "upper_50": 6.69
+    },
+    {
+      "date": "2019-08-08",
+      "actual": 31.0,
+      "predicted": 3.04,
+      "lower_90": 0.0,
+      "upper_90": 18.11,
+      "lower_50": 1.14,
+      "upper_50": 6.64
+    },
+    {
+      "date": "2019-08-09",
+      "actual": 1.0,
+      "predicted": 3.2,
+      "lower_90": 0.0,
+      "upper_90": 18.87,
+      "lower_50": 1.22,
+      "upper_50": 6.94
+    },
+    {
+      "date": "2019-08-10",
+      "actual": 0.0,
+      "predicted": 2.84,
+      "lower_90": 0.0,
+      "upper_90": 17.21,
+      "lower_50": 1.03,
+      "upper_50": 6.26
+    },
+    {
+      "date": "2019-08-11",
+      "actual": 2.0,
+      "predicted": 2.94,
+      "lower_90": 0.0,
+      "upper_90": 17.77,
+      "lower_50": 1.08,
+      "upper_50": 6.47
+    },
+    {
+      "date": "2019-08-12",
+      "actual": 5.0,
+      "predicted": 3.45,
+      "lower_90": 0.0,
+      "upper_90": 20.03,
+      "lower_50": 1.35,
+      "upper_50": 7.41
+    },
+    {
+      "date": "2019-08-13",
+      "actual": 2.0,
+      "predicted": 3.01,
+      "lower_90": 0.0,
+      "upper_90": 17.93,
+      "lower_50": 1.12,
+      "upper_50": 6.57
+    },
+    {
+      "date": "2019-08-14",
+      "actual": 0.0,
+      "predicted": 2.87,
+      "lower_90": 0.0,
+      "upper_90": 17.32,
+      "lower_50": 1.05,
+      "upper_50": 6.32
+    },
+    {
+      "date": "2019-08-15",
+      "actual": 11.0,
+      "predicted": 2.75,
+      "lower_90": 0.0,
+      "upper_90": 16.75,
+      "lower_50": 0.98,
+      "upper_50": 6.09
+    },
+    {
+      "date": "2019-08-16",
+      "actual": 10.0,
+      "predicted": 3.42,
+      "lower_90": 0.0,
+      "upper_90": 19.91,
+      "lower_50": 1.34,
+      "upper_50": 7.35
+    },
+    {
+      "date": "2019-08-17",
+      "actual": 0.0,
+      "predicted": 3.52,
+      "lower_90": 0.0,
+      "upper_90": 20.44,
+      "lower_50": 1.39,
+      "upper_50": 7.56
+    },
+    {
+      "date": "2019-08-18",
+      "actual": 7.0,
+      "predicted": 3.19,
+      "lower_90": 0.0,
+      "upper_90": 18.85,
+      "lower_50": 1.22,
+      "upper_50": 6.93
+    },
+    {
+      "date": "2019-08-19",
+      "actual": 0.0,
+      "predicted": 3.89,
+      "lower_90": 0.04,
+      "upper_90": 22.06,
+      "lower_50": 1.59,
+      "upper_50": 8.23
+    },
+    {
+      "date": "2019-08-20",
+      "actual": 2.0,
+      "predicted": 3.01,
+      "lower_90": 0.0,
+      "upper_90": 17.89,
+      "lower_50": 1.12,
+      "upper_50": 6.57
+    },
+    {
+      "date": "2019-08-21",
+      "actual": 5.0,
+      "predicted": 2.83,
+      "lower_90": 0.0,
+      "upper_90": 17.06,
+      "lower_50": 1.03,
+      "upper_50": 6.23
+    },
+    {
+      "date": "2019-08-22",
+      "actual": 10.0,
+      "predicted": 2.59,
+      "lower_90": 0.0,
+      "upper_90": 15.94,
+      "lower_50": 0.9,
+      "upper_50": 5.78
+    },
+    {
+      "date": "2019-08-23",
+      "actual": 4.0,
+      "predicted": 2.95,
+      "lower_90": 0.0,
+      "upper_90": 17.62,
+      "lower_50": 1.09,
+      "upper_50": 6.45
+    },
+    {
+      "date": "2019-08-24",
+      "actual": 0.0,
+      "predicted": 3.06,
+      "lower_90": 0.0,
+      "upper_90": 18.21,
+      "lower_50": 1.15,
+      "upper_50": 6.68
+    },
+    {
+      "date": "2019-08-25",
+      "actual": 3.0,
+      "predicted": 2.93,
+      "lower_90": 0.0,
+      "upper_90": 17.59,
+      "lower_50": 1.08,
+      "upper_50": 6.43
+    },
+    {
+      "date": "2019-08-26",
+      "actual": 3.0,
+      "predicted": 3.22,
+      "lower_90": 0.0,
+      "upper_90": 18.92,
+      "lower_50": 1.23,
+      "upper_50": 6.97
+    },
+    {
+      "date": "2019-08-27",
+      "actual": 0.0,
+      "predicted": 2.96,
+      "lower_90": 0.0,
+      "upper_90": 17.64,
+      "lower_50": 1.1,
+      "upper_50": 6.47
+    },
+    {
+      "date": "2019-08-28",
+      "actual": 0.0,
+      "predicted": 2.68,
+      "lower_90": 0.0,
+      "upper_90": 16.32,
+      "lower_50": 0.95,
+      "upper_50": 5.94
+    },
+    {
+      "date": "2019-08-29",
+      "actual": 1.0,
+      "predicted": 2.39,
+      "lower_90": 0.0,
+      "upper_90": 14.97,
+      "lower_50": 0.8,
+      "upper_50": 5.4
+    },
+    {
+      "date": "2019-08-30",
+      "actual": 2.0,
+      "predicted": 2.5,
+      "lower_90": 0.0,
+      "upper_90": 15.5,
+      "lower_50": 0.85,
+      "upper_50": 5.61
+    },
+    {
+      "date": "2019-08-31",
+      "actual": 4.0,
+      "predicted": 2.99,
+      "lower_90": 0.0,
+      "upper_90": 17.9,
+      "lower_50": 1.11,
+      "upper_50": 6.55
+    },
+    {
+      "date": "2019-09-01",
+      "actual": 5.0,
+      "predicted": 4.99,
+      "lower_90": 0.26,
+      "upper_90": 27.47,
+      "lower_50": 2.16,
+      "upper_50": 10.35
+    },
+    {
+      "date": "2019-09-02",
+      "actual": 1.0,
+      "predicted": 5.09,
+      "lower_90": 0.29,
+      "upper_90": 27.78,
+      "lower_50": 2.22,
+      "upper_50": 10.51
+    },
+    {
+      "date": "2019-09-03",
+      "actual": 1.0,
+      "predicted": 4.27,
+      "lower_90": 0.12,
+      "upper_90": 23.9,
+      "lower_50": 1.79,
+      "upper_50": 8.96
+    },
+    {
+      "date": "2019-09-04",
+      "actual": 3.0,
+      "predicted": 3.64,
+      "lower_90": 0.0,
+      "upper_90": 20.91,
+      "lower_50": 1.45,
+      "upper_50": 7.76
+    },
+    {
+      "date": "2019-09-05",
+      "actual": 1.0,
+      "predicted": 3.29,
+      "lower_90": 0.0,
+      "upper_90": 19.29,
+      "lower_50": 1.27,
+      "upper_50": 7.11
+    },
+    {
+      "date": "2019-09-06",
+      "actual": 0.0,
+      "predicted": 3.11,
+      "lower_90": 0.0,
+      "upper_90": 18.42,
+      "lower_50": 1.17,
+      "upper_50": 6.77
+    },
+    {
+      "date": "2019-09-07",
+      "actual": 6.0,
+      "predicted": 3.78,
+      "lower_90": 0.0,
+      "upper_90": 21.81,
+      "lower_50": 1.52,
+      "upper_50": 8.07
+    },
+    {
+      "date": "2019-09-08",
+      "actual": 3.0,
+      "predicted": 4.47,
+      "lower_90": 0.15,
+      "upper_90": 24.94,
+      "lower_50": 1.89,
+      "upper_50": 9.35
+    },
+    {
+      "date": "2019-09-09",
+      "actual": 5.0,
+      "predicted": 3.97,
+      "lower_90": 0.05,
+      "upper_90": 22.45,
+      "lower_50": 1.63,
+      "upper_50": 8.39
+    },
+    {
+      "date": "2019-09-10",
+      "actual": 1.0,
+      "predicted": 4.22,
+      "lower_90": 0.11,
+      "upper_90": 23.6,
+      "lower_50": 1.76,
+      "upper_50": 8.85
+    },
+    {
+      "date": "2019-09-11",
+      "actual": 5.0,
+      "predicted": 3.81,
+      "lower_90": 0.02,
+      "upper_90": 21.7,
+      "lower_50": 1.54,
+      "upper_50": 8.08
+    },
+    {
+      "date": "2019-09-12",
+      "actual": 10.0,
+      "predicted": 3.62,
+      "lower_90": 0.0,
+      "upper_90": 20.78,
+      "lower_50": 1.45,
+      "upper_50": 7.72
+    },
+    {
+      "date": "2019-09-13",
+      "actual": 5.0,
+      "predicted": 3.65,
+      "lower_90": 0.0,
+      "upper_90": 20.97,
+      "lower_50": 1.46,
+      "upper_50": 7.79
+    },
+    {
+      "date": "2019-09-14",
+      "actual": 2.0,
+      "predicted": 4.2,
+      "lower_90": 0.1,
+      "upper_90": 23.65,
+      "lower_50": 1.75,
+      "upper_50": 8.84
+    },
+    {
+      "date": "2019-09-15",
+      "actual": 2.0,
+      "predicted": 4.04,
+      "lower_90": 0.06,
+      "upper_90": 22.88,
+      "lower_50": 1.66,
+      "upper_50": 8.53
+    },
+    {
+      "date": "2019-09-16",
+      "actual": 0.0,
+      "predicted": 4.21,
+      "lower_90": 0.1,
+      "upper_90": 23.58,
+      "lower_50": 1.76,
+      "upper_50": 8.84
+    },
+    {
+      "date": "2019-09-17",
+      "actual": 6.0,
+      "predicted": 3.69,
+      "lower_90": 0.0,
+      "upper_90": 21.1,
+      "lower_50": 1.48,
+      "upper_50": 7.85
+    },
+    {
+      "date": "2019-09-18",
+      "actual": 2.0,
+      "predicted": 3.89,
+      "lower_90": 0.04,
+      "upper_90": 22.06,
+      "lower_50": 1.59,
+      "upper_50": 8.24
+    },
+    {
+      "date": "2019-09-19",
+      "actual": 3.0,
+      "predicted": 3.61,
+      "lower_90": 0.0,
+      "upper_90": 20.75,
+      "lower_50": 1.44,
+      "upper_50": 7.71
+    },
+    {
+      "date": "2019-09-20",
+      "actual": 1.0,
+      "predicted": 3.99,
+      "lower_90": 0.05,
+      "upper_90": 22.62,
+      "lower_50": 1.63,
+      "upper_50": 8.43
+    },
+    {
+      "date": "2019-09-21",
+      "actual": 6.0,
+      "predicted": 4.21,
+      "lower_90": 0.1,
+      "upper_90": 23.72,
+      "lower_50": 1.75,
+      "upper_50": 8.86
+    },
+    {
+      "date": "2019-09-22",
+      "actual": 8.0,
+      "predicted": 4.82,
+      "lower_90": 0.23,
+      "upper_90": 26.6,
+      "lower_50": 2.08,
+      "upper_50": 10.02
+    },
+    {
+      "date": "2019-09-23",
+      "actual": 1.0,
+      "predicted": 4.43,
+      "lower_90": 0.15,
+      "upper_90": 24.65,
+      "lower_50": 1.87,
+      "upper_50": 9.26
+    },
+    {
+      "date": "2019-09-24",
+      "actual": 1.0,
+      "predicted": 4.23,
+      "lower_90": 0.11,
+      "upper_90": 23.67,
+      "lower_50": 1.77,
+      "upper_50": 8.88
+    },
+    {
+      "date": "2019-09-25",
+      "actual": 1.42,
+      "predicted": 3.83,
+      "lower_90": 0.03,
+      "upper_90": 21.77,
+      "lower_50": 1.56,
+      "upper_50": 8.12
+    },
+    {
+      "date": "2019-09-26",
+      "actual": 31.0,
+      "predicted": 3.51,
+      "lower_90": 0.0,
+      "upper_90": 20.23,
+      "lower_50": 1.39,
+      "upper_50": 7.51
+    },
+    {
+      "date": "2019-09-27",
+      "actual": 2.0,
+      "predicted": 4.48,
+      "lower_90": 0.16,
+      "upper_90": 24.99,
+      "lower_50": 1.89,
+      "upper_50": 9.37
+    },
+    {
+      "date": "2019-09-28",
+      "actual": 1.0,
+      "predicted": 4.44,
+      "lower_90": 0.14,
+      "upper_90": 24.88,
+      "lower_50": 1.87,
+      "upper_50": 9.31
+    },
+    {
+      "date": "2019-09-29",
+      "actual": 3.0,
+      "predicted": 4.67,
+      "lower_90": 0.19,
+      "upper_90": 26.03,
+      "lower_50": 1.99,
+      "upper_50": 9.75
+    },
+    {
+      "date": "2019-09-30",
+      "actual": 5.0,
+      "predicted": 5.03,
+      "lower_90": 0.27,
+      "upper_90": 27.57,
+      "lower_50": 2.18,
+      "upper_50": 10.4
+    },
+    {
+      "date": "2019-10-01",
+      "actual": 17.0,
+      "predicted": 5.38,
+      "lower_90": 0.35,
+      "upper_90": 29.21,
+      "lower_50": 2.37,
+      "upper_50": 11.07
+    },
+    {
+      "date": "2019-10-02",
+      "actual": 0.0,
+      "predicted": 5.61,
+      "lower_90": 0.4,
+      "upper_90": 30.23,
+      "lower_50": 2.5,
+      "upper_50": 11.49
+    },
+    {
+      "date": "2019-10-03",
+      "actual": 2.0,
+      "predicted": 4.55,
+      "lower_90": 0.17,
+      "upper_90": 25.28,
+      "lower_50": 1.93,
+      "upper_50": 9.49
+    },
+    {
+      "date": "2019-10-04",
+      "actual": 1.0,
+      "predicted": 5.52,
+      "lower_90": 0.38,
+      "upper_90": 29.81,
+      "lower_50": 2.45,
+      "upper_50": 11.33
+    },
+    {
+      "date": "2019-10-05",
+      "actual": 0.0,
+      "predicted": 5.53,
+      "lower_90": 0.37,
+      "upper_90": 30.01,
+      "lower_50": 2.45,
+      "upper_50": 11.36
+    },
+    {
+      "date": "2019-10-06",
+      "actual": 5.0,
+      "predicted": 5.55,
+      "lower_90": 0.38,
+      "upper_90": 30.15,
+      "lower_50": 2.46,
+      "upper_50": 11.41
+    },
+    {
+      "date": "2019-10-07",
+      "actual": 10.0,
+      "predicted": 6.29,
+      "lower_90": 0.54,
+      "upper_90": 33.47,
+      "lower_50": 2.86,
+      "upper_50": 12.78
+    },
+    {
+      "date": "2019-10-08",
+      "actual": 2.0,
+      "predicted": 6.77,
+      "lower_90": 0.64,
+      "upper_90": 35.77,
+      "lower_50": 3.11,
+      "upper_50": 13.7
+    },
+    {
+      "date": "2019-10-09",
+      "actual": 13.2,
+      "predicted": 5.75,
+      "lower_90": 0.43,
+      "upper_90": 30.9,
+      "lower_50": 2.57,
+      "upper_50": 11.75
+    },
+    {
+      "date": "2019-10-10",
+      "actual": 8.2,
+      "predicted": 5.31,
+      "lower_90": 0.33,
+      "upper_90": 28.87,
+      "lower_50": 2.34,
+      "upper_50": 10.93
+    },
+    {
+      "date": "2019-10-11",
+      "actual": 3.4,
+      "predicted": 5.22,
+      "lower_90": 0.32,
+      "upper_90": 28.29,
+      "lower_50": 2.3,
+      "upper_50": 10.74
+    },
+    {
+      "date": "2019-10-12",
+      "actual": 5.8,
+      "predicted": 5.71,
+      "lower_90": 0.42,
+      "upper_90": 30.82,
+      "lower_50": 2.55,
+      "upper_50": 11.7
+    },
+    {
+      "date": "2019-10-13",
+      "actual": 3.6,
+      "predicted": 6.23,
+      "lower_90": 0.53,
+      "upper_90": 33.2,
+      "lower_50": 2.82,
+      "upper_50": 12.67
+    },
+    {
+      "date": "2019-10-14",
+      "actual": 8.0,
+      "predicted": 5.94,
+      "lower_90": 0.47,
+      "upper_90": 31.7,
+      "lower_50": 2.67,
+      "upper_50": 12.1
+    },
+    {
+      "date": "2019-10-15",
+      "actual": 8.0,
+      "predicted": 5.5,
+      "lower_90": 0.38,
+      "upper_90": 29.65,
+      "lower_50": 2.44,
+      "upper_50": 11.28
+    },
+    {
+      "date": "2019-10-16",
+      "actual": 4.8,
+      "predicted": 5.87,
+      "lower_90": 0.46,
+      "upper_90": 31.4,
+      "lower_50": 2.64,
+      "upper_50": 11.97
+    },
+    {
+      "date": "2019-10-17",
+      "actual": 3.2,
+      "predicted": 5.29,
+      "lower_90": 0.33,
+      "upper_90": 28.64,
+      "lower_50": 2.33,
+      "upper_50": 10.87
+    },
+    {
+      "date": "2019-10-18",
+      "actual": 5.8,
+      "predicted": 5.47,
+      "lower_90": 0.37,
+      "upper_90": 29.56,
+      "lower_50": 2.42,
+      "upper_50": 11.22
+    },
+    {
+      "date": "2019-10-19",
+      "actual": 8.8,
+      "predicted": 6.58,
+      "lower_90": 0.59,
+      "upper_90": 35.03,
+      "lower_50": 3.0,
+      "upper_50": 13.36
+    },
+    {
+      "date": "2019-10-20",
+      "actual": 10.8,
+      "predicted": 6.65,
+      "lower_90": 0.62,
+      "upper_90": 35.26,
+      "lower_50": 3.05,
+      "upper_50": 13.48
+    },
+    {
+      "date": "2019-10-21",
+      "actual": 7.4,
+      "predicted": 6.49,
+      "lower_90": 0.59,
+      "upper_90": 34.34,
+      "lower_50": 2.96,
+      "upper_50": 13.14
+    },
+    {
+      "date": "2019-10-22",
+      "actual": 10.2,
+      "predicted": 6.54,
+      "lower_90": 0.6,
+      "upper_90": 34.53,
+      "lower_50": 2.99,
+      "upper_50": 13.23
+    },
+    {
+      "date": "2019-10-23",
+      "actual": 11.2,
+      "predicted": 5.91,
+      "lower_90": 0.47,
+      "upper_90": 31.59,
+      "lower_50": 2.66,
+      "upper_50": 12.05
+    },
+    {
+      "date": "2019-10-24",
+      "actual": 6.2,
+      "predicted": 5.33,
+      "lower_90": 0.34,
+      "upper_90": 28.92,
+      "lower_50": 2.35,
+      "upper_50": 10.96
+    },
+    {
+      "date": "2019-10-25",
+      "actual": 8.6,
+      "predicted": 5.41,
+      "lower_90": 0.35,
+      "upper_90": 29.35,
+      "lower_50": 2.39,
+      "upper_50": 11.12
+    },
+    {
+      "date": "2019-10-26",
+      "actual": 4.8,
+      "predicted": 6.32,
+      "lower_90": 0.53,
+      "upper_90": 33.89,
+      "lower_50": 2.86,
+      "upper_50": 12.88
+    },
+    {
+      "date": "2019-10-27",
+      "actual": 8.6,
+      "predicted": 6.69,
+      "lower_90": 0.62,
+      "upper_90": 35.51,
+      "lower_50": 3.06,
+      "upper_50": 13.56
+    },
+    {
+      "date": "2019-10-28",
+      "actual": 6.2,
+      "predicted": 6.44,
+      "lower_90": 0.57,
+      "upper_90": 34.22,
+      "lower_50": 2.93,
+      "upper_50": 13.07
+    },
+    {
+      "date": "2019-10-29",
+      "actual": 9.4,
+      "predicted": 6.0,
+      "lower_90": 0.48,
+      "upper_90": 32.1,
+      "lower_50": 2.7,
+      "upper_50": 12.23
+    },
+    {
+      "date": "2019-10-30",
+      "actual": 5.8,
+      "predicted": 6.31,
+      "lower_90": 0.55,
+      "upper_90": 33.59,
+      "lower_50": 2.87,
+      "upper_50": 12.83
+    },
+    {
+      "date": "2019-10-31",
+      "actual": 5.2,
+      "predicted": 5.85,
+      "lower_90": 0.45,
+      "upper_90": 31.4,
+      "lower_50": 2.62,
+      "upper_50": 11.95
+    },
+    {
+      "date": "2019-11-01",
+      "actual": 5.6,
+      "predicted": 4.95,
+      "lower_90": 0.26,
+      "upper_90": 27.23,
+      "lower_50": 2.15,
+      "upper_50": 10.27
+    },
+    {
+      "date": "2019-11-02",
+      "actual": 4.2,
+      "predicted": 4.98,
+      "lower_90": 0.26,
+      "upper_90": 27.39,
+      "lower_50": 2.16,
+      "upper_50": 10.32
+    },
+    {
+      "date": "2019-11-03",
+      "actual": 2.8,
+      "predicted": 4.99,
+      "lower_90": 0.27,
+      "upper_90": 27.36,
+      "lower_50": 2.17,
+      "upper_50": 10.33
+    },
+    {
+      "date": "2019-11-04",
+      "actual": 4.6,
+      "predicted": 5.33,
+      "lower_90": 0.34,
+      "upper_90": 28.84,
+      "lower_50": 2.35,
+      "upper_50": 10.95
+    },
+    {
+      "date": "2019-11-05",
+      "actual": 3.8,
+      "predicted": 5.42,
+      "lower_90": 0.36,
+      "upper_90": 29.27,
+      "lower_50": 2.4,
+      "upper_50": 11.13
+    },
+    {
+      "date": "2019-11-06",
+      "actual": 6.6,
+      "predicted": 4.77,
+      "lower_90": 0.22,
+      "upper_90": 26.32,
+      "lower_50": 2.05,
+      "upper_50": 9.91
+    },
+    {
+      "date": "2019-11-07",
+      "actual": 3.8,
+      "predicted": 4.76,
+      "lower_90": 0.22,
+      "upper_90": 26.28,
+      "lower_50": 2.05,
+      "upper_50": 9.9
+    },
+    {
+      "date": "2019-11-08",
+      "actual": 11.8,
+      "predicted": 4.62,
+      "lower_90": 0.19,
+      "upper_90": 25.56,
+      "lower_50": 1.97,
+      "upper_50": 9.62
+    },
+    {
+      "date": "2019-11-09",
+      "actual": 10.2,
+      "predicted": 5.06,
+      "lower_90": 0.29,
+      "upper_90": 27.54,
+      "lower_50": 2.21,
+      "upper_50": 10.44
+    },
+    {
+      "date": "2019-11-10",
+      "actual": 12.2,
+      "predicted": 5.21,
+      "lower_90": 0.32,
+      "upper_90": 28.27,
+      "lower_50": 2.29,
+      "upper_50": 10.73
+    },
+    {
+      "date": "2019-11-11",
+      "actual": 6.6,
+      "predicted": 5.68,
+      "lower_90": 0.42,
+      "upper_90": 30.45,
+      "lower_50": 2.54,
+      "upper_50": 11.61
+    },
+    {
+      "date": "2019-11-12",
+      "actual": 10.2,
+      "predicted": 5.13,
+      "lower_90": 0.3,
+      "upper_90": 27.81,
+      "lower_50": 2.25,
+      "upper_50": 10.56
+    },
+    {
+      "date": "2019-11-13",
+      "actual": 5.6,
+      "predicted": 5.03,
+      "lower_90": 0.28,
+      "upper_90": 27.43,
+      "lower_50": 2.2,
+      "upper_50": 10.39
+    },
+    {
+      "date": "2019-11-14",
+      "actual": 4.4,
+      "predicted": 4.66,
+      "lower_90": 0.2,
+      "upper_90": 25.69,
+      "lower_50": 2.0,
+      "upper_50": 9.69
+    },
+    {
+      "date": "2019-11-15",
+      "actual": 10.6,
+      "predicted": 4.62,
+      "lower_90": 0.19,
+      "upper_90": 25.54,
+      "lower_50": 1.97,
+      "upper_50": 9.62
+    },
+    {
+      "date": "2019-11-16",
+      "actual": 4.0,
+      "predicted": 4.98,
+      "lower_90": 0.26,
+      "upper_90": 27.25,
+      "lower_50": 2.16,
+      "upper_50": 10.3
+    },
+    {
+      "date": "2019-11-17",
+      "actual": 10.8,
+      "predicted": 5.15,
+      "lower_90": 0.3,
+      "upper_90": 28.06,
+      "lower_50": 2.25,
+      "upper_50": 10.62
+    },
+    {
+      "date": "2019-11-18",
+      "actual": 4.0,
+      "predicted": 5.99,
+      "lower_90": 0.48,
+      "upper_90": 31.94,
+      "lower_50": 2.7,
+      "upper_50": 12.2
+    },
+    {
+      "date": "2019-11-19",
+      "actual": 4.4,
+      "predicted": 5.56,
+      "lower_90": 0.39,
+      "upper_90": 29.86,
+      "lower_50": 2.47,
+      "upper_50": 11.37
+    },
+    {
+      "date": "2019-11-20",
+      "actual": 6.0,
+      "predicted": 5.15,
+      "lower_90": 0.31,
+      "upper_90": 27.95,
+      "lower_50": 2.26,
+      "upper_50": 10.61
+    },
+    {
+      "date": "2019-11-21",
+      "actual": 7.8,
+      "predicted": 5.11,
+      "lower_90": 0.3,
+      "upper_90": 27.73,
+      "lower_50": 2.24,
+      "upper_50": 10.53
+    },
+    {
+      "date": "2019-11-22",
+      "actual": 6.6,
+      "predicted": 5.0,
+      "lower_90": 0.27,
+      "upper_90": 27.29,
+      "lower_50": 2.18,
+      "upper_50": 10.33
+    },
+    {
+      "date": "2019-11-23",
+      "actual": 5.0,
+      "predicted": 4.94,
+      "lower_90": 0.26,
+      "upper_90": 27.12,
+      "lower_50": 2.14,
+      "upper_50": 10.24
+    },
+    {
+      "date": "2019-11-24",
+      "actual": 4.2,
+      "predicted": 5.06,
+      "lower_90": 0.28,
+      "upper_90": 27.65,
+      "lower_50": 2.21,
+      "upper_50": 10.46
+    },
+    {
+      "date": "2019-11-25",
+      "actual": 3.0,
+      "predicted": 5.49,
+      "lower_90": 0.37,
+      "upper_90": 29.73,
+      "lower_50": 2.43,
+      "upper_50": 11.28
+    },
+    {
+      "date": "2019-11-26",
+      "actual": 10.2,
+      "predicted": 5.07,
+      "lower_90": 0.28,
+      "upper_90": 27.71,
+      "lower_50": 2.21,
+      "upper_50": 10.47
+    },
+    {
+      "date": "2019-11-27",
+      "actual": 3.4,
+      "predicted": 5.24,
+      "lower_90": 0.33,
+      "upper_90": 28.36,
+      "lower_50": 2.31,
+      "upper_50": 10.77
+    },
+    {
+      "date": "2019-11-28",
+      "actual": 8.0,
+      "predicted": 4.76,
+      "lower_90": 0.23,
+      "upper_90": 26.09,
+      "lower_50": 2.05,
+      "upper_50": 9.87
+    },
+    {
+      "date": "2019-11-29",
+      "actual": 2.0,
+      "predicted": 4.92,
+      "lower_90": 0.26,
+      "upper_90": 26.88,
+      "lower_50": 2.13,
+      "upper_50": 10.17
+    },
+    {
+      "date": "2019-11-30",
+      "actual": 4.4,
+      "predicted": 4.69,
+      "lower_90": 0.21,
+      "upper_90": 25.79,
+      "lower_50": 2.01,
+      "upper_50": 9.73
+    },
+    {
+      "date": "2019-12-01",
+      "actual": 6.8,
+      "predicted": 6.74,
+      "lower_90": 0.64,
+      "upper_90": 35.56,
+      "lower_50": 3.1,
+      "upper_50": 13.63
+    },
+    {
+      "date": "2019-12-02",
+      "actual": 11.4,
+      "predicted": 7.54,
+      "lower_90": 0.81,
+      "upper_90": 39.28,
+      "lower_50": 3.53,
+      "upper_50": 15.13
+    },
+    {
+      "date": "2019-12-03",
+      "actual": 6.8,
+      "predicted": 7.69,
+      "lower_90": 0.85,
+      "upper_90": 39.91,
+      "lower_50": 3.61,
+      "upper_50": 15.4
+    },
+    {
+      "date": "2019-12-04",
+      "actual": 4.4,
+      "predicted": 6.88,
+      "lower_90": 0.67,
+      "upper_90": 36.1,
+      "lower_50": 3.18,
+      "upper_50": 13.87
+    },
+    {
+      "date": "2019-12-05",
+      "actual": 8.4,
+      "predicted": 6.4,
+      "lower_90": 0.57,
+      "upper_90": 33.86,
+      "lower_50": 2.92,
+      "upper_50": 12.97
+    },
+    {
+      "date": "2019-12-06",
+      "actual": 9.9,
+      "predicted": 6.48,
+      "lower_90": 0.59,
+      "upper_90": 34.29,
+      "lower_50": 2.96,
+      "upper_50": 13.13
+    },
+    {
+      "date": "2019-12-07",
+      "actual": 9.8,
+      "predicted": 6.51,
+      "lower_90": 0.59,
+      "upper_90": 34.54,
+      "lower_50": 2.97,
+      "upper_50": 13.2
+    },
+    {
+      "date": "2019-12-08",
+      "actual": 4.1,
+      "predicted": 6.93,
+      "lower_90": 0.67,
+      "upper_90": 36.6,
+      "lower_50": 3.19,
+      "upper_50": 14.01
+    },
+    {
+      "date": "2019-12-09",
+      "actual": 4.2,
+      "predicted": 7.42,
+      "lower_90": 0.78,
+      "upper_90": 38.76,
+      "lower_50": 3.45,
+      "upper_50": 14.9
+    },
+    {
+      "date": "2019-12-10",
+      "actual": 11.0,
+      "predicted": 6.93,
+      "lower_90": 0.68,
+      "upper_90": 36.42,
+      "lower_50": 3.2,
+      "upper_50": 13.98
+    },
+    {
+      "date": "2019-12-11",
+      "actual": 7.6,
+      "predicted": 7.18,
+      "lower_90": 0.74,
+      "upper_90": 37.59,
+      "lower_50": 3.33,
+      "upper_50": 14.46
+    },
+    {
+      "date": "2019-12-12",
+      "actual": 12.4,
+      "predicted": 6.58,
+      "lower_90": 0.61,
+      "upper_90": 34.77,
+      "lower_50": 3.01,
+      "upper_50": 13.32
+    },
+    {
+      "date": "2019-12-13",
+      "actual": 11.6,
+      "predicted": 7.14,
+      "lower_90": 0.72,
+      "upper_90": 37.47,
+      "lower_50": 3.31,
+      "upper_50": 14.39
+    },
+    {
+      "date": "2019-12-14",
+      "actual": 13.2,
+      "predicted": 7.18,
+      "lower_90": 0.73,
+      "upper_90": 37.68,
+      "lower_50": 3.33,
+      "upper_50": 14.46
+    },
+    {
+      "date": "2019-12-15",
+      "actual": 8.4,
+      "predicted": 7.49,
+      "lower_90": 0.79,
+      "upper_90": 39.11,
+      "lower_50": 3.49,
+      "upper_50": 15.04
+    },
+    {
+      "date": "2019-12-16",
+      "actual": 9.2,
+      "predicted": 7.74,
+      "lower_90": 0.85,
+      "upper_90": 40.34,
+      "lower_50": 3.62,
+      "upper_50": 15.52
+    },
+    {
+      "date": "2019-12-17",
+      "actual": 10.2,
+      "predicted": 7.63,
+      "lower_90": 0.82,
+      "upper_90": 40.0,
+      "lower_50": 3.56,
+      "upper_50": 15.35
+    },
+    {
+      "date": "2019-12-18",
+      "actual": 4.8,
+      "predicted": 7.36,
+      "lower_90": 0.76,
+      "upper_90": 38.73,
+      "lower_50": 3.42,
+      "upper_50": 14.84
+    },
+    {
+      "date": "2019-12-19",
+      "actual": 5.3,
+      "predicted": 6.69,
+      "lower_90": 0.62,
+      "upper_90": 35.36,
+      "lower_50": 3.06,
+      "upper_50": 13.53
+    },
+    {
+      "date": "2019-12-20",
+      "actual": 5.8,
+      "predicted": 6.83,
+      "lower_90": 0.66,
+      "upper_90": 35.99,
+      "lower_50": 3.14,
+      "upper_50": 13.79
+    },
+    {
+      "date": "2019-12-21",
+      "actual": 8.2,
+      "predicted": 6.97,
+      "lower_90": 0.68,
+      "upper_90": 36.69,
+      "lower_50": 3.21,
+      "upper_50": 14.06
+    },
+    {
+      "date": "2019-12-22",
+      "actual": 6.4,
+      "predicted": 7.85,
+      "lower_90": 0.87,
+      "upper_90": 40.93,
+      "lower_50": 3.67,
+      "upper_50": 15.74
+    },
+    {
+      "date": "2019-12-23",
+      "actual": 7.4,
+      "predicted": 8.55,
+      "lower_90": 1.02,
+      "upper_90": 44.21,
+      "lower_50": 4.05,
+      "upper_50": 17.06
+    },
+    {
+      "date": "2019-12-24",
+      "actual": 6.6,
+      "predicted": 8.02,
+      "lower_90": 0.91,
+      "upper_90": 41.69,
+      "lower_50": 3.77,
+      "upper_50": 16.06
+    },
+    {
+      "date": "2019-12-25",
+      "actual": 7.8,
+      "predicted": 7.61,
+      "lower_90": 0.81,
+      "upper_90": 39.94,
+      "lower_50": 3.54,
+      "upper_50": 15.31
+    },
+    {
+      "date": "2019-12-26",
+      "actual": 4.8,
+      "predicted": 7.02,
+      "lower_90": 0.68,
+      "upper_90": 37.16,
+      "lower_50": 3.23,
+      "upper_50": 14.2
+    },
+    {
+      "date": "2019-12-27",
+      "actual": 9.2,
+      "predicted": 6.95,
+      "lower_90": 0.67,
+      "upper_90": 36.85,
+      "lower_50": 3.19,
+      "upper_50": 14.07
+    },
+    {
+      "date": "2019-12-28",
+      "actual": 17.0,
+      "predicted": 7.05,
+      "lower_90": 0.69,
+      "upper_90": 37.31,
+      "lower_50": 3.25,
+      "upper_50": 14.26
+    },
+    {
+      "date": "2019-12-29",
+      "actual": 5.6,
+      "predicted": 8.0,
+      "lower_90": 0.91,
+      "upper_90": 41.53,
+      "lower_50": 3.77,
+      "upper_50": 16.01
+    },
+    {
+      "date": "2019-12-30",
+      "actual": 10.6,
+      "predicted": 7.93,
+      "lower_90": 0.72,
+      "upper_90": 45.48,
+      "lower_50": 3.54,
+      "upper_50": 16.56
+    },
+    {
+      "date": "2019-12-31",
+      "actual": 6.8,
+      "predicted": 7.99,
+      "lower_90": 0.73,
+      "upper_90": 45.72,
+      "lower_50": 3.57,
+      "upper_50": 16.66
+    }
+  ]
+}
