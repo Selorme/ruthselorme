@@ -738,26 +738,87 @@ def delete_post(post_id):
     db.session.commit()
     return redirect(url_for('home'))
 
+#
+# def send_reset_email(email, reset_url):
+#     msg = Message("Password Reset Request",
+#                   sender=os.getenv('MY_WEBSITE_EMAIL'),
+#                   recipients=[email])
+#
+#     # Email body content
+#     msg.body = f"""To reset your password, click the following link: {reset_url}
+#
+# If you did not request this, ignore this email.
+# """
+#
+#     # Set the Reply-To header to a non-monitored address
+#     msg.reply_to = "no-reply@example.com"  # Use a non-monitored address
+#
+#     # Send the email
+#     mail.send(msg)
+
 
 def send_reset_email(email, reset_url):
-    msg = Message("Password Reset Request",
-                  sender=os.getenv('MY_WEBSITE_EMAIL'),
-                  recipients=[email])
+    """Send password reset email via Brevo API (not SMTP - avoids Render's port block)."""
+    subject = "Password Reset Request"
 
-    # Email body content
-    msg.body = f"""To reset your password, click the following link: {reset_url}
+    html_content = f'''
+    <html>
+        <body>
+            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                <h2>Password Reset Request</h2>
+                <p>To reset your password, click the link below:</p>
+                <a href="{reset_url}" 
+                   style="background-color: #007bff; color: white; padding: 10px 20px; 
+                          text-decoration: none; border-radius: 5px;">
+                    Reset Password
+                </a>
+                <p style="margin-top: 20px; font-size: 14px; color: #666;">
+                    If you did not request this, you can safely ignore this email.
+                </p>
+            </div>
+        </body>
+    </html>
+    '''
 
-If you did not request this, ignore this email.
-"""
+    send_smtp_email = sib_api_v3_sdk.SendSmtpEmail(
+        sender={"email": "noreply@ruthselormeacolatse.info", "name": "Ruth Selorme Acolatse"},
+        to=[{"email": email}],
+        subject=subject,
+        html_content=html_content
+    )
 
-    # Set the Reply-To header to a non-monitored address
-    msg.reply_to = "no-reply@example.com"  # Use a non-monitored address
-
-    # Send the email
-    mail.send(msg)
+    email_api.send_transac_email(send_smtp_email)
 
 
-# Passwowrd reset routes
+# # Passwowrd reset routes
+# @app.route("/forgot-password", methods=["GET", "POST"])
+# def forgot_password():
+#     form = ForgotPasswordForm()
+#     if form.validate_on_submit():
+#         email = form.email.data
+#         user = db.session.query(User).filter_by(email=email).first()
+#         if user:
+#             token = s.dumps(email, salt='email-reset')
+#
+#             # save or update the password reset token in the database
+#             reset_token = db.session.query(PasswordResetToken).filter_by(email=email).first()
+#             if reset_token:
+#                 reset_token.token = token
+#             else:
+#                 reset_token = PasswordResetToken(email=email, token=token)
+#                 db.session.add(reset_token)
+#             db.session.commit()
+#
+#             reset_url = url_for('reset_password', token=token, _external=True)
+#             send_reset_email(email, reset_url)
+#             flash("A password reset link has been sent to your email.", "info")
+#             return redirect(url_for('login'))
+#         else:
+#             flash("Email not found. Please register.", "warning")
+#             return redirect(url_for('register'))
+#     return render_template("forgot_password.html", form=form, copyright_year=year)
+
+
 @app.route("/forgot-password", methods=["GET", "POST"])
 def forgot_password():
     form = ForgotPasswordForm()
@@ -767,7 +828,6 @@ def forgot_password():
         if user:
             token = s.dumps(email, salt='email-reset')
 
-            # save or update the password reset token in the database
             reset_token = db.session.query(PasswordResetToken).filter_by(email=email).first()
             if reset_token:
                 reset_token.token = token
@@ -777,8 +837,19 @@ def forgot_password():
             db.session.commit()
 
             reset_url = url_for('reset_password', token=token, _external=True)
-            send_reset_email(email, reset_url)
-            flash("A password reset link has been sent to your email.", "info")
+
+            # --- everything below this line is what's new ---
+            try:
+                send_reset_email(email, reset_url)
+                flash("A password reset link has been sent to your email.", "info")
+            except ApiException as e:
+                app.logger.error(f"Brevo API error sending reset email: {e}")
+                flash("We couldn't send the reset email right now. Please try again shortly.", "danger")
+            except Exception:
+                app.logger.exception("Unexpected error sending reset email")
+                flash("Something went wrong. Please try again shortly.", "danger")
+            # --- end of new part ---
+
             return redirect(url_for('login'))
         else:
             flash("Email not found. Please register.", "warning")
