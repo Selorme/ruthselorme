@@ -8,9 +8,10 @@
 
             <p class="mb-4">
                 This is the winning model from my
-                <a href="{{ url_for('show_post', category='masters-portfolio', post_id=184, slug='pharmacy-drug-sales-forecasting') }}">pharmacy sales forecasting project</a>
+                <a href="{{ url_for('show_post', category='masters-portfolio', post_id=184, slug='pharmacy-drug-sales-forecasting') }}">pharmacy sales forecasting project</a> —
                 a linear regression trained on log-scaled, engineered features. Pick any date from its held-out
-                test period below to see what it predicted against what actually sold.
+                test period below to see what it predicted, and how confident the model actually was in that
+                specific prediction.
             </p>
 
             <style>
@@ -24,6 +25,8 @@
                 --accent-ink: #1d4ed8;
                 --good: #047857;
                 --bad: #b91c1c;
+                --band-90: #dbeafe;
+                --band-50: #93c5fd;
 
                 font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
                 color: var(--ink);
@@ -49,6 +52,23 @@
                 font-size: 0.9rem;
                 color: var(--ink-soft);
                 line-height: 1.5;
+              }
+
+              .r03-widget__stats {
+                padding: 14px 24px;
+                border-bottom: 1px solid var(--line);
+                background: var(--panel);
+                font-size: 0.85rem;
+                color: var(--ink);
+                text-align: center;
+                line-height: 1.5;
+              }
+
+              .r03-widget__stats-figure {
+                font-variant-numeric: tabular-nums;
+                font-weight: 700;
+                font-size: 1.05rem;
+                color: var(--accent-ink);
               }
 
               .r03-widget__body {
@@ -90,6 +110,10 @@
                 font-family: inherit;
               }
 
+              .r03-widget__controls input[type="date"]:disabled {
+                opacity: 0.6;
+              }
+
               .r03-widget__range-hint {
                 font-size: 0.75rem;
                 color: var(--ink-soft);
@@ -110,7 +134,7 @@
               }
 
               .r03-widget__predict:hover { background: var(--accent-ink); }
-              .r03-widget__predict:disabled { background: #9db8e8; cursor: default; }
+              .r03-widget__predict:disabled { background: #a3adba; cursor: not-allowed; }
 
               .r03-widget__result {
                 padding: 24px;
@@ -125,6 +149,13 @@
                 color: var(--ink-soft);
                 font-size: 0.9rem;
                 text-align: center;
+              }
+
+              .r03-widget__error {
+                color: var(--bad);
+                font-size: 0.9rem;
+                text-align: center;
+                line-height: 1.5;
               }
 
               .r03-widget__figure {
@@ -149,14 +180,98 @@
               .r03-widget__unit {
                 font-size: 0.85rem;
                 color: var(--ink-soft);
-                margin-bottom: 14px;
+                margin-bottom: 4px;
+              }
+
+              /* ---- interval bar: shows the 90% and 50% prediction interval for THIS day ---- */
+              .r03-widget__interval-wrap {
+                margin: 14px auto 10px;
+                max-width: 320px;
+              }
+
+              .r03-widget__interval-track {
+                position: relative;
+                height: 26px;
+              }
+
+              .r03-widget__interval-band90 {
+                position: absolute;
+                top: 9px;
+                height: 8px;
+                background: var(--band-90);
+                border-radius: 4px;
+              }
+
+              .r03-widget__interval-band50 {
+                position: absolute;
+                top: 9px;
+                height: 8px;
+                background: var(--band-50);
+                border-radius: 4px;
+              }
+
+              .r03-widget__interval-point {
+                position: absolute;
+                top: 3px;
+                width: 3px;
+                height: 20px;
+                background: var(--accent-ink);
+                border-radius: 2px;
+                transform: translateX(-1.5px);
+              }
+
+              .r03-widget__interval-actual {
+                position: absolute;
+                top: 3px;
+                width: 12px;
+                height: 12px;
+                margin-top: 4px;
+                border-radius: 50%;
+                background: #fff;
+                border: 2.5px solid var(--good);
+                transform: translateX(-6px);
+              }
+
+              .r03-widget__interval-actual--outside {
+                border-color: var(--bad);
+              }
+
+              .r03-widget__interval-labels {
+                display: flex;
+                justify-content: space-between;
+                font-size: 0.7rem;
+                color: var(--ink-soft);
+                font-variant-numeric: tabular-nums;
+                margin-top: 2px;
+              }
+
+              .r03-widget__interval-legend {
+                display: flex;
+                justify-content: center;
+                gap: 16px;
+                font-size: 0.7rem;
+                color: var(--ink-soft);
+                margin-top: 10px;
+              }
+
+              .r03-widget__interval-legend span {
+                display: inline-flex;
+                align-items: center;
+                gap: 5px;
+              }
+
+              .r03-widget__legend-swatch {
+                width: 10px;
+                height: 10px;
+                border-radius: 3px;
+                display: inline-block;
               }
 
               .r03-widget__compare {
                 display: flex;
                 justify-content: center;
                 gap: 24px;
-                margin-top: 6px;
+                margin-top: 10px;
                 font-size: 0.85rem;
               }
 
@@ -171,9 +286,8 @@
                 font-weight: 650;
               }
 
-              .r03-widget__delta--over  { color: var(--bad); }
-              .r03-widget__delta--under { color: var(--bad); }
-              .r03-widget__delta--close { color: var(--good); }
+              .r03-widget__verdict--inside  { color: var(--good); }
+              .r03-widget__verdict--outside { color: var(--bad); }
 
               .r03-widget__note {
                 margin-top: 14px;
@@ -202,8 +316,10 @@
             <div class="r03-widget" id="r03-widget">
               <div class="r03-widget__head">
                 <h3>R03 demand predictor</h3>
-                <p>R03 — medication for obstructive airway disease. Pick any date from the held-out test period (2018–2019, never seen during training) and see what the winning model predicted against what actually sold.</p>
+                <p>R03 — medication for obstructive airway disease. Pick any date from the held-out test period (2018–2019, never seen during training). The model gives both a point prediction and a per-day confidence interval, computed from how unusual that day's features are relative to what it trained on.</p>
               </div>
+
+              <div class="r03-widget__stats" id="r03-widget-stats">Loading calibration stats…</div>
 
               <div class="r03-widget__body">
                 <div class="r03-widget__controls">
@@ -214,7 +330,7 @@
                 </div>
 
                 <div class="r03-widget__result" id="r03-result">
-                  <p class="r03-widget__placeholder">Choose a date and hit predict to see the model's forecast.</p>
+                  <p class="r03-widget__placeholder">Choose a date and hit predict to see the model's forecast and its confidence interval.</p>
                 </div>
               </div>
 
@@ -232,29 +348,12 @@
 
 <script>
 (function () {
-  // Sample data — shown only if r03_predictions.json hasn't been uploaded yet
-  // to /static/data/. Once it's there, it's fetched automatically and this
-  // fallback is ignored.
-  const SAMPLE_DATA = {
-    model: "Linear Regression (log-scaled, 24 features) — sample/demo data",
-    test_period: "2018-01-07 to 2019-11-03",
-    metrics: { mae: 4.76, rmse: 7.38, wape_pct: 65.78 },
-    predictions: [
-      { date: "2018-01-07", actual: 12.0, predicted: 9.9 },
-      { date: "2018-02-11", actual: 18.0, predicted: 14.2 },
-      { date: "2018-07-15", actual: 6.0, predicted: 7.8 },
-      { date: "2018-12-16", actual: 24.0, predicted: 19.1 },
-      { date: "2019-01-13", actual: 27.0, predicted: 21.6 },
-      { date: "2019-06-09", actual: 8.0, predicted: 9.2 },
-      { date: "2019-11-03", actual: 15.0, predicted: 13.4 }
-    ]
-  };
-
   const dateInput  = document.getElementById('r03-date');
   const rangeHint  = document.getElementById('r03-range-hint');
   const predictBtn = document.getElementById('r03-predict-btn');
   const resultBox  = document.getElementById('r03-result');
   const footBox    = document.getElementById('r03-foot');
+  const statsBox   = document.getElementById('r03-widget-stats');
 
   let dataMap = new Map();
   let sortedDates = [];
@@ -282,13 +381,24 @@
     dateInput.min = sortedDates[0];
     dateInput.max = sortedDates[sortedDates.length - 1];
     dateInput.value = sortedDates[0];
+    dateInput.disabled = false;
+    predictBtn.disabled = false;
+    predictBtn.textContent = 'Predict';
 
     rangeHint.textContent =
       `Available: ${formatDate(sortedDates[0])} – ${formatDate(sortedDates[sortedDates.length - 1])}`;
 
     footBox.textContent =
       `${data.model} · test period ${data.test_period} · ` +
-      `avg. error (MAE) ±${data.metrics.mae} units`;
+      `intervals are per-day OLS prediction intervals (fit-time residual variance + leverage), not a flat margin`;
+
+    statsBox.innerHTML =
+      `On the held-out test set, the actual value landed inside the model's ` +
+      `<span class="r03-widget__stats-figure">90% interval</span> on ` +
+      `<span class="r03-widget__stats-figure">${data.metrics.coverage_90_pct}%</span> of days, ` +
+      `and inside its <span class="r03-widget__stats-figure">50% interval</span> on ` +
+      `<span class="r03-widget__stats-figure">${data.metrics.coverage_50_pct}%</span> of days ` +
+      `— i.e. how well-calibrated the model's stated confidence actually is on data it never trained on.`;
 
     predictBtn.onclick = () => {
       const chosen = dateInput.value;
@@ -300,16 +410,32 @@
         usedDate = nearestAvailable(chosen);
         row = dataMap.get(usedDate);
       }
-      renderResult(row, data.metrics.mae, usedDate !== chosen ? chosen : null);
+      renderResult(row, usedDate !== chosen ? chosen : null);
     };
   }
 
-  function renderResult(row, mae, requestedButMissingDate) {
-    const diff = row.predicted - row.actual;
-    const closeness = Math.abs(diff) <= mae ? 'close' : (diff > 0 ? 'over' : 'under');
-    const closenessLabel = closeness === 'close'
-      ? 'within typical error range'
-      : (diff > 0 ? 'overpredicted' : 'underpredicted');
+  function renderResult(row, requestedButMissingDate) {
+    const insideNinety = row.actual >= row.lower_90 && row.actual <= row.upper_90;
+    const insideFifty   = row.actual >= row.lower_50 && row.actual <= row.upper_50;
+
+    // Map values onto a 0-100% track spanning the 90% interval (with a little padding)
+    const pad = (row.upper_90 - row.lower_90) * 0.12 || 1;
+    const trackMin = row.lower_90 - pad;
+    const trackMax = row.upper_90 + pad;
+    const span = trackMax - trackMin || 1;
+    const pct = v => Math.max(0, Math.min(100, ((v - trackMin) / span) * 100));
+
+    const band90Left  = pct(row.lower_90);
+    const band90Width = pct(row.upper_90) - band90Left;
+    const band50Left  = pct(row.lower_50);
+    const band50Width = pct(row.upper_50) - band50Left;
+    const pointPos    = pct(row.predicted);
+    const actualPos   = pct(row.actual);
+
+    const verdictLabel = insideFifty
+      ? 'within the model\u2019s typical (50%) range'
+      : (insideNinety ? 'within the model\u2019s wider (90%) range, but an unusual day' : 'outside the model\u2019s 90% interval — a genuine surprise to the model');
+    const verdictClass = insideNinety ? 'inside' : 'outside';
 
     const swapNote = requestedButMissingDate
       ? `<div class="r03-widget__swap-note">No sales recorded for ${formatDate(requestedButMissingDate)} (closure/missing day) — showing nearest available date instead.</div>`
@@ -319,23 +445,55 @@
       <div class="r03-widget__figure">
         <div class="r03-widget__label">Predicted sales · ${formatDate(row.date)}</div>
         <div class="r03-widget__number">${row.predicted.toFixed(1)}</div>
-        <div class="r03-widget__unit">units, ± ${mae.toFixed(1)} typical error</div>
-        <div class="r03-widget__compare">
-          <div><span>Actual</span><span>${row.actual.toFixed(1)}</span></div>
-          <div><span>Difference</span>
-            <span class="r03-widget__delta--${closeness}">${diff > 0 ? '+' : ''}${diff.toFixed(1)}</span>
+        <div class="r03-widget__unit">units predicted</div>
+
+        <div class="r03-widget__interval-wrap">
+          <div class="r03-widget__interval-track">
+            <div class="r03-widget__interval-band90" style="left:${band90Left}%; width:${band90Width}%;"></div>
+            <div class="r03-widget__interval-band50" style="left:${band50Left}%; width:${band50Width}%;"></div>
+            <div class="r03-widget__interval-point" style="left:${pointPos}%;"></div>
+            <div class="r03-widget__interval-actual${insideNinety ? '' : ' r03-widget__interval-actual--outside'}" style="left:${actualPos}%;"></div>
+          </div>
+          <div class="r03-widget__interval-labels">
+            <span>${row.lower_90.toFixed(1)}</span>
+            <span>${row.upper_90.toFixed(1)}</span>
+          </div>
+          <div class="r03-widget__interval-legend">
+            <span><span class="r03-widget__legend-swatch" style="background:var(--band-90);"></span>90% interval</span>
+            <span><span class="r03-widget__legend-swatch" style="background:var(--band-50);"></span>50% interval</span>
+            <span><span class="r03-widget__legend-swatch" style="background:#fff;border:2px solid var(--good);"></span>actual</span>
           </div>
         </div>
-        <div class="r03-widget__note">Model ${closenessLabel} on this date. Shown on real, held-out test-set data the model never trained on.</div>
+
+        <div class="r03-widget__compare">
+          <div><span>Actual</span><span>${row.actual.toFixed(1)}</span></div>
+          <div><span>50% range</span><span>${row.lower_50.toFixed(1)} – ${row.upper_50.toFixed(1)}</span></div>
+          <div><span>90% range</span><span>${row.lower_90.toFixed(1)} – ${row.upper_90.toFixed(1)}</span></div>
+        </div>
+
+        <div class="r03-widget__note r03-widget__verdict--${verdictClass}">Actual value fell ${verdictLabel}.</div>
+        <div class="r03-widget__note">Interval width reflects how typical this day's features (season, recent lags) were relative to training data — unusual days get wider intervals. Shown on real, held-out test-set data the model never trained on.</div>
         ${swapNote}
       </div>
     `;
   }
 
+  function showError() {
+    statsBox.textContent = 'Calibration stats unavailable.';
+    footBox.textContent = 'Prediction data could not be loaded.';
+    rangeHint.textContent = '';
+    dateInput.disabled = true;
+    predictBtn.disabled = true;
+    predictBtn.textContent = 'Unavailable';
+    resultBox.innerHTML =
+      '<p class="r03-widget__error">Couldn\u2019t load the model\u2019s prediction data right now. ' +
+      'Please refresh the page, or check back shortly.</p>';
+  }
+
   fetch("{{ url_for('static', filename='data/r03_predictions.json') }}")
     .then(r => { if (!r.ok) throw new Error('not found'); return r.json(); })
     .then(data => populate(data))
-    .catch(() => populate(SAMPLE_DATA));
+    .catch(() => showError());
 })();
 </script>
 
